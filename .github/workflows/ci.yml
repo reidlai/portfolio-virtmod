@@ -40,6 +40,12 @@ jobs:
           pip install pre-commit pytm semgrep
 
       - name: Run DevSecOps Gates (Pre-commit)
-        uses: pre-commit/action@v3.0.1
+        run: |
+          echo "Git version:"
+          git --version
+          echo "Git status:"
+          git status
+          echo "Running pre-commit:"
+          pre-commit run --all-files --show-diff-on-failure
         env:
            PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
