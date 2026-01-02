@@ -45,6 +45,18 @@ _(None for this feature - Infrastructure is the feature)_
 - [x] T009 [US2] Create `svelte/src/widgets/PortfolioSummaryWidget.test.ts` with 1 passing test mocking `$app/navigation` and asserting props
 - [x] T010 [US2] Verify `moon run portfolio-web:test` passes
 
+- [ ] T014 [US3] Configure `ts-test` in `moon.yml` and install vitest in `ts/package.json`
+- [ ] T015 [US3] Create `ts/src/portfolio.service.test.ts` smoke test for ReactiveX logic
+- [ ] T016 [US3] Verify `moon run portfolio-ts:test` passes
+
+## Phase 4.5: User Story 3 - Run TypeScript Unit Tests (ReactiveX)
+
+**Goal**: Developers must be able to write and run unit tests for shared TypeScript logic (`ts/`) using `vitest`.
+
+- [x] T014 [US3] Configure `ts-test` in `moon.yml` and install vitest in `ts/`
+- [x] T015 [US3] Create `ts/src/portfolio_logic.test.ts` smoke test
+- [x] T016 [US3] Verify `moon run portfolio-ts:test` passest
+
 ## Phase 5: Documentation & Polish
 
 **Purpose**: Improvements that affect multiple user stories

@@ -54,6 +54,13 @@ tasks:
     inputs: ["ts/**/*"]
     platform: "node"
 
+  ts-test:
+    command: "pnpm --dir ts run test"
+    env:
+      CI: "true"
+    inputs: ["ts/**/*"]
+    platform: "node"
+
   # Composite Tasks
   build:
     command: 'echo "Building all components"'
@@ -62,7 +69,7 @@ tasks:
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test"] # Runs both backend and frontend tests
+    deps: ["go-test", "svelte-test", "ts-test"] # Runs both backend and frontend tests
     platform: "system"
 
   lint:
