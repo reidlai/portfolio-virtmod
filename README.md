@@ -79,13 +79,74 @@ pre-commit run --all-files
 ./local-devsecops.sh
 ```
 
-### Integration
+### Integration with TA Workspace
 
-To add this module to `ta-workspace`:
+This is a **Virtual Module** designed to integrate into the main [ta-workspace](https://github.com/reidlai/ta-workspace) appshell. See [VIRTUAL-MODULE-ARCHITECTURE.md](./docs/VIRTUAL-MODULE-ARCHITECTURE.md) for the integration model.
 
-```bash
-npx @moonrepo/cli run :add-module -- https://github.com/reidlai/portfolio-virtmod --name portfolio
-```
+#### Architecture Overview
+
+**Reference**: [`ta-workspace/docs/APPSHELL-ARCHITECTURE.md`](https://github.com/reidlai/ta-workspace/blob/main/docs/APPSHELL-ARCHITECTURE.md)
+
+This module follows the **Virtual Module** pattern:
+
+- **NOT a standalone service** - designed to be embedded into the host application
+- **Polyglot components**: Go backend services + Svelte UI widgets + TypeScript contracts
+- **Zero infrastructure** - no persistent state, inherits host app's DB/auth/routing
+
+#### Integration Steps
+
+1. **Add Module to Workspace**:
+
+   ```bash
+   cd ta-workspace
+   npx @moonrepo/cli run :add-module -- https://github.com/reidlai/portfolio-virtmod --name portfolio
+   ```
+
+2. **Automatic Configuration**:
+   The `add-module` workflow automatically:
+   - Adds submodule to `modules/portfolio/`
+   - Updates `pnpm-workspace.yaml` with `modules/portfolio/svelte` and `modules/portfolio/ts`
+   - Updates `go.work` with `modules/portfolio/go`
+   - Registers tasks in `moon.yml`
+
+3. **Backend Integration** (Go):
+
+   ```go
+   // In ta-workspace/apps/ta-server/cmd/api-server.go
+   import portfoliopkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
+
+   // Register service with Goa
+   portfolioSvc := portfoliopkg.NewPortfolioService(logger, db)
+   portfolioEndpoints := portfolio.NewEndpoints(portfolioSvc)
+   ```
+
+4. **Frontend Integration** (Svelte):
+
+   ```typescript
+   // In ta-workspace/apps/sv-appshell/src/lib/registry.ts
+   import { PortfolioSummaryWidget } from "@modules/portfolio";
+
+   Registry.register("portfolio-summary", PortfolioSummaryWidget);
+   ```
+
+5. **Verify Integration**:
+
+   ```bash
+   # Build all components
+   npx @moonrepo/cli run :build
+
+   # Run tests
+   npx @moonrepo/cli run :test
+   ```
+
+#### Module Boundaries
+
+- **State**: No database ownership - uses host app's DB connection
+- **Auth**: Inherits session context from host app
+- **UI**: Renders into slots provided by appshell layout
+- **API**: Exposes Goa services that are mounted by host app's HTTP server
+
+See [VIRTUAL-MODULE-ARCHITECTURE.md](./docs/VIRTUAL-MODULE-ARCHITECTURE.md) for detailed integration patterns.
 
 ## Troubleshooting
 
