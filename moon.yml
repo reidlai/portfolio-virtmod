@@ -35,6 +35,14 @@ tasks:
     inputs: ["svelte/**/*", "ts/**/*"]
     platform: "node"
 
+  svelte-test:
+    command: "pnpm --dir svelte run test"
+    env:
+      CI: "true"
+    inputs: ["svelte/**/*", "ts/**/*"]
+    deps: ["ts-build"]
+    platform: "node"
+
   # TypeScript Shared Lib
   ts-build:
     command: "pnpm --dir ts build"
@@ -54,7 +62,7 @@ tasks:
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-check"] # Svelte check is akin to test for frontend structure
+    deps: ["go-test", "svelte-test"] # Runs both backend and frontend tests
     platform: "system"
 
   lint:

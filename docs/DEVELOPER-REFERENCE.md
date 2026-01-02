@@ -14,9 +14,22 @@
 
 - **Config**: Strict Env Var usage.
 - **Backing Services**: Treated as attached resources (Host App checks).
+- **Backing Services**: Treated as attached resources (Host App checks).
 - **Build/Release/Run**: Strict separation via Moonrepo tasks and Release workflow.
 
-## Integration Cheat Sheet
+## Testing Strategy (New)
+
+### 1. Unit Testing
+
+- **Goal**: Verify logic in isolation (checking "infra-only" behavior is fine for start).
+- **Go**: Use `testify/assert` and `testify/mock`.
+- **Svelte**: Use `vitest` and `@testing-library/svelte`.
+- **Mocking**: MANDATORY. Never connect to real DBs or APIs in unit tests.
+
+### 2. Dependency Injection (DI)
+
+- **Go**: Always define interfaces for dependencies in `pkg/interfaces.go` (e.g. `Logger`, `Database`).
+- **Svelte**: Use Props for data injection (`export let data: Type`). Avoid internal data fetching in widgets.
 
 This section provides quick copy-paste patterns for integrating the Virtual Module into the AppShell architecture.
 

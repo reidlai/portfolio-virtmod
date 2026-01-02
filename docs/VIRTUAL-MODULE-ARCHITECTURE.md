@@ -179,6 +179,21 @@ See `threat_modelling/tm.py` for PyTM model:
 - No direct external exposure
 - Data flows through host's API gateway
 
+## App Architecture Constraints (Updates)
+
+### 1. Mockability
+
+**Rule**: All external dependencies (Host APIs, DBs, Auth) MUST be mockable.
+
+- **Go**: Structs must accept Interfaces.
+- **Svelte**: Components must accept Props or use Context.
+
+### 2. Dependency Injection
+
+**Rule**: No hardcoded instantiations of infra clients.
+
+- Use Service Factories (`NewPortfolioService(deps...)`).
+
 ## Testing Strategy
 
 ### Unit Tests

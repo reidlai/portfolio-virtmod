@@ -2,14 +2,22 @@
     import * as Card from "@ui/card";
     import { goto } from "$app/navigation";
 
-    // MOCK DATA (FR-003, T015)
-    // In a real app, this would come from a service
-    const valuation = {
+    // FR-006: Props for DI
+    interface Valuation {
+        balance: number;
+        currency: string;
+        trendPercent: number;
+        trendDirection: "up" | "down" | "flat";
+    }
+
+    export let valuation: Valuation = {
         balance: 1250.0,
         currency: "USD",
         trendPercent: 12.5,
-        trendDirection: "up", // 'up' | 'down' | 'flat'
+        trendDirection: "up",
     };
+
+    export let onNavigate: (() => void) | undefined = undefined;
 
     function formatCurrency(amount: number, currency: string) {
         return new Intl.NumberFormat("en-US", {
@@ -23,8 +31,11 @@
     }
 
     function handleClick() {
-        // FR-005, T021 placeholder
-        goto("/portfolio");
+        if (onNavigate) {
+            onNavigate();
+        } else {
+            goto("/portfolio");
+        }
     }
 </script>
 
