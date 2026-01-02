@@ -289,8 +289,10 @@ The local `pre-commit` checks are mirrored in the GitHub Actions CI pipeline (`.
 
 ```yaml
 # .github/workflows/ci.yml
-- name: Run pre-commit
-  run: pre-commit run --all-files
+# Stages are expanded into individual steps for visibility
+- name: SCA - Go Vulnerability Check
+  run: cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+# ... (other steps mirror local hooks)
 ```
 
 See the [CI Gates](#ci-gates-blocking) section for the blocking criteria in the pipeline.
