@@ -5,7 +5,27 @@
 
 **Repo**: `github.com/reidlai/portfolio-virtmod`
 
-A polyglot module (Go, Svelte, TypeScript) designed for integration into `ta-workspace`.
+## Introduction
+
+The **Portfolio Virtual Module** is a reference implementation of the virtual module pattern for the [ta-workspace](https://github.com/reidlai/ta-workspace) AppShell.
+
+This project demonstrates how to **distribute full-stack development effort** across autonomous teams while maintaining a cohesive application architecture. It serves as a blueprint for implementing SOLID principles and achieving end-to-end delivery through standardized integration patterns.
+
+### Why this project?
+
+As applications grow, managing coding complexity and coordinating multiple teams becomes critical. The **Virtual Module** concept addresses this by:
+
+- **Distributed Development**: allowing distinct full-stack teams to own features from backend to frontend.
+- **Reduced Complexity**: breaking down the application into manageable, self-contained units.
+- **Standardized Integration**: decoupling modules using ReactiveX (RxJS) for robust, end-to-end data flow.
+- **Feature Injection**: utilizing Dependency Injection (DI) to seamlessly plug new or updated capabilities into the host AppShell without tight coupling.
+
+## Highlights
+
+- **Polyglot Design**: Seamlessly combines Go (backend logic), Svelte (UI widgets), and TypeScript (shared types/logic).
+- **SOLID Architecture**: Enforces strict boundaries via Dependency Injection (Go) and Interface Contracts (TypeScript).
+- **End-to-End Delivery**: Autonomous build and deployment lifecycle that integrates into the host AppShell via standard protocols.
+- **DevSecOps Native**: Built-in 6-stage security pipeline (SCA, SAST, Threat Modeling) ensuring enterprise-grade compliance.
 
 ## Documentation
 
