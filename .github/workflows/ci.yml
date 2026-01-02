@@ -40,10 +40,6 @@ jobs:
           pip install pre-commit pytm semgrep
 
       - name: Run DevSecOps Gates (Pre-commit)
-        run: |
-          sudo apt-get update && sudo apt-get install -y git
-          git config --global --add safe.directory ${{ github.workspace }}
-          pre-commit run --all-files --show-diff-on-failure
+        run: pre-commit run --all-files --show-diff-on-failure
         env:
-           # Ensure pre-commit can find locally installed tools
            PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
