@@ -20,6 +20,16 @@ The pipeline consists of **15 automated checks** across **6 stages**, ensuring c
 └─────────┴─────────┴─────────┴─────────┴─────────┴─────────────────────┘
 ```
 
+## CI Gates (Blocking)
+
+All PRs targeting `main` must pass the following gates, which mirror the local `pre-commit` checks:
+
+1.  **Unit Tests**: `moon run test` (Go, Vitest)
+2.  **Linting**: `moon run lint` (ESLint, Go Vet)
+3.  **Secret Scanning**: Trivy filesystem scan (via Semgrep/Gosec in local pipeline)
+4.  **SCA**: Dependency analysis (`govulncheck`, `pnpm audit`)
+5.  **SAST**: Threat modeling check (`pytm`, `gosec`, `semgrep`)
+
 ## Prerequisites
 
 | Tool    | Version   | Purpose                             |
@@ -169,6 +179,18 @@ pre-commit run govulncheck --all-files
 git commit --no-verify -m "Emergency fix"
 ```
 
+## Release Process
+
+This module follows Semantic Versioning (SemVer) and Release-Please Automation.
+
+1.  **Trigger**: Merge to `main`.
+2.  **Action**: `release-please` analyzes commits (Conventional Commits).
+3.  **Output**: Creates a new GitHub Release tag (e.g., `v1.0.1`) and updates `CHANGELOG.md`.
+
+### Integration
+
+Use the release tag in `go.mod` (backend) or `package.json` (frontend) of consuming workspaces.
+
 ## Troubleshooting
 
 ### Go version mismatch
@@ -250,7 +272,20 @@ When security tools detect issues:
 
 ## CI/CD Integration
 
-The same checks run in GitHub Actions CI:
+The local `pre-commit` checks are mirrored in the GitHub Actions CI pipeline (`.github/workflows/ci.yml`) to ensure consistency between local development and CI environments.
+
+| Local Hook              | CI Step                        |
+| :---------------------- | :----------------------------- |
+| `govulncheck`           | `SCA - Go Vulnerability Check` |
+| `pnpm-audit`            | `SCA - PNPM Audit`             |
+| `prettier`              | `Lint - Prettier`              |
+| `go-fmt`, `go-mod-tidy` | `Lint - Go Format & Tidy`      |
+| `go-vet`                | `Quality - Go Vet`             |
+| `moon-lint`             | `Quality - Moon Lint (TS/JS)`  |
+| `moon-test`             | `Test - Moon Unit Tests`       |
+| `gosec`                 | `SAST - Gosec (Go)`            |
+| `semgrep`               | `SAST - Semgrep (Polyglot)`    |
+| `pytm`                  | `Threat Model - PyTM`          |
 
 ```yaml
 # .github/workflows/ci.yml
@@ -258,7 +293,7 @@ The same checks run in GitHub Actions CI:
   run: pre-commit run --all-files
 ```
 
-See [CI Pipeline](./CI-PIPELINE.md) for full CI/CD documentation.
+See the [CI Gates](#ci-gates-blocking) section for the blocking criteria in the pipeline.
 
 ## References
 

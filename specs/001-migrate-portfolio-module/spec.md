@@ -62,7 +62,7 @@ As a Developer, I want to read comprehensive documentation for the portfolio mod
 - **FR-002**: The module MUST allow integration via the `moon :add-module` global task.
 - **FR-003**: The module MUST include the following documentation:
   - Root `README.md`: Module Overview, Quick Start, License.
-  - `docs/CI-PIPELINE.md`: CI/CD pipeline overview, gates, and application.
+  - `docs/DEVSECOPS.md`: CI/CD pipeline overview, gates, and application.
   - `docs/VIRTUAL-MODULE-ARCHITECTURE.md`: Supporting `docs/APPSHELL-ARCHITECTURE.md`.
   - `docs/FUNCTIONAL-DOCUMENTATION.md`: Functional details and user guides.
   - `docs/DEVELOPER-REFERENCE.md`: SOLID principles and development guidelines.

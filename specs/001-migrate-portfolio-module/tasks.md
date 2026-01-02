@@ -43,7 +43,7 @@
 > **Independent Test**: New developer can follow README to start environment.
 
 - [x] T010 [US2] Create root `README.md` with Overview and Quick Start in `README.md`
-- [x] T010a [US2] Create `docs/CI-PIPELINE.md` detailing the CI workflow and Release process in `docs/CI-PIPELINE.md`
+- [x] T010a [US2] Create `docs/DEVSECOPS.md` detailing the CI workflow and Release process
 - [x] T010b [US2] Create `docs/VIRTUAL-MODULE-ARCHITECTURE.md` describing internal structure in `docs/VIRTUAL-MODULE-ARCHITECTURE.md`
 - [x] T010c [US2] Create `docs/FUNCTIONAL-DOCUMENTATION.md` describing module capabilities in `docs/FUNCTIONAL-DOCUMENTATION.md`
 - [x] T010d [US2] Create `docs/DEVELOPER-REFERENCE.md` with SOLID principles and dev guidelines in `docs/DEVELOPER-REFERENCE.md`

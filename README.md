@@ -10,8 +10,8 @@ A polyglot module (Go, Svelte, TypeScript) designed for integration into `ta-wor
 ## Documentation
 
 - [Architecture](./docs/VIRTUAL-MODULE-ARCHITECTURE.md) (Reference: `docs/APPSHELL-ARCHITECTURE.md`)
-- [CI Pipeline](./docs/CI-PIPELINE.md)
-- [DevSecOps](./docs/DEVSECOPS.md) (Pre-commit hooks, Security scanning)
+- [DevSecOps Pipeline](./docs/DEVSECOPS.md)
+
 - [Functional Documentation](./docs/FUNCTIONAL-DOCUMENTATION.md)
 - [Developer Reference](./docs/DEVELOPER-REFERENCE.md) (SOLID, Guidelines)
 - [License](./LICENSE)
