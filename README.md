@@ -21,7 +21,7 @@ A polyglot module (Go, Svelte, TypeScript) designed for integration into `ta-wor
 ### Prerequisites
 
 - **Node.js**: v20.18.0+ (Required for `moon` and `prettier`)
-- **Go**: v1.24+ (Required for `govulncheck`, `gosec`, and build)
+- **Go**: v1.24.11+ (Required for `govulncheck`, `gosec`, and build)
 - **Python**: 3.10+ (Required for `pre-commit`, `pytm`, and `semgrep`)
 - **Pre-commit**: (`pip install pre-commit pytm semgrep`)
 

@@ -25,7 +25,7 @@ The pipeline consists of **15 automated checks** across **6 stages**, ensuring c
 | Tool    | Version   | Purpose                             |
 | ------- | --------- | ----------------------------------- |
 | Node.js | v20.18.0+ | Moonrepo, Prettier, ESLint          |
-| Go      | v1.24+    | Go toolchain, govulncheck, gosec    |
+| Go      | v1.24.11+ | Go toolchain, govulncheck, gosec    |
 | Python  | 3.10+     | pre-commit, pytm, semgrep           |
 | pnpm    | 9.x       | Package management                  |
 | gvm     | latest    | Go version management (recommended) |
@@ -39,7 +39,7 @@ pip install pre-commit pytm semgrep
 # Setup pre-commit hooks
 pre-commit install
 
-# Verify Go version (requires 1.24+)
+# Verify Go version (requires 1.24.11+)
 go version
 ```
 
@@ -56,7 +56,7 @@ Scans dependencies for known vulnerabilities.
 
 **Configuration Notes:**
 
-- `govulncheck` requires Go 1.24+ (configured via gvm)
+- `govulncheck` requires Go 1.24.11+ (configured via gvm)
 - `pnpm-audit` uses `--audit-level=high` to avoid false positives from moderate advisories
 
 ### Stage 2: Linting & Formatting
@@ -175,7 +175,7 @@ git commit --no-verify -m "Emergency fix"
 
 **Symptom:** `package requires newer Go version go1.24`
 
-**Solution:** Ensure gvm is configured with Go 1.24+:
+**Solution:** Ensure gvm is configured with Go 1.24.11+:
 
 ```bash
 gvm install go1.24.11
