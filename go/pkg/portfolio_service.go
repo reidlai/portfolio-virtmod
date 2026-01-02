@@ -3,7 +3,6 @@ package pkg
 import (
 	"context"
 	"crypto/rand"
-	"log/slog"
 	"math/big"
 
 	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
@@ -11,11 +10,11 @@ import (
 
 // portfolio service implementation.
 type portfoliosrvc struct {
-	logger *slog.Logger
+	logger Logger
 }
 
 // NewPortfolio returns the portfolio service implementation.
-func NewPortfolio(logger *slog.Logger) portfolio.Service {
+func NewPortfolio(logger Logger) portfolio.Service {
 	return &portfoliosrvc{logger: logger}
 }
 

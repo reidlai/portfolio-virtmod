@@ -5,12 +5,14 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest run"
   },
   "dependencies": {
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "vitest": "^4.0.16",
     "typescript": "^5.0.0",
     "eslint": "^9.0.0",
     "@eslint/js": "^9.0.0",

@@ -1,0 +1,22 @@
+# Ensure consistent line endings across platforms
+* text=auto eol=lf
+
+# Specific file types that should always use LF
+*.py text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.dockerfile text eol=lf
+Dockerfile text eol=lf
+
+# Binary files (don't modify line endings)
+*.pkl binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
