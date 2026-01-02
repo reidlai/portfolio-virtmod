@@ -35,18 +35,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Git
+        run: |
+          if ! command -v git &> /dev/null; then
+            echo "Git not found, installing..."
+            apt-get update && apt-get install -y git
+          else
+            echo "Git already installed: $(git --version)"
+          fi
+
       - name: Install Dependencies
         run: |
           pnpm install
           pip install pre-commit pytm semgrep
 
       - name: Run DevSecOps Gates (Pre-commit)
-        run: |
-          echo "Git version:"
-          git --version
-          echo "Git status:"
-          git status
-          echo "Running pre-commit:"
-          pre-commit run --all-files --show-diff-on-failure
+        uses: pre-commit/action@v3.0.1
         env:
            PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
