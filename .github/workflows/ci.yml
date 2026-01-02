@@ -41,6 +41,7 @@ jobs:
 
       - name: Run DevSecOps Gates (Pre-commit)
         run: |
+          sudo apt-get update && sudo apt-get install -y git
           git config --global --add safe.directory ${{ github.workspace }}
           pre-commit run --all-files --show-diff-on-failure
         env:
