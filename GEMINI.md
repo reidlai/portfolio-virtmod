@@ -7,6 +7,7 @@
 3.  Use `.agent/workflows/` as your `{WORKFLOW_DIR}`.
 
 ## Active Technologies
+
 - Node.js v20 (LTS) (managed via toolchain) + Moonrepo, pnpm (001-initialize-current-project)
 - Svelte 5 (managed via toolchain) + Vite (001-initialize-current-project)
 - TailwindCSS (managed via toolchain) + PostCSS (001-initialize-current-project)
@@ -19,5 +20,6 @@
 - Dart v2.22+ (managed via toolchain) (001-initialize-current-project)
 - Firebase v10+ (managed via toolchain) (001-initialize-current-project)
 
+## Recent Changes
 
-
+- 001-migrate-portfolio-module: Added Go 1.22+, Node.js v20 (LTS), Svelte 5, TypeScript ES2022 + Moonrepo, SvelteKit v2, TailwindCSS, RxJS v7, Go modules

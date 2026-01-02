@@ -1,1 +1,71 @@
-{"swagger":"2.0","info":{"title":"","version":"0.0.1"},"host":"localhost:80","consumes":["application/json","application/xml","application/gob"],"produces":["application/json","application/xml","application/gob"],"paths":{"/portfolio":{"get":{"tags":["portfolio"],"summary":"list portfolio","operationId":"portfolio#list","parameters":[{"name":"X-User-ID","in":"header","description":"User ID","required":true,"type":"string"}],"responses":{"200":{"description":"OK response.","schema":{"type":"array","items":{"$ref":"#/definitions/Insight"}}}},"schemes":["http"]}}},"definitions":{"Insight":{"title":"Insight","type":"object","properties":{"action":{"type":"string","description":"Recommended Action","example":"Neque quibusdam consequatur consectetur."},"sentiment":{"type":"string","description":"Market Sentiment","example":"neutral","enum":["bullish","bearish","neutral"]},"summary":{"type":"string","description":"Analysis Summary","example":"Illo inventore dicta."},"symbol":{"type":"string","description":"Stock Symbol","example":"Rem facere eligendi."}},"example":{"action":"Nisi distinctio assumenda.","sentiment":"bearish","summary":"Quia nostrum qui sed.","symbol":"Modi accusamus nulla facere."},"required":["symbol","sentiment","summary","action"]}}}
+{
+  "swagger": "2.0",
+  "info": { "title": "", "version": "0.0.1" },
+  "host": "localhost:80",
+  "consumes": ["application/json", "application/xml", "application/gob"],
+  "produces": ["application/json", "application/xml", "application/gob"],
+  "paths": {
+    "/portfolio": {
+      "get": {
+        "tags": ["portfolio"],
+        "summary": "list portfolio",
+        "operationId": "portfolio#list",
+        "parameters": [
+          {
+            "name": "X-User-ID",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Insight" }
+            }
+          }
+        },
+        "schemes": ["http"]
+      }
+    }
+  },
+  "definitions": {
+    "Insight": {
+      "title": "Insight",
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Recommended Action",
+          "example": "Neque quibusdam consequatur consectetur."
+        },
+        "sentiment": {
+          "type": "string",
+          "description": "Market Sentiment",
+          "example": "neutral",
+          "enum": ["bullish", "bearish", "neutral"]
+        },
+        "summary": {
+          "type": "string",
+          "description": "Analysis Summary",
+          "example": "Illo inventore dicta."
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Stock Symbol",
+          "example": "Rem facere eligendi."
+        }
+      },
+      "example": {
+        "action": "Nisi distinctio assumenda.",
+        "sentiment": "bearish",
+        "summary": "Quia nostrum qui sed.",
+        "symbol": "Modi accusamus nulla facere."
+      },
+      "required": ["symbol", "sentiment", "summary", "action"]
+    }
+  }
+}

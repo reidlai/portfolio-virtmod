@@ -1,0 +1,6 @@
+# https://moonrepo.dev/docs/config/toolchain
+node:
+  version: "20.18.0"
+  packageManager: "pnpm"
+  pnpm:
+    version: "9.15.4"

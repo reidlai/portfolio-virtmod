@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pipx install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm audit:*)",
+      "Bash(pre-commit run:*)",
+      "Bash(npx @moonrepo/cli run:*)"
+    ]
+  }
+}

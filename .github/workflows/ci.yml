@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.11'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          pnpm install
+          pip install pytm semgrep
+
+      # Stage 1: SCA
+      - name: SCA - Go Vulnerability Check
+        run: cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+      - name: SCA - PNPM Audit
+        run: pnpm audit --prod --audit-level=high
+        continue-on-error: true
+
+      # Stage 2: Linting & Formatting
+      - name: Lint - Prettier
+        run: npx prettier --check .
+        continue-on-error: true
+
+      - name: Lint - Go Format & Tidy
+        run: |
+          cd go
+          go fmt ./...
+          go mod tidy
+
+      # Stage 3: Code Quality
+      - name: Quality - Go Vet
+        run: cd go && go vet ./...
+
+      - name: Quality - Moon Lint (TS/JS)
+        run: npx @moonrepo/cli run :lint
+
+      # Stage 4: Unit Tests
+      - name: Test - Moon Unit Tests
+        run: npx @moonrepo/cli run :test
+
+      # Stage 5: SAST
+      - name: SAST - Gosec (Go)
+        run: cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...
+
+      - name: SAST - Semgrep (Polyglot)
+        run: semgrep --config=p/security-audit --error .
+        continue-on-error: true
+
+      # Stage 6: Threat Modeling
+      - name: Threat Model - PyTM
+        run: python3 threat_modelling/tm.py --seq

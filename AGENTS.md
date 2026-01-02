@@ -6,12 +6,12 @@
 
 Before executing any task, identify your runtime environment and load the corresponding configuration:
 
-| Agent Identity | Command Path | Config Dir | Instruction Source |
-| :--- | :--- | :--- | :--- |
-| **Gemini CLI** | `.gemini/commands/` | `.gemini` | `GEMINI.md` (Redirects here) |
-| **Claude Code** | `.claude/commands/` | `.claude` | `CLAUDE.md` (Redirects here) |
-| **Open Code** | `.opencode/commands/`| `.opencode`| `AGENTS.md` (Native) |
-| **Antigravity** | `.agent/workflows/`| `.agent`| `AGENTS.md` (Native) |
+| Agent Identity  | Command Path          | Config Dir  | Instruction Source           |
+| :-------------- | :-------------------- | :---------- | :--------------------------- |
+| **Gemini CLI**  | `.gemini/commands/`   | `.gemini`   | `GEMINI.md` (Redirects here) |
+| **Claude Code** | `.claude/commands/`   | `.claude`   | `CLAUDE.md` (Redirects here) |
+| **Open Code**   | `.opencode/commands/` | `.opencode` | `AGENTS.md` (Native)         |
+| **Antigravity** | `.agent/workflows/`   | `.agent`    | `AGENTS.md` (Native)         |
 
 **Rule**: Whenever the documentation below refers to `{COMMAND_DIR}`, substitute it with the **Command Path** specific to your identity above.
 
@@ -161,11 +161,12 @@ When using workflow commands:
 ## Project Technical Stack
 
 **Monorepo**: Use moonrepo to manage multiple application under ./apps/ and multiple packages under ./packages/
-**Frontend**: Next.js or SvelteKit 
+**Frontend**: Next.js or SvelteKit
 **Backend**: Golang or rust
 **CI**: GitHub Actions with multi-environment promotion flow
 **CD**: Cloud provider deployment tool
 **Security Tools**:
+
 - Secrets: gitleaks
 - SCA: checkov
 - SAST: Semgrep
