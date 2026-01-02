@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: moonrepo/setup-toolchain@v0
+        with:
+          auto-install: true
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: moon run :lint
+
+      - name: Test
+        run: moon run :test
+
+      - name: Secret Scanning
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          trivy-config: trivy.yaml
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
+
+      - name: SAST/Threat Modeling
+        run: |
+          mkdir -p threat_modelling/reports
+          echo '{"threats": []}' > threat_modelling/reports/pr-threats.json
+          # Placeholder for real SAST tool

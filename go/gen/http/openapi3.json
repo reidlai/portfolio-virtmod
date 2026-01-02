@@ -1,1 +1,119 @@
-{"openapi":"3.0.3","info":{"title":"Goa API","version":"0.0.1"},"servers":[{"url":"http://localhost:80","description":"Default server for portfolio"}],"paths":{"/portfolio":{"get":{"tags":["portfolio"],"summary":"list portfolio","operationId":"portfolio#list","parameters":[{"name":"X-User-ID","in":"header","description":"User ID","allowEmptyValue":true,"required":true,"schema":{"type":"string","description":"User ID","example":"Exercitationem sit harum."},"example":"A porro."}],"responses":{"200":{"description":"OK response.","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Insight"},"example":[{"action":"Provident aut in.","sentiment":"neutral","summary":"Voluptatem ut eaque nisi sit nesciunt.","symbol":"Consectetur sunt."},{"action":"Provident aut in.","sentiment":"neutral","summary":"Voluptatem ut eaque nisi sit nesciunt.","symbol":"Consectetur sunt."}]},"example":[{"action":"Provident aut in.","sentiment":"neutral","summary":"Voluptatem ut eaque nisi sit nesciunt.","symbol":"Consectetur sunt."},{"action":"Provident aut in.","sentiment":"neutral","summary":"Voluptatem ut eaque nisi sit nesciunt.","symbol":"Consectetur sunt."},{"action":"Provident aut in.","sentiment":"neutral","summary":"Voluptatem ut eaque nisi sit nesciunt.","symbol":"Consectetur sunt."}]}}}}}}},"components":{"schemas":{"Insight":{"type":"object","properties":{"action":{"type":"string","description":"Recommended Action","example":"Ex eius et iure repellat."},"sentiment":{"type":"string","description":"Market Sentiment","example":"neutral","enum":["bullish","bearish","neutral"]},"summary":{"type":"string","description":"Analysis Summary","example":"Cupiditate animi."},"symbol":{"type":"string","description":"Stock Symbol","example":"Nihil quae impedit aut eligendi cumque."}},"example":{"action":"Sed molestiae.","sentiment":"neutral","summary":"Quia qui facere id.","symbol":"Quasi dolorem magni."},"required":["symbol","sentiment","summary","action"]}}},"tags":[{"name":"portfolio","description":"Provide AI insights"}]}
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Goa API", "version": "0.0.1" },
+  "servers": [
+    {
+      "url": "http://localhost:80",
+      "description": "Default server for portfolio"
+    }
+  ],
+  "paths": {
+    "/portfolio": {
+      "get": {
+        "tags": ["portfolio"],
+        "summary": "list portfolio",
+        "operationId": "portfolio#list",
+        "parameters": [
+          {
+            "name": "X-User-ID",
+            "in": "header",
+            "description": "User ID",
+            "allowEmptyValue": true,
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "User ID",
+              "example": "Exercitationem sit harum."
+            },
+            "example": "A porro."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Insight" },
+                  "example": [
+                    {
+                      "action": "Provident aut in.",
+                      "sentiment": "neutral",
+                      "summary": "Voluptatem ut eaque nisi sit nesciunt.",
+                      "symbol": "Consectetur sunt."
+                    },
+                    {
+                      "action": "Provident aut in.",
+                      "sentiment": "neutral",
+                      "summary": "Voluptatem ut eaque nisi sit nesciunt.",
+                      "symbol": "Consectetur sunt."
+                    }
+                  ]
+                },
+                "example": [
+                  {
+                    "action": "Provident aut in.",
+                    "sentiment": "neutral",
+                    "summary": "Voluptatem ut eaque nisi sit nesciunt.",
+                    "symbol": "Consectetur sunt."
+                  },
+                  {
+                    "action": "Provident aut in.",
+                    "sentiment": "neutral",
+                    "summary": "Voluptatem ut eaque nisi sit nesciunt.",
+                    "symbol": "Consectetur sunt."
+                  },
+                  {
+                    "action": "Provident aut in.",
+                    "sentiment": "neutral",
+                    "summary": "Voluptatem ut eaque nisi sit nesciunt.",
+                    "symbol": "Consectetur sunt."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Insight": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "Recommended Action",
+            "example": "Ex eius et iure repellat."
+          },
+          "sentiment": {
+            "type": "string",
+            "description": "Market Sentiment",
+            "example": "neutral",
+            "enum": ["bullish", "bearish", "neutral"]
+          },
+          "summary": {
+            "type": "string",
+            "description": "Analysis Summary",
+            "example": "Cupiditate animi."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Stock Symbol",
+            "example": "Nihil quae impedit aut eligendi cumque."
+          }
+        },
+        "example": {
+          "action": "Sed molestiae.",
+          "sentiment": "neutral",
+          "summary": "Quia qui facere id.",
+          "symbol": "Quasi dolorem magni."
+        },
+        "required": ["symbol", "sentiment", "summary", "action"]
+      }
+    }
+  },
+  "tags": [{ "name": "portfolio", "description": "Provide AI insights" }]
+}

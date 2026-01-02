@@ -1,15 +1,10 @@
 {
-    "extends": "../../../tsconfig.base.json",
-    "include": [
-        "src/**/*"
-    ],
-    "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "strict": true,
-        "types": [
-            "svelte",
-            "vite/client"
-        ]
-    }
+  "extends": "../tsconfig.base.json",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "types": ["svelte", "vite/client"]
+  }
 }

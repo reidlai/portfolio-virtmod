@@ -2,8 +2,9 @@ package pkg
 
 import (
 	"context"
+	"crypto/rand"
 	"log/slog"
-	"math/rand"
+	"math/big"
 
 	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
 )
@@ -37,8 +38,11 @@ func (s *portfoliosrvc) List(ctx context.Context, p *portfolio.ListPayload) (res
 }
 
 func randomSentiment() string {
-	r := rand.Intn(3)
-	switch r {
+	n, err := rand.Int(rand.Reader, big.NewInt(3))
+	if err != nil {
+		return "neutral"
+	}
+	switch n.Int64() {
 	case 0:
 		return "bullish"
 	case 1:

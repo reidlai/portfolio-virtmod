@@ -7,6 +7,7 @@
 3.  Use `.agent/workflows/` as your `{WORKFLOW_DIR}`.
 
 ## Active Technologies
+
 - Node.js v20 (LTS) (managed via toolchain) + Moonrepo, pnpm (001-initialize-current-project)
 - Svelte 5 (managed via toolchain) + Vite (001-initialize-current-project)
 - TailwindCSS (managed via toolchain) + PostCSS (001-initialize-current-project)
@@ -18,4 +19,3 @@
 - Flutter v3.22+ (managed via toolchain) (001-initialize-current-project)
 - Dart v2.22+ (managed via toolchain) (001-initialize-current-project)
 - Firebase v10+ (managed via toolchain) (001-initialize-current-project)
-

@@ -1,0 +1,10 @@
+# https://moonrepo.dev/docs/config/workspace
+projects:
+  portfolio: "."
+
+vcs:
+  manager: "git"
+  provider: "github"
+  defaultBranch: "main"
+
+telemetry: false

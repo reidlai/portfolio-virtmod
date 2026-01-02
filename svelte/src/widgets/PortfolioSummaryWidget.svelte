@@ -28,7 +28,7 @@
     }
 </script>
 
-<!-- FR-006: Container queries handled via parent or intrinsic sizing. 
+<!-- FR-006: Container queries handled via parent or intrinsic sizing.
      Using a button-like div for interactivity (FR-004) -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->

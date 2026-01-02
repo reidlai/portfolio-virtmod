@@ -93,7 +93,7 @@ protection gates are satisfied.
 - Unit tests pass.
 - SAST/Threat Modeling: produce JSON at `./threat_modelling/reports/pr-threats.json`
   and Markdown summary; auto-create GitHub issues for findings with severity labels.
-  
+
 **Container build (pre-merge to env branch)**:
 
 - Build with distroless base.
@@ -140,6 +140,11 @@ AI coding agents MUST:
 - Adopt Twelve-Factor and SOLID principles as defaults for maintainability and
   scalability. Deviation requires an approved waiver.
 
+### 11. Project Types & Scoping
+
+- **Service Projects**: Full CD pipeline required (dev-test -> staging -> prod) per Rule 1.
+- **Module/Library Projects**: CI-only flow. CD gates (DAST, Integration in env, Smoke) are exempt as there is no standalone runtime. Artifact publishing/tagging replaces deployment steps.
+
 ## Definitions of Done (DoD) by Gate
 
 **Main (PR)**: SCA, Lint/format, unit tests, SAST/threat modeling, secrets scan all
@@ -156,6 +161,7 @@ green; artifacts uploaded.
 **Prod**: Remove existing `blue` tag from docker registry; Tagged `prod-YYYYMMDDHHmm` docker container in docker registry with `blue` and `stagging-YYYYMMDDHHmm` docker container in docker registry with `green`; Latest image tagged with `green` deployed as production service; post-deploy DAST pass
 
 ## Enforcement Mapping (Reference Job Names)
+
 - `ci-sca`: blocks on CRITICAL; HIGH requires waiver.
 - `ci-format-lint`: enforces formatting/lint rules.
 - `ci-secrets-scan`: blocks on any secrets.
@@ -186,11 +192,13 @@ before expiry. Re-review required at expiry.
 ## Monorepo Architecture & Stack Strategy
 
 ### Workspace Authority (Moonrepo)
+
 - **Governance**: The project MUST use **moonrepo** (`moon`) as the exclusive build system and task runner.
 - **Dependency Management**: Moonrepo is the source of truth for the project graph; strict boundaries between projects must be enforced via `moon.yml` configurations.
 - **Toolchain Consistency**: All environments (Local Dev & CI) must use Moonrepo's toolchain management to pin specific versions of Node.js and Golang, ensuring zero "works on my machine" issues.
 
 ### Authorized Tech Stack
+
 - **Frontend Layer**: **Next.js** or **SvelteKit** are two options for all web interfaces and client-side applications.
 - **Backend Layer**: **Golang**, **Python**, or **Rust** are the authorized languages for core API services, focusing on performance and concurrency.
 - **Unified CI/CD**: CI pipelines must utilize Moonrepo's caching (`moon ci`) to only build/test affected projects, preventing redundant computation across the Frontend and Backend.
@@ -211,4 +219,3 @@ guidance.
 
 Amendments require: documentation, approval from Security Lead + PO + Maintainer,
 `constitution-change` label, and passing CI policy jobs before merge.
-

@@ -1,0 +1,99 @@
+repos:
+  # Stage 1: SCA
+  - repo: local
+    hooks:
+      - id: govulncheck
+        name: SCA (Go Vuln Check)
+        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...'
+        language: system
+        types: [go]
+        pass_filenames: false
+      - id: pnpm-audit
+        name: SCA (PNPM Audit)
+        entry: pnpm audit --prod --audit-level=high
+        language: system
+        pass_filenames: false
+
+  # Stage 2: Linting & Formatting (Standard Hooks)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^(\..*|CLAUDE\.md|GEMINI\.md|AGENTS\.md|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig\.base\.json|package\.json|package-lock\.json|moon\.yml|go\.work(\.sum)?)$
+      - id: end-of-file-fixer
+        exclude: ^(\..*|CLAUDE\.md|GEMINI\.md|AGENTS\.md|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig\.base\.json|package\.json|package-lock\.json|moon\.yml|go\.work(\.sum)?)$
+
+  # Stage 2: Linting & Formatting (Local Hooks)
+  - repo: local
+    hooks:
+      - id: go-mod-tidy
+        name: Go Mod Tidy
+        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go mod tidy'
+        language: system
+        files: go.mod
+        pass_filenames: false
+      - id: go-fmt
+        name: Go Format
+        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go fmt ./...'
+        language: system
+        types: [go]
+        pass_filenames: false
+      - id: prettier
+        name: Prettier
+        entry: npx prettier --write --ignore-unknown
+        language: system
+        types: [text]
+        exclude: ^(\..*|CLAUDE\.md|GEMINI\.md|AGENTS\.md|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig\.base\.json|package\.json|package-lock\.json|moon\.yml|go\.work(\.sum)?)$
+
+  # Stage 3: Code Quality (Standard Hooks)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        exclude: ^(\..*|pnpm-lock\.yaml|pnpm-workspace\.yaml|moon\.yml)$
+      - id: check-added-large-files
+
+  # Stage 3: Code Quality (Local Hooks) & Stages 4, 5, 6
+  - repo: local
+    hooks:
+      - id: moon-lint
+        name: Moon Lint (TS/JS)
+        entry: npx @moonrepo/cli run :lint
+        language: system
+        pass_filenames: false
+        exclude: ^(\..*|CLAUDE\.md|GEMINI\.md|AGENTS\.md|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig\.base\.json|package\.json|package-lock\.json|moon\.yml|go\.work(\.sum)?)$
+
+      - id: go-vet
+        name: Go Vet
+        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go vet ./...'
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      # Stage 4: Unit Tests
+      - id: moon-test
+        name: Moon Unit Tests (All)
+        entry: npx @moonrepo/cli run :test
+        language: system
+        pass_filenames: false
+
+      # Stage 5: SAST
+      - id: gosec
+        name: Gosec (SAST)
+        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...'
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      - id: semgrep
+        name: Semgrep (SAST Polyglot)
+        entry: semgrep --config=p/security-audit --error
+        language: system
+        pass_filenames: false
+
+      # Stage 6: Threat Modelling
+      - id: pytm
+        name: Threat Modelling (pytm)
+        entry: python3 threat_modelling/tm.py --seq
+        language: system
+        pass_filenames: false
