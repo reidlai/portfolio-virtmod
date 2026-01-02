@@ -15,33 +15,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: moonrepo/setup-toolchain@v0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          auto-install: true
+          node-version: 20
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Lint
-        run: moon run :lint
-
-      - name: Test
-        run: moon run :test
-
-      - name: Secret Scanning
-        uses: aquasecurity/trivy-action@master
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          scan-type: "fs"
-          scan-ref: "."
-          trivy-config: trivy.yaml
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+          go-version: '1.24.0'
 
-      - name: SAST/Threat Modeling
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
         run: |
-          mkdir -p threat_modelling/reports
-          echo '{"threats": []}' > threat_modelling/reports/pr-threats.json
-          # Placeholder for real SAST tool
+          pnpm install
+          pip install pre-commit pytm semgrep
+
+      - name: Run DevSecOps Gates (Pre-commit)
+        run: pre-commit run --all-files --show-diff-on-failure
+        env:
+           # Ensure pre-commit can find locally installed tools
+           PATH: ${{ github.workspace }}/node_modules/.bin:$PATH

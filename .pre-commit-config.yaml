@@ -4,7 +4,7 @@ repos:
     hooks:
       - id: govulncheck
         name: SCA (Go Vuln Check)
-        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...'
+        entry: bash -c 'if [ -f ~/.gvm/scripts/gvm ]; then source ~/.gvm/scripts/gvm && gvm use go1.24.11; fi && cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...'
         language: system
         types: [go]
         pass_filenames: false
@@ -28,13 +28,13 @@ repos:
     hooks:
       - id: go-mod-tidy
         name: Go Mod Tidy
-        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go mod tidy'
+        entry: bash -c 'if [ -f ~/.gvm/scripts/gvm ]; then source ~/.gvm/scripts/gvm && gvm use go1.24.11; fi && cd go && go mod tidy'
         language: system
         files: go.mod
         pass_filenames: false
       - id: go-fmt
         name: Go Format
-        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go fmt ./...'
+        entry: bash -c 'if [ -f ~/.gvm/scripts/gvm ]; then source ~/.gvm/scripts/gvm && gvm use go1.24.11; fi && cd go && go fmt ./...'
         language: system
         types: [go]
         pass_filenames: false
@@ -65,7 +65,7 @@ repos:
 
       - id: go-vet
         name: Go Vet
-        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go vet ./...'
+        entry: bash -c 'if [ -f ~/.gvm/scripts/gvm ]; then source ~/.gvm/scripts/gvm && gvm use go1.24.11; fi && cd go && go vet ./...'
         language: system
         types: [go]
         pass_filenames: false
@@ -80,7 +80,7 @@ repos:
       # Stage 5: SAST
       - id: gosec
         name: Gosec (SAST)
-        entry: bash -c 'source ~/.gvm/scripts/gvm && gvm use go1.24.11 && cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...'
+        entry: bash -c 'if [ -f ~/.gvm/scripts/gvm ]; then source ~/.gvm/scripts/gvm && gvm use go1.24.11; fi && cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...'
         language: system
         types: [go]
         pass_filenames: false
@@ -88,7 +88,8 @@ repos:
       - id: semgrep
         name: Semgrep (SAST Polyglot)
         entry: semgrep --config=p/security-audit --error
-        language: system
+        language: python
+        additional_dependencies: ['semgrep']
         pass_filenames: false
 
       # Stage 6: Threat Modelling
