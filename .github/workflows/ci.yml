@@ -40,28 +40,44 @@ jobs:
           pnpm install
           pip install pytm semgrep
 
-      - name: Run DevSecOps Gates
+      # Stage 1: SCA
+      - name: SCA - Go Vulnerability Check
+        run: cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+      - name: SCA - PNPM Audit
+        run: pnpm audit --prod --audit-level=high
+        continue-on-error: true
+
+      # Stage 2: Linting & Formatting
+      - name: Lint - Prettier
+        run: npx prettier --check .
+        continue-on-error: true
+
+      - name: Lint - Go Format & Tidy
         run: |
-          echo "=== Stage 1: SCA ==="
-          cd go && go run golang.org/x/vuln/cmd/govulncheck@latest ./... && cd ..
-          pnpm audit --prod --audit-level=high || true
-          
-          echo "=== Stage 2: Linting & Formatting ==="
-          npx prettier --check . || true
-          cd go && go fmt ./... && go mod tidy && cd ..
-          
-          echo "=== Stage 3: Code Quality ==="
-          cd go && go vet ./... && cd ..
-          npx @moonrepo/cli run :lint
-          
-          echo "=== Stage 4: Unit Tests ==="
-          npx @moonrepo/cli run :test
-          
-          echo "=== Stage 5: SAST ==="
-          cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./... && cd ..
-          semgrep --config=p/security-audit --error . || true
-          
-          echo "=== Stage 6: Threat Modeling ==="
-          python3 threat_modelling/tm.py --seq
-        env:
-           PATH: ${{ github.workspace }}/node_modules/.bin:$PATH
+          cd go
+          go fmt ./...
+          go mod tidy
+
+      # Stage 3: Code Quality
+      - name: Quality - Go Vet
+        run: cd go && go vet ./...
+
+      - name: Quality - Moon Lint (TS/JS)
+        run: npx @moonrepo/cli run :lint
+
+      # Stage 4: Unit Tests
+      - name: Test - Moon Unit Tests
+        run: npx @moonrepo/cli run :test
+
+      # Stage 5: SAST
+      - name: SAST - Gosec (Go)
+        run: cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...
+
+      - name: SAST - Semgrep (Polyglot)
+        run: semgrep --config=p/security-audit --error .
+        continue-on-error: true
+
+      # Stage 6: Threat Modeling
+      - name: Threat Model - PyTM
+        run: python3 threat_modelling/tm.py --seq
