@@ -1,7 +1,3 @@
-declare module "$app/navigation" {
-  export function goto(url: string | URL, opts?: any): Promise<void>;
-}
-
 declare module "$lib/components/ui/card" {
   export const Root: any;
   export const Header: any;

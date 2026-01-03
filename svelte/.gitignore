@@ -1,0 +1,4 @@
+# SvelteKit
+.svelte-kit
+/dist
+/package
