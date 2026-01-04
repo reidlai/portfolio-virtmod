@@ -37,6 +37,8 @@ tasks:
     local: true
     options:
       runInCI: true # Required because 'local: true' defaults this to false
+      persistent: false # It's a one-off command, not a server
+
 
 
   svelte-check:
