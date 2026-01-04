@@ -224,31 +224,55 @@ Svelte components consume the RxJS service directly. Svelte's `$` syntax auto-su
 ```svelte
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { PortfolioStore } from '@modules/portfolio-ts'; // Import from TS module
-  import { apiClient } from '@modules/core'; // DI from Core
+  import { watchlistService } from '@modules/watchlist-ts'; // Real example from watchlist module
 
-  // 1. Initialize Service
-  const store = new PortfolioStore(apiClient);
-
-  // 2. Create Reactive Signals from Observables
-  const items = store.items$;
-  const total = store.totalValue$;
+  // The service uses RxJS BehaviorSubject internally and exposes:
+  // 1. Observable streams (tickers$)
+  // 2. Svelte-compatible subscribe method
+  // 3. Action methods (fetchTickers, addTicker, removeTicker)
 
   onMount(() => {
-    store.fetchItems();
+    // Service auto-fetches on initialization
+    // Manual refresh if needed:
+    watchlistService.fetchTickers();
   });
 </script>
 
-<!-- 3. Render Async Data ($ prefix) -->
+<!-- Svelte auto-subscribes to the service using $ prefix -->
 <div class="card">
-  <h3>Total Value: {$total}</h3>
+  <h3>My Watchlist</h3>
 
   <ul>
-    {#each $items as item}
-      <li>{item.symbol}: {item.value}</li>
+    {#each $watchlistService as ticker}
+      <li>{ticker.symbol} - {ticker.on_hand ? 'Owned' : 'Watching'}</li>
     {/each}
   </ul>
 </div>
+```
+
+**How it works** (see `modules/watchlist/ts/src/services/WatchlistService.ts`):
+
+```typescript
+export class WatchlistService {
+  private _tickers$ = new BehaviorSubject<TickerItem[]>([]);
+  public readonly tickers$ = this._tickers$.asObservable();
+
+  // Svelte-compatible subscribe method
+  public subscribe(run: (value: TickerItem[]) => void): () => void {
+    const subscription = this._tickers$.subscribe(run);
+    return () => subscription.unsubscribe();
+  }
+
+  public async fetchTickers(): Promise<void> {
+    const res = await fetch("/api/watchlist", {
+      headers: { "X-User-ID": this.userId },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      this._tickers$.next(data); // Update RxJS state
+    }
+  }
+}
 ```
 
 ### 4. Frontend Integration (NextJS / React)
