@@ -1,4 +1,4 @@
-import type { IModuleBundle } from "@core/types";
+import type { IModuleBundle } from "virtual-module-core/types";
 import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
 export { PortfolioSummaryWidget };
 import PortfolioPage from "./lib/pages/PortfolioPage.svelte";
