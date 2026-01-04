@@ -33,6 +33,7 @@ As applications grow, managing coding complexity and coordinating multiple teams
 - [DevSecOps Pipeline](./docs/DEVSECOPS.md)
 
 - [Functional Documentation](./docs/FUNCTIONAL-DOCUMENTATION.md)
+- [Creation Guide](./docs/HOWTO-CREATE-VIRTUAL-MODULE.md) (Step-by-step tutorial)
 - [Developer Reference](./docs/DEVELOPER-REFERENCE.md) (SOLID, Guidelines)
 - [License](./LICENSE)
 
@@ -143,14 +144,48 @@ This module follows the **Virtual Module** pattern:
 
 4. **Frontend Integration** (Svelte):
 
-   ```typescript
-   // In ta-workspace/apps/sv-appshell/src/lib/registry.ts
-   import { PortfolioSummaryWidget } from "@modules/portfolio";
+   The `ta-workspace` uses a `ModuleLoader` to dynamically load and register the module at runtime.
+   - **Mechanism**: The host app imports `@modules/portfolio`, calls `init(context)`, and consumes the returned `IModuleBundle`.
+   - **Contract**: The module exports an `init` function in `src/lib/index.ts` that returns:
+     - `widgets`: Components registered to specific locations (e.g., dashboard).
+     - `routes`: Pages mapped to URL paths.
+     - `handlers`: Background handlers or middleware (if defined).
 
-   Registry.register("portfolio-summary", PortfolioSummaryWidget);
+   ```typescript
+   // Contract in modules/portfolio/svelte/src/lib/index.ts
+   export const init = async (context) => {
+     return {
+       id: "portfolio-module",
+       widgets: [ ... ], // Auto-registered by ModuleLoader
+       routes:  [ ... ]  // Auto-registered by ModuleLoader
+     };
+   };
    ```
 
-5. **Verify Integration**:
+   5. **Shared Logic & State** (TypeScript):
+
+      The `ts/` directory contains framework-agnostic business logic and state management using **ReactiveX (RxJS)**. This layer bridges the backend data and the UI.
+
+      ```typescript
+      // modules/portfolio/ts/src/portfolio.store.ts
+      import { BehaviorSubject } from "rxjs";
+
+      // State is exposed as Observables
+      export const portfolioStore = new BehaviorSubject<Portfolio | null>(null);
+      ```
+
+      Svelte components consume this state directly:
+
+      ```svelte
+      // modules/portfolio/svelte/src/widgets/Summary.svelte
+      <script>
+        import { portfolioStore } from "@modules/portfolio-ts";
+      </script>
+
+      <h1>{$portfolioStore?.totalValue}</h1>
+      ```
+
+   6. **Verify Integration**:
 
    ```bash
    # Build all components

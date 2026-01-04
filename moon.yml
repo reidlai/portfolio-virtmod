@@ -30,10 +30,24 @@ tasks:
     deps: ["ts-build"] # Depends on shared lib
     platform: "node"
 
+  svelte-sync:
+    command: "pnpm --dir svelte run sync"
+
+    inputs: ["svelte/**/*.svelte", "svelte/**/*.ts", "svelte/**/*.js"]
+    platform: "node"
+    local: true
+    options:
+      runInCI: true # Required because 'local: true' defaults this to false
+      persistent: false # It's a one-off command, not a server
+
+
+
   svelte-check:
     command: "pnpm --dir svelte check"
     inputs: ["svelte/**/*", "ts/**/*"]
+    deps: ["svelte-sync"]
     platform: "node"
+
 
   svelte-test:
     command: "pnpm --dir svelte run test"
@@ -69,10 +83,12 @@ tasks:
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test", "ts-test"] # Runs both backend and frontend tests
+    deps: ["go-test", "svelte-test", "ts-test", "svelte-check"] # Runs both backend and frontend tests + type check
+
     platform: "system"
 
   lint:
     command: 'echo "Linting all components"'
-    deps: ["ts-lint"]
+    deps: ["ts-lint", "svelte-check"]
+
     platform: "system"
