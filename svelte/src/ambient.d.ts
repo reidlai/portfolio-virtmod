@@ -16,20 +16,7 @@ declare module "@ui/card" {
   export const Footer: any;
 }
 
-declare module "@core/types" {
-  export interface IModuleBundle {
-    id: string;
-    routes: Array<{ path: string; component: any }>;
-    widgets: Array<{
-      id: string;
-      title: string;
-      component: any;
-      location: string;
-      size: string;
-      props?: Record<string, any>;
-    }>;
-  }
-}
+
 
 declare module "$app/navigation" {
   export const goto: (url: string | URL, opts?: any) => Promise<void>;
