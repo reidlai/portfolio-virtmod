@@ -69,10 +69,12 @@ tasks:
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test", "ts-test"] # Runs both backend and frontend tests
+    deps: ["go-test", "svelte-test", "ts-test", "svelte-check"] # Runs both backend and frontend tests + type check
+
     platform: "system"
 
   lint:
     command: 'echo "Linting all components"'
-    deps: ["ts-lint"]
+    deps: ["ts-lint", "svelte-check"]
+
     platform: "system"

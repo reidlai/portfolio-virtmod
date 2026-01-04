@@ -33,6 +33,7 @@ As applications grow, managing coding complexity and coordinating multiple teams
 - [DevSecOps Pipeline](./docs/DEVSECOPS.md)
 
 - [Functional Documentation](./docs/FUNCTIONAL-DOCUMENTATION.md)
+- [Creation Guide](./docs/HOWTO-CREATE-VIRTUAL-MODULE.md) (Step-by-step tutorial)
 - [Developer Reference](./docs/DEVELOPER-REFERENCE.md) (SOLID, Guidelines)
 - [License](./LICENSE)
 

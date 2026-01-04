@@ -1,0 +1,20 @@
+# User requested ignores
+.agent/
+.claude/
+.github/
+.moon/
+.specify/
+**/node_modules/
+svelte/.svelte-kit/
+specs/
+svelte/dist
+threat_modelling/
+**/package-lock.json
+**/pnpm-lock.yaml
+.pre-commit-config.yaml
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+
+# Config files (explicitly requested)
+**/eslint.config.js
