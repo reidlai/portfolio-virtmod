@@ -31,7 +31,8 @@ tasks:
     platform: "node"
 
   svelte-sync:
-    command: "npx svelte-kit sync"
+    command: "pnpm --dir svelte run sync"
+
     inputs: ["svelte/**/*.svelte", "svelte/**/*.ts", "svelte/**/*.js"]
     platform: "node"
     local: true

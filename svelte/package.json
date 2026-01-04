@@ -6,6 +6,7 @@
     "dev": "vite dev",
     "build": "svelte-package",
     "preview": "vite preview",
+    "sync": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run"
   },
