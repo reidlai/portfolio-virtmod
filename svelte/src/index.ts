@@ -1,7 +1,7 @@
 import type { IModuleBundle } from "@core/types";
-import PortfolioSummaryWidget from "./widgets/PortfolioSummaryWidget.svelte";
+import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
 export { PortfolioSummaryWidget };
-import PortfolioPage from "./pages/PortfolioPage.svelte";
+import PortfolioPage from "./lib/pages/PortfolioPage.svelte";
 
 const bundle: IModuleBundle = {
   id: "portfolio-module",
