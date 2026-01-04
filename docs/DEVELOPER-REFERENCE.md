@@ -225,7 +225,7 @@ Svelte components consume the RxJS service directly. Svelte's `$` syntax auto-su
 <script lang="ts">
   import { onMount } from 'svelte';
   import { PortfolioStore } from '@modules/portfolio-ts'; // Import from TS module
-  import { apiClient } from '@modules/core'; // DI from Core
+  import { apiClient } from 'virtual-module-core'; // DI from virtual-module-core
 
   // 1. Initialize Service
   const store = new PortfolioStore(apiClient);
@@ -261,7 +261,7 @@ The **SAME** RxJS service can be used in NextJS/React using a simple hook. This 
 import { useEffect } from "react";
 import { useObservable } from "rxjs-hooks"; // or custom hook
 import { PortfolioStore } from "@modules/portfolio-ts";
-import { apiClient } from "@modules/core";
+import { apiClient } from "virtual-module-core";
 
 // 1. Initialize Service (Singleton or Context)
 const store = new PortfolioStore(apiClient);
@@ -293,7 +293,7 @@ export const SummaryWidget = () => {
 
 ### 5. Dependency Injection (Core Module)
 
-The `modules/core` provides the infrastructure interfaces used by virtual modules.
+The `virtual-module-core` package provides the infrastructure interfaces used by virtual modules.
 
 - **Backend**: `*sql.DB`, `*slog.Logger`, `http.Client`
 - **Frontend**: `ApiClient`, `AuthStore`, `NotificationService`
