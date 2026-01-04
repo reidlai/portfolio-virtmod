@@ -34,7 +34,10 @@ tasks:
     command: "npx svelte-kit sync"
     inputs: ["svelte/**/*.svelte", "svelte/**/*.ts", "svelte/**/*.js"]
     platform: "node"
-    local: true # Only needed for types gen, mostly local
+    local: true
+    options:
+      runInCI: true # Required because 'local: true' defaults this to false
+
 
   svelte-check:
     command: "pnpm --dir svelte check"
