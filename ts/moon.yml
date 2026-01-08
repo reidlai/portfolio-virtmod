@@ -1,5 +1,7 @@
 $schema: 'https://moonrepo.dev/schemas/project.json'
 id: 'portfolio-ts'
+type: 'library'
+stack: 'frontend'
 
 tasks:
   build:

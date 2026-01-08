@@ -1,0 +1,62 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+id: 'portfolio-go'
+type: 'library'
+stack: 'backend'
+
+tasks:
+  build:
+    command: 'go build ./...'
+    inputs:
+      - '**/*.go'
+      - 'go.mod'
+      - 'go.sum'
+    outputs: []
+    options:
+      mergeArgs: 'replace'
+      mergeOutputs: 'replace'
+
+  format:
+    command: "goimports"
+    args:
+      - "-w"
+      - "."
+    inputs:
+      - "**/*.go"
+      - "go.mod"
+      - "go.sum"
+    platform: "system"
+    options:
+      mergeArgs: "replace"
+      mergeInputs: "replace"
+
+  lint:
+    command: "go"
+    args:
+      - "run"
+      - "github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+      - "run"
+      - "-v"
+    inputs:
+      - "**/*.go"
+      - "go.mod"
+      - "go.sum"
+    options:
+      mergeArgs: "replace"
+
+  test:
+    command: "go test ./..."
+    inputs:
+      - "**/*.go"
+      - "go.mod"
+      - "go.sum"
+    options:
+      runInCI: true
+      mergeArgs: "replace"
+
+  gen:
+    command: "goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
+    inputs:
+      - "design/**/*.go"
+      - "go.mod"
+    options:
+      mergeArgs: "replace"

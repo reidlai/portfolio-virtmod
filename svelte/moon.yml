@@ -1,16 +1,14 @@
 $schema: 'https://moonrepo.dev/schemas/project.json'
 id: 'portfolio-svelte'
+type: 'library'
+stack: 'frontend'
 
 tasks:
   build:
     command: 'svelte-package'
     outputs:
       - 'dist/**'
-  lint:
-    command: 'echo "No lint script available"'
-    options:
-      mergeArgs: 'replace'
-  test:
-    command: 'echo "No test script available"'
-    options:
-      mergeArgs: 'replace'
+  
+  dev:
+    command: 'vite dev'
+    local: true
