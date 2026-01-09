@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { PortfolioService, IFetcher } from './PortfolioService';
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
+import { PortfolioService } from './PortfolioService';
 
 // Mock response data
 const mockApiResponse = {
@@ -9,7 +9,7 @@ const mockApiResponse = {
   trend_direction: 'up'
 };
 
-const createFetchResponse = (ok: boolean, data: any) => {
+const createFetchResponse = (ok: boolean, data: unknown) => {
   return {
     ok,
     json: () => Promise.resolve(data)
@@ -18,7 +18,7 @@ const createFetchResponse = (ok: boolean, data: any) => {
 
 describe('PortfolioService (Unit)', () => {
   let service: PortfolioService;
-  let mockFetch: any;
+  let mockFetch: Mock;
 
   beforeEach(() => {
     // Create a dedicated mock function (Stub) for the API
