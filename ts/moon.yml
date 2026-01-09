@@ -8,3 +8,12 @@ tasks:
     outputs: []
     options:
       mergeOutputs: 'replace'
+
+  lint:
+    command: 'pnpm run lint'
+
+  test:
+    command: 'vitest run'
+
+  format:
+    command: 'prettier --write .'

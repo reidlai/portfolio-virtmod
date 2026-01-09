@@ -44,7 +44,7 @@ tasks:
       mergeArgs: "replace"
 
   test:
-    command: "go test ./..."
+    command: "go test ./pkg/... ./internal/..."
     inputs:
       - "**/*.go"
       - "go.mod"
@@ -53,10 +53,28 @@ tasks:
       runInCI: true
       mergeArgs: "replace"
 
-  gen:
+  goa-gen:
     command: "goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
     inputs:
       - "design/**/*.go"
       - "go.mod"
     options:
       mergeArgs: "replace"
+
+  build-server:
+    command: "go build -o bin/portfolio-server ."
+    inputs:
+      - "main.go"
+      - "cmd/**/*.go"
+      - "pkg/**/*.go"
+      - "gen/**/*.go"
+      - "go.mod"
+      - "go.sum"
+    outputs:
+      - "bin/portfolio-server"
+
+  start:
+    command: "./bin/portfolio-server"
+    deps:
+      - "build-server"
+    local: true
