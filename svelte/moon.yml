@@ -17,8 +17,13 @@ tasks:
     command: 'pnpm run story:dev'
     local: true
 
+  sync:
+    command: 'svelte-kit sync'
+
   check:
     command: 'svelte-check --tsconfig ./tsconfig.json'
+    deps:
+      - 'sync'
 
   lint:
     command: 'pnpm run lint'

@@ -81,6 +81,7 @@ tasks:
   svelte-lint:
     command: "pnpm --dir svelte lint"
     inputs: ["svelte/**/*"]
+    deps: ["svelte-sync"]
     platform: "node"
 
   svelte-format:

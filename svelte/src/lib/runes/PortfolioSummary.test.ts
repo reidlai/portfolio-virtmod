@@ -1,3 +1,5 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
 // We avoid importing external modules inside the factory to prevent Vitest/Vite resolution issues.
 vi.mock('@modules/portfolio-ts', async (importOriginal) => {
     const actual = await importOriginal<typeof import('@modules/portfolio-ts')>();
@@ -85,7 +87,7 @@ describe('PortfolioSummary (Runes)', () => {
         // Force invalid update (bypass TS for testing)
         // @ts-ignore
         portfolioService.updateSummary({
-            balance: "invalid-number", // Zod expects number
+            balance: "invalid-number" as any, // Zod expects number
             currency: 'USD',
             trend_percent: 0,
             trend_direction: 'neutral'
