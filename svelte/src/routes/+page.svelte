@@ -1,6 +1,6 @@
 <script>
   // Simple test harness to preview widgets
-  import PortfolioSummaryWidget from '$lib/widgets/PortfolioSummaryWidget.svelte';
+  import PortfolioSummaryWidget from '../lib/widgets/PortfolioSummaryWidget.svelte';
 </script>
 
 <div class="p-8 space-y-8">

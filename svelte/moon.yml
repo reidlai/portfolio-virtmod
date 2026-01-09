@@ -12,3 +12,19 @@ tasks:
   dev:
     command: 'vite dev'
     local: true
+
+  storybook:
+    command: 'pnpm run story:dev'
+    local: true
+
+  check:
+    command: 'svelte-check --tsconfig ./tsconfig.json'
+
+  lint:
+    command: 'pnpm run lint'
+
+  test:
+    command: 'vitest run'
+
+  format:
+    command: 'prettier --plugin-search-dir . --write .'

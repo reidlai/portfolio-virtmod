@@ -1,23 +1,11 @@
 <script lang="ts">
-    import * as Card from "@ui/card";
+    import { portfolioSummaryState } from "../runes/PortfolioSummary.svelte";
+    import * as Card from "../components/ui/card";
     import { goto } from "$app/navigation";
 
-    // FR-006: Props for DI
-    interface Valuation {
-        balance: number;
-        currency: string;
-        trendPercent: number;
-        trendDirection: "up" | "down" | "flat";
-    }
-
-    export let valuation: Valuation = {
-        balance: 1250.0,
-        currency: "USD",
-        trendPercent: 12.5,
-        trendDirection: "up",
-    };
-
-    export let onNavigate: (() => void) | undefined = undefined;
+    // FR-006: Props for DI - Allow partial overrides, default to store state
+    // In Svelte 5, we can use derived state or just use the store directly for this demo.
+    // For simplicity and tight integration, we use the store directly.
 
     function formatCurrency(amount: number, currency: string) {
         return new Intl.NumberFormat("en-US", {
@@ -31,44 +19,36 @@
     }
 
     function handleClick() {
-        if (onNavigate) {
-            onNavigate();
-        } else {
-            goto("/portfolio");
-        }
+        // Simple navigation for now, can add prop callback later if needed
+        goto("/portfolio");
     }
 </script>
 
-<!-- FR-006: Container queries handled via parent or intrinsic sizing.
-     Using a button-like div for interactivity (FR-004) -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
     class="@container w-full h-full cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]"
-    on:click={handleClick}
+    onclick={handleClick}
 >
-    <!-- FR-001, T016: ShadCN Card Component -->
-    <Card.Root
-        class="h-full flex flex-col justify-between border-l-4 border-l-primary"
-    >
+    <Card.Root class="h-full">
         <Card.Header class="pb-2">
-            <Card.Description>Total Valuation</Card.Description>
+            <Card.Description>Total Balance</Card.Description>
             <Card.Title class="text-3xl font-bold tracking-tight">
-                {formatCurrency(valuation.balance, valuation.currency)}
+                {formatCurrency(portfolioSummaryState.balance, portfolioSummaryState.currency)}
             </Card.Title>
         </Card.Header>
         <Card.Content>
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2 text-sm">
                 <span
-                    class="{valuation.trendDirection === 'up'
+                    class="{portfolioSummaryState.trendDirection === 'up'
                         ? 'text-green-500'
-                        : 'text-red-500'} font-semibold text-sm"
+                        : portfolioSummaryState.trendDirection === 'down'
+                          ? 'text-red-500'
+                          : 'text-muted-foreground'} font-medium"
                 >
-                    {formatPercent(valuation.trendPercent)}
+                    {formatPercent(portfolioSummaryState.trendPercent)}
                 </span>
-                <span class="text-sm text-muted-foreground">
-                    from last month
-                </span>
+                <span class="text-muted-foreground">from last month</span>
             </div>
         </Card.Content>
     </Card.Root>

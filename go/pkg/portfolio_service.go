@@ -3,6 +3,7 @@ package pkg
 import (
 	"context"
 	"crypto/rand"
+	"log/slog"
 	"math/big"
 
 	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
@@ -10,11 +11,16 @@ import (
 
 // portfolio service implementation.
 type portfoliosrvc struct {
-	logger Logger
+	logger *slog.Logger
 }
 
+// Verify that portfoliosrvc implements portfolio.Service.
+// This line tells the compiler: "Please fail the build immediately if *portfoliosrvc does not strictly satisfy the 
+// portfolio.Service interface." This is the "bridge" that ensures your struct implementation stays in sync with your interface definition.
+var _ portfolio.Service = (*portfoliosrvc)(nil)
+
 // NewPortfolio returns the portfolio service implementation.
-func NewPortfolio(logger Logger) portfolio.Service {
+func NewPortfolio(logger *slog.Logger) portfolio.Service {
 	return &portfoliosrvc{logger: logger}
 }
 
@@ -32,6 +38,20 @@ func (s *portfoliosrvc) List(ctx context.Context, p *portfolio.ListPayload) (res
 			Summary:   "AI generated summary for " + sym + ": Moving average indicates strong momentum.",
 			Action:    "HOLD",
 		})
+	}
+	return
+}
+
+// Get portfolio summary
+func (s *portfoliosrvc) Summary(ctx context.Context, p *portfolio.SummaryPayload) (res *portfolio.Summary2, err error) {
+	s.logger.InfoContext(ctx, "portfolio.summary", "user", p.UserID)
+
+	// Mock data for now, matching the frontend simulation
+	res = &portfolio.Summary2{
+		Balance:        12500.50,
+		Currency:       "USD",
+		TrendPercent:   12.5,
+		TrendDirection: "up",
 	}
 	return
 }

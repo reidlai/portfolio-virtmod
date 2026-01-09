@@ -18,6 +18,27 @@ tasks:
     inputs: ["go/**/*"]
     platform: "system"
 
+  go-lint:
+    command: "go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run -v ./go/..."
+    inputs: ["go/**/*"]
+    platform: "system"
+
+  go-format:
+    command: "goimports -w ./go"
+    inputs: ["go/**/*"]
+    platform: "system"
+
+  go-run:
+    command: "cd go && go run ."
+    inputs: ["go/**/*"]
+    platform: "system"
+    local: true
+
+  goa-gen:
+    command: "cd go && goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
+    inputs: ["go/design/**/*"]
+    platform: "system"
+
   # Svelte Frontend
   svelte-dev:
     command: "pnpm --dir svelte dev"
@@ -57,6 +78,22 @@ tasks:
     deps: ["ts-build"]
     platform: "node"
 
+  svelte-lint:
+    command: "pnpm --dir svelte lint"
+    inputs: ["svelte/**/*"]
+    platform: "node"
+
+  svelte-format:
+    command: "pnpm --dir svelte run format"
+    inputs: ["svelte/**/*"]
+    platform: "node"
+
+  svelte-storybook:
+    command: "pnpm --dir svelte run story:dev"
+    inputs: ["svelte/**/*"]
+    platform: "node"
+    local: true
+
   # TypeScript Shared Lib
   ts-build:
     command: "pnpm --dir ts build"
@@ -75,6 +112,11 @@ tasks:
     inputs: ["ts/**/*"]
     platform: "node"
 
+  ts-format:
+    command: "pnpm --dir ts run format"
+    inputs: ["ts/**/*"]
+    platform: "node"
+
   # Composite Tasks
   build:
     command: 'echo "Building all components"'
@@ -89,6 +131,10 @@ tasks:
 
   lint:
     command: 'echo "Linting all components"'
-    deps: ["ts-lint", "svelte-check"]
+    deps: ["go-lint", "ts-lint", "svelte-lint"]
+    platform: "system"
 
+  format:
+    command: 'echo "Formatting all components"'
+    deps: ["go-format", "ts-format", "svelte-format"]
     platform: "system"
