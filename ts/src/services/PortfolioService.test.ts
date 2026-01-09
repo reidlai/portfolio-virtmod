@@ -57,8 +57,8 @@ describe('PortfolioService (Unit)', () => {
 
     expect(state.balance).toBe(mockApiResponse.balance);
     expect(state.currency).toBe(mockApiResponse.currency);
-    expect(state.trendPercent).toBe(mockApiResponse.trend_percent);
-    expect(state.trendDirection).toBe(mockApiResponse.trend_direction);
+    expect(state.trend_percent).toBe(mockApiResponse.trend_percent);
+    expect(state.trend_direction).toBe(mockApiResponse.trend_direction);
   });
 
   it('should poll for updates periodically', async () => {
