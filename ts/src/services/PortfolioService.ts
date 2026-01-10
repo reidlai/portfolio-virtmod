@@ -47,11 +47,6 @@ export class PortfolioService {
         // or ensure setConfig handles initial undefined states.
         // The setConfig method handles the initial assignment correctly.
         this.setConfig(config);
-
-        // Initial fetch
-        this.fetchSummary();
-        // Poll every 30 seconds
-        setInterval(() => this.fetchSummary(), 30000);
     }
 
     public setConfig(config: PortfolioConfig) {
@@ -61,7 +56,7 @@ export class PortfolioService {
         }
     }
 
-    private async fetchSummary() {
+    public async fetchSummary() {
         try {
             // Use configured API URL
             // Ensure no double slash if baseUrl ends with /

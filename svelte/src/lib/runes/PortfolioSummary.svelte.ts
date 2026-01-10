@@ -4,7 +4,7 @@ import { portfolioService, type PortfolioSummary, PortfolioSummarySchema } from 
  * PortfolioSummaryStub
  * Reactive bridge between PortfolioService (RxJS) and Svelte 5 UI.
  */
-class PortfolioSummaryStub {
+class PortfolioSummaryRune {
     balance = $state(0);
     currency = $state('USD');
     trendPercent = $state(0);
@@ -37,4 +37,4 @@ class PortfolioSummaryStub {
     }
 }
 
-export const portfolioSummaryState = new PortfolioSummaryStub();
+export const portfolioSummaryState = new PortfolioSummaryRune();

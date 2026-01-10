@@ -31,14 +31,25 @@ describe('PortfolioService (Unit)', () => {
     vi.useRealTimers();
   });
 
-  it('should fetch summary on initialization using injected fetcher (Stub)', async () => {
-    // INJECTION: Pass the mock/stub via config
+  it('should not fetch summary automatically on initialization', async () => {
     service = new PortfolioService({
       fetcher: mockFetch,
       apiBaseUrl: 'http://test-api.com'
     });
 
-    // API CALL VERIFICATION
+    // API CALL VERIFICATION - should not happen automatically
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it('should fetch summary when called using injected fetcher (Stub)', async () => {
+    service = new PortfolioService({
+      fetcher: mockFetch,
+      apiBaseUrl: 'http://test-api.com'
+    });
+
+    // FETCH EXPLICITLY
+    await service.fetchSummary();
+
     expect(mockFetch).toHaveBeenCalledWith(
       'http://test-api.com/portfolio/summary',
       expect.objectContaining({
@@ -49,9 +60,7 @@ describe('PortfolioService (Unit)', () => {
 
   it('should update state with data from API', async () => {
     service = new PortfolioService({ fetcher: mockFetch, apiBaseUrl: 'http://test' });
-
-    // Wait a microtask for promise resolution
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await service.fetchSummary();
 
     const state = service.getSummary();
 
@@ -61,25 +70,12 @@ describe('PortfolioService (Unit)', () => {
     expect(state.trend_direction).toBe(mockApiResponse.trend_direction);
   });
 
-  it('should poll for updates periodically', async () => {
-    vi.useFakeTimers();
-    service = new PortfolioService({ fetcher: mockFetch, apiBaseUrl: 'http://test' });
-
-    mockFetch.mockClear();
-
-    // Fast-forward time to trigger the interval
-    await vi.advanceTimersByTimeAsync(30001);
-
-    expect(mockFetch).toHaveBeenCalledTimes(1);
-  });
-
   it('should handle fetch errors gracefully', async () => {
     const errorFetch = vi.fn().mockResolvedValue(createFetchResponse(false, null));
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
     service = new PortfolioService({ fetcher: errorFetch, apiBaseUrl: 'http://test' });
-
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await service.fetchSummary();
 
     expect(consoleSpy).toHaveBeenCalledWith(
       'PortfolioService fetch error:',
