@@ -27,6 +27,8 @@ tasks:
 
   lint:
     command: 'pnpm run lint'
+    options:
+      mergeArgs: 'replace'
 
   test:
     command: 'vitest run'

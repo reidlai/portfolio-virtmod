@@ -1,5 +1,6 @@
 <script lang="ts">
     import { portfolioSummaryState } from "../runes/PortfolioSummary.svelte";
+    import { portfolioService } from "@modules/portfolio-ts";
     import * as Card from "../components/ui/card";
     import { goto } from "$app/navigation";
 
@@ -22,6 +23,10 @@
         // Simple navigation for now, can add prop callback later if needed
         goto("/portfolio");
     }
+
+    $effect(() => {
+        portfolioService.fetchSummary();
+    });
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -34,7 +39,10 @@
         <Card.Header class="pb-2">
             <Card.Description>Total Balance</Card.Description>
             <Card.Title class="text-3xl font-bold tracking-tight">
-                {formatCurrency(portfolioSummaryState.balance, portfolioSummaryState.currency)}
+                {formatCurrency(
+                    portfolioSummaryState.balance,
+                    portfolioSummaryState.currency,
+                )}
             </Card.Title>
         </Card.Header>
         <Card.Content>

@@ -10,7 +10,9 @@ tasks:
       mergeOutputs: 'replace'
 
   lint:
-    command: 'pnpm run lint'
+    command: 'eslint .'
+    options:
+      mergeArgs: 'replace'
 
   test:
     command: 'vitest run'
