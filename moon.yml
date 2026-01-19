@@ -122,6 +122,7 @@ tasks:
   build:
     command: 'echo "Building all components"'
     deps: ["go-build", "svelte-build", "ts-build"]
+    outputs: []
     platform: "system"
 
   test:
