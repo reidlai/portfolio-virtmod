@@ -19,3 +19,8 @@ tasks:
 
   format:
     command: 'prettier --write .'
+
+  zodios-gen:
+    command: 'npx openapi-zod-client "../go/goa_gen/gen/http/openapi3.json" -o "./src/lib/api-client.ts"'
+    deps:
+      - 'build'

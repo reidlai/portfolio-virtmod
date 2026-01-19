@@ -29,7 +29,7 @@ As applications grow, managing coding complexity and coordinating multiple teams
 
 ## Documentation
 
-- [Architecture](./docs/VIRTUAL-MODULE-ARCHITECTURE.md) (Reference: `docs/APPSHELL-ARCHITECTURE.md`)
+- [Architecture](./docs/VIRTUAL-MODULE-ARCHITECTURE.md) (Reference: `https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md`)
 - [DevSecOps Pipeline](./docs/DEVSECOPS.md)
 
 - [Functional Documentation](./docs/FUNCTIONAL-DOCUMENTATION.md)
@@ -107,7 +107,7 @@ This is a **Virtual Module** designed to integrate into the main [ta-workspace](
 
 #### Architecture Overview
 
-**Reference**: [`ta-workspace/docs/APPSHELL-ARCHITECTURE.md`](https://github.com/reidlai/ta-workspace/blob/main/docs/APPSHELL-ARCHITECTURE.md)
+**Reference**: [`ta-workspace/docs/APPSHELL-ARCHITECTURE.md`](https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md)
 
 This module follows the **Virtual Module** pattern:
 
@@ -134,7 +134,7 @@ This module follows the **Virtual Module** pattern:
 3. **Backend Integration** (Go):
 
    ```go
-   // In ta-workspace/apps/ta-server/cmd/api-server.go
+   // In ta-workspace/apps/go-server/cmd/api-server.go
    import portfoliopkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
 
    // Register service with Goa
@@ -152,7 +152,7 @@ This module follows the **Virtual Module** pattern:
      - `handlers`: Background handlers or middleware (if defined).
 
    ```typescript
-   // Contract in modules/portfolio/svelte/src/lib/index.ts
+   // Contract in modules/portfolio/sveltekit/src/lib/index.ts
    export const init = async (context) => {
      return {
        id: "portfolio-module",
@@ -177,7 +177,7 @@ This module follows the **Virtual Module** pattern:
       Svelte components consume this state directly:
 
       ```svelte
-      // modules/portfolio/svelte/src/widgets/Summary.svelte
+      // modules/portfolio/sveltekit/src/widgets/Summary.svelte
       <script>
         import { portfolioStore } from "@modules/portfolio-ts";
       </script>

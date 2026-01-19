@@ -2,7 +2,7 @@
 
 **Primary Reference**: [`ta-workspace/docs/DEVELOPER-GUIDE.md`](https://github.com/reidlai/ta-workspace/blob/main/docs/DEVELOPER-GUIDE.md)
 
-**AppShell Details**: [`ta-workspace/docs/APPSHELL-ARCHITECTURE.md`](https://github.com/reidlai/ta-workspace/blob/main/docs/APPSHELL-ARCHITECTURE.md)
+**AppShell Details**: [`ta-workspace/docs/APPSHELL-ARCHITECTURE.md`](https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md)
 
 ## Overview
 
@@ -67,8 +67,8 @@ This module is developed as a **separate Git repository** and integrated via Git
    - Update `.moon/workspace.yml` - Add project paths
    - Update `pnpm-workspace.yaml` - Add package paths
    - Update `go.work` - Add Go module path
-   - Update `apps/sv-appshell/svelte.config.js` - Add `@modules/portfolio-ts` alias
-   - Update `apps/sv-appshell/vite.config.ts` - Add `@modules/portfolio-ts` alias
+   - Update `apps/sveltekit-appshell/svelte.config.js` - Add `@modules/portfolio-ts` alias
+   - Update `apps/sveltekit-appshell/vite.config.ts` - Add `@modules/portfolio-ts` alias
 
 3. **Install Dependencies**:
    ```bash
@@ -516,8 +516,8 @@ npx @moonrepo/cli run :test
 
 The module produces **no independent artifacts**. It's compiled into:
 
-- `ta-server` binary (Go services embedded)
-- `sv-appshell` bundle (Svelte widgets bundled)
+- `go-server` binary (Go services embedded)
+- `sveltekit-appshell` bundle (Svelte widgets bundled)
 
 ### Release Process
 

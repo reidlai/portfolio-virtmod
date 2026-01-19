@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
+	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -1,0 +1,58 @@
+swagger: "2.0"
+info:
+    title: ""
+    version: 0.0.1
+host: localhost:80
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /portfolio/summary:
+        get:
+            tags:
+                - portfolio
+            summary: getPortfolioSummary portfolio
+            operationId: portfolio#getPortfolioSummary
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/PortfolioSummary'
+                        required:
+                            - balance
+                            - currency
+                            - change_percent
+            schemes:
+                - http
+definitions:
+    PortfolioSummary:
+        title: PortfolioSummary
+        type: object
+        properties:
+            balance:
+                type: number
+                description: Total Balance
+                example: 0.5157822629951638
+                format: double
+            change_percent:
+                type: number
+                description: Change Percentage
+                example: 0.6309358093655018
+                format: double
+            currency:
+                type: string
+                description: Currency Code
+                example: Aperiam suscipit et nobis.
+        example:
+            balance: 0.48762896212116436
+            change_percent: 0.03770770812643
+            currency: Debitis impedit.
+        required:
+            - balance
+            - currency
+            - change_percent
