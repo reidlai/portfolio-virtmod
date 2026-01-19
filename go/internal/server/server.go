@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
-	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/http/portfolio/server"
+	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
+	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"

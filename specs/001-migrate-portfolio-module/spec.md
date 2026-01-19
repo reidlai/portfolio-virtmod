@@ -13,7 +13,7 @@
 
 - Q: Does the repository function as a standalone workspace or just a passive container? → A: **Standalone Workspace**. The repository will contain its own root `moon.yml`, `package.json`, and toolchain configuration to support independent "Quick Start" development and testing, separate from any consuming parent workspace.
 - Q: Should the repository have its own CI workflow? → A: **Self-Contained CI**. The repository will include `.github/workflows` to independently validate Pull Requests (build/test) using the local toolchain.
-- Q: How should the subfolders (go, svelte, ts) be defined in the workspace? → A: **Single Root Project**. The module will be treated as a single monolithic unit with one `moon.yml` at the root, reflecting the tight integration of the stack components (as described in `docs/APPSHELL-ARCHITECTURE.md`).
+- Q: How should the subfolders (go, svelte, ts) be defined in the workspace? → A: **Single Root Project**. The module will be treated as a single monolithic unit with one `moon.yml` at the root, reflecting the tight integration of the stack components (as described in `https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md`).
 
 ### User Story 1 - Module Migration & Integration (Priority: P1)
 
@@ -63,11 +63,11 @@ As a Developer, I want to read comprehensive documentation for the portfolio mod
 - **FR-003**: The module MUST include the following documentation:
   - Root `README.md`: Module Overview, Quick Start, License.
   - `docs/DEVSECOPS.md`: CI/CD pipeline overview, gates, and application.
-  - `docs/VIRTUAL-MODULE-ARCHITECTURE.md`: Supporting `docs/APPSHELL-ARCHITECTURE.md`.
+  - `docs/VIRTUAL-MODULE-ARCHITECTURE.md`: Supporting `https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md`.
   - `docs/FUNCTIONAL-DOCUMENTATION.md`: Functional details and user guides.
   - `docs/DEVELOPER-REFERENCE.md`: SOLID principles and development guidelines.
   - Root `LICENSE`: License information.
-- **FR-004**: The documentation MUST explicitly reference `docs/API-SERVER.md` and `docs/APPSHELL-ARCHITECTURE.md` as architectural baselines.
+- **FR-004**: The documentation MUST explicitly reference `docs/API-SERVER.md` and `https://github.com/reidlai/virtual-module-core/blob/main/docs/APPSHELL-ARCHITECTURE.md` as architectural baselines.
 - **FR-005**: The module MUST maintain independent build and test configurations for its sub-components (go, svelte, ts).
 
 ### Key Entities

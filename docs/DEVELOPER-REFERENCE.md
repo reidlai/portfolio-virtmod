@@ -58,10 +58,10 @@ func NewPortfolioService(logger *slog.Logger, db *sql.DB) portfolio.Service {
 }
 ```
 
-**Host Integration (ta-server)**:
+**Host Integration (go-server)**:
 
 ```go
-// apps/ta-server/cmd/api-server.go
+// apps/go-server/cmd/api-server.go
 import portfoliopkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
 
 // 1. Inject Dependencies (Core Module)
@@ -286,7 +286,6 @@ import { useEffect } from "react";
 import { useObservable } from "rxjs-hooks"; // or custom hook
 import { PortfolioStore } from "@modules/portfolio-ts";
 import { apiClient } from "@modules/core";
-
 // 1. Initialize Service (Singleton or Context)
 const store = new PortfolioStore(apiClient);
 

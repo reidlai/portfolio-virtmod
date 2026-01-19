@@ -4,51 +4,31 @@ import (
 	. "goa.design/goa/v3/dsl"
 )
 
-var Insight = Type("Insight", func() {
-	Attribute("symbol", String, "Stock Symbol")
-	Attribute("sentiment", String, "Market Sentiment", func() {
-		Enum("bullish", "bearish", "neutral")
-	})
-	Attribute("summary", String, "Analysis Summary")
-	Attribute("action", String, "Recommended Action")
-	Required("symbol", "sentiment", "summary", "action")
-})
+var PortfolioSummarySchema = Type("PortfolioSummary", func() { // Type "PortfolioSummary" will be found in OpenAPI components.schemas section
 
-var SummaryObj = Type("Summary", func() {
+    // Match Zod schema defined in ts/src/schema/portfolio.ts
+    // export const PortfolioSummarySchema = z.object({
+    //   balance: z.number(),
+    //   currency: z.string(),
+    //   changePercent: z.number(),
+    // });
 	Attribute("balance", Float64, "Total Balance")
 	Attribute("currency", String, "Currency Code")
-	Attribute("trend_percent", Float64, "Trend Percentage")
-	Attribute("trend_direction", String, "Trend Direction", func() {
-		Enum("up", "down", "neutral")
-	})
-	Required("balance", "currency", "trend_percent", "trend_direction")
+	Attribute("change_percent", Float64, "Change Percentage")
+
+	// Required attribute list
+	Required("balance", "currency", "change_percent")
 })
 
+// Match zodios API defined in zod schema file ts/src/schema/portfolio.ts as baseline. Security schema, Error schema, and HTTP schema are revised here. Benefit of converting zod schema to Goa DSL is that it can be used to generate client and server stubs together with future MCP extensions.
 var _ = Service("portfolio", func() {
-	Description("Provide AI insights")
-
-	Method("list", func() {
-		Payload(func() {
-			Attribute("user_id", String, "User ID")
-			Required("user_id")
-		})
-		Result(ArrayOf(Insight))
-		HTTP(func() {
-			GET("/portfolio")
-			Header("user_id:X-User-ID")
-			Response(StatusOK)
-		})
-	})
-
-	Method("summary", func() {
-		Payload(func() {
-			Attribute("user_id", String, "User ID")
-			Required("user_id")
-		})
-		Result(SummaryObj)
+	Description("Portfolio API")
+	Error("unauthorized", String, "Missing or invalid token")
+	Error("not_found", String, "Portfolio not found for user")
+	Method("getPortfolioSummary", func() {
+		Result(PortfolioSummarySchema)
 		HTTP(func() {
 			GET("/portfolio/summary")
-			Header("user_id:X-User-ID")
 			Response(StatusOK)
 		})
 	})
