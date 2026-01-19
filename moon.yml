@@ -3,7 +3,7 @@ language: "unknown" # Mixed/Polyglot
 
 fileGroups:
   go: ["go/**/*"]
-  svelte: ["svelte/**/*"]
+  svelte: ["sveltekit/**/*"]
   ts: ["ts/**/*"]
 
 tasks:
@@ -41,20 +41,20 @@ tasks:
 
   # Svelte Frontend
   svelte-dev:
-    command: "pnpm --dir svelte dev"
+    command: "pnpm --dir sveltekit dev"
     local: true
     platform: "node"
 
   svelte-build:
-    command: "pnpm --dir svelte build"
-    inputs: ["svelte/**/*", "ts/**/*"]
+    command: "pnpm --dir sveltekit build"
+    inputs: ["sveltekit/**/*", "ts/**/*"]
     deps: ["ts-build"] # Depends on shared lib
     platform: "node"
 
   svelte-sync:
-    command: "pnpm --dir svelte run sync"
+    command: "pnpm --dir sveltekit run sync"
 
-    inputs: ["svelte/**/*.svelte", "svelte/**/*.ts", "svelte/**/*.js"]
+    inputs: ["sveltekit/**/*.svelte", "sveltekit/**/*.ts", "sveltekit/**/*.js"]
     platform: "node"
     local: true
     options:
@@ -64,34 +64,34 @@ tasks:
 
 
   svelte-check:
-    command: "pnpm --dir svelte check"
-    inputs: ["svelte/**/*", "ts/**/*"]
+    command: "pnpm --dir sveltekit check"
+    inputs: ["sveltekit/**/*", "ts/**/*"]
     deps: ["svelte-sync"]
     platform: "node"
 
 
   svelte-test:
-    command: "pnpm --dir svelte run test"
+    command: "pnpm --dir sveltekit run test"
     env:
       CI: "true"
-    inputs: ["svelte/**/*", "ts/**/*"]
+    inputs: ["sveltekit/**/*", "ts/**/*"]
     deps: ["ts-build"]
     platform: "node"
 
   svelte-lint:
-    command: "pnpm --dir svelte lint"
-    inputs: ["svelte/**/*"]
+    command: "pnpm --dir sveltekit lint"
+    inputs: ["sveltekit/**/*"]
     deps: ["svelte-sync"]
     platform: "node"
 
   svelte-format:
-    command: "pnpm --dir svelte run format"
-    inputs: ["svelte/**/*"]
+    command: "pnpm --dir sveltekit run format"
+    inputs: ["sveltekit/**/*"]
     platform: "node"
 
   svelte-storybook:
-    command: "pnpm --dir svelte run story:dev"
-    inputs: ["svelte/**/*"]
+    command: "pnpm --dir sveltekit run story:dev"
+    inputs: ["sveltekit/**/*"]
     platform: "node"
     local: true
 
