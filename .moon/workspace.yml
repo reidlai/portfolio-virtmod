@@ -1,6 +1,9 @@
 # https://moonrepo.dev/docs/config/workspace
 projects:
   portfolio: "."
+  portfolio-sveltekit: "sveltekit"
+  portfolio-ts: "ts"
+  portfolio-go: "go"
 
 vcs:
   manager: "git"

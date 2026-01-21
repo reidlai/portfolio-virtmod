@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"testing"
 
-
 	"github.com/stretchr/testify/assert"
 )
 

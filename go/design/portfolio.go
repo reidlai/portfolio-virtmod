@@ -6,12 +6,12 @@ import (
 
 var PortfolioSummarySchema = Type("PortfolioSummary", func() { // Type "PortfolioSummary" will be found in OpenAPI components.schemas section
 
-    // Match Zod schema defined in ts/src/schema/portfolio.ts
-    // export const PortfolioSummarySchema = z.object({
-    //   balance: z.number(),
-    //   currency: z.string(),
-    //   changePercent: z.number(),
-    // });
+	// Match Zod schema defined in ts/src/schema/portfolio.ts
+	// export const PortfolioSummarySchema = z.object({
+	//   balance: z.number(),
+	//   currency: z.string(),
+	//   changePercent: z.number(),
+	// });
 	Attribute("balance", Float64, "Total Balance")
 	Attribute("currency", String, "Currency Code")
 	Attribute("change_percent", Float64, "Change Percentage")

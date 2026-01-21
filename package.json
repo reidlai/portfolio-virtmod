@@ -1,25 +1,13 @@
 {
   "name": "portfolio-virtmod",
   "private": true,
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.26.2",
   "devDependencies": {
     "@moonrepo/cli": "latest",
     "prettier": "^3.7.4"
   },
   "engines": {
     "node": "20.18.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "svelte@<3.49.0": ">=3.49.0",
-      "svelte@<4.2.19": ">=4.2.19"
-    },
-    "auditConfig": {
-      "ignoreCves": [
-        "GHSA-wv8q-r932-8hc7",
-        "GHSA-8266-84wp-wv5c"
-      ]
-    }
   },
   "version": "1.0.0"
 }

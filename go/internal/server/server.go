@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
+	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
@@ -109,8 +109,8 @@ func handleHTTPServer(ctx context.Context, cfg *Config, endpoints *portfolioGen.
 
 	var handler http.Handler = mux
 	{
-		handler = httpmdlwr.Log(mdlwrAdapter)(handler)       //nolint:staticcheck // Deprecated but sufficient for dev server
-		handler = httpmdlwr.RequestID()(handler) //nolint:staticcheck // Deprecated but sufficient for dev server
+		handler = httpmdlwr.Log(mdlwrAdapter)(handler) //nolint:staticcheck // Deprecated but sufficient for dev server
+		handler = httpmdlwr.RequestID()(handler)       //nolint:staticcheck // Deprecated but sufficient for dev server
 	}
 
 	addr := fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)

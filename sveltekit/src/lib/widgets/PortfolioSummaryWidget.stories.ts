@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import PortfolioSummaryWidget from '$lib/widgets/PortfolioSummaryWidget.svelte';
-import type { IPortfolioSummaryWidgetStory } from '$lib/widgets/PortfolioSummaryWidget.types';
-import { portfolioRxService } from '@modules/portfolio-ts';
+import PortfolioSummaryWidget from "./PortfolioSummaryWidget.svelte";
+import { portfolioRxService } from "@modules/portfolio-ts";
 
-const meta = {
+const meta: Meta<typeof PortfolioSummaryWidget> = {
     title: 'Widgets/PortfolioSummaryWidget',
     component: PortfolioSummaryWidget,
     tags: ['autodocs'],
@@ -49,10 +48,10 @@ const meta = {
             return story();
         }
     ]
-} satisfies Meta<IPortfolioSummaryWidgetStory>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof PortfolioSummaryWidget>;
 
 export const Default: Story = {
     args: {
@@ -72,7 +71,7 @@ export const NegativeBalance: Story = {
         changePercent: -1.3,
         loading: false,
         error: "",
-        usingMockData: true,        
+        usingMockData: true,
     }
 };
 

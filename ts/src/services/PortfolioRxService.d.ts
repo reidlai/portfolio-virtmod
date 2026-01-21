@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { schemas, api } from '../lib/api-client';
+import { z } from "zod";
+import { schemas, api } from "../lib/api-client";
 export type PortfolioSummaryType = z.infer<typeof schemas.PortfolioSummary>;
 type ApiClient = typeof api;
 /**

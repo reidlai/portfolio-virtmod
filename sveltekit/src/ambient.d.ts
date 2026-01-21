@@ -16,8 +16,6 @@ declare module "@ui/card" {
   export const Footer: any;
 }
 
-
-
 declare module "$app/navigation" {
   export const goto: (url: string | URL, opts?: any) => Promise<void>;
   export const invalidate: (
@@ -35,7 +33,7 @@ declare module "$app/navigation" {
 // The default export is a Svelte component
 // Named exports from <script module> blocks (like Props interfaces) are preserved by the Svelte compiler
 declare module "*.svelte" {
-  import type { Component, ComponentProps } from 'svelte';
+  import type { Component, ComponentProps } from "svelte";
   const component: Component<any>;
   export default component;
 }

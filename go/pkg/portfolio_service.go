@@ -13,7 +13,7 @@ type portfoliosrvc struct {
 }
 
 // Verify that portfoliosrvc implements portfolio.Service.
-// This line tells the compiler: "Please fail the build immediately if *portfoliosrvc does not strictly satisfy the 
+// This line tells the compiler: "Please fail the build immediately if *portfoliosrvc does not strictly satisfy the
 // portfolio.Service interface." This is the "bridge" that ensures your struct implementation stays in sync with your interface definition.
 var _ genportfolio.Service = (*portfoliosrvc)(nil)
 
