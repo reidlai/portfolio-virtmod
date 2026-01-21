@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { IPortfolioSummaryWidgetStory } from "./PortfolioSummaryWidget.types";
-    import * as Card from "$lib/components/ui/card";
+    import * as Card from "../components/ui/card";
     import { portfolioSummaryState } from "../runes/PortfolioSummaryState.svelte";
     import { goto } from "$app/navigation";
 

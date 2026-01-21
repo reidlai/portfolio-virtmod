@@ -5,7 +5,11 @@ import { portfolioRxService } from "@modules/portfolio-ts";
 // Mock the service
 vi.mock("@modules/portfolio-ts", async () => {
     const { BehaviorSubject, of } = await import("rxjs");
-    const mockSummary$ = new BehaviorSubject(null);
+    const mockSummary$ = new BehaviorSubject({
+        balance: 1000,
+        currency: "USD",
+        change_percent: 5
+    });
     const mockError$ = new BehaviorSubject(null);
 
     return {
@@ -18,7 +22,7 @@ vi.mock("@modules/portfolio-ts", async () => {
         },
         schemas: {
             PortfolioSummary: {
-                parse: vi.fn(),
+                parse: vi.fn().mockImplementation((val) => val),
             }
         }
     };
@@ -33,8 +37,12 @@ describe("PortfolioSummaryState Rune", () => {
     });
 
     it("should initialize with default state", () => {
-        // initial state depends on the behavior subject's initial value (null)
-        expect(portfolioSummaryState.summary).toBe(null);
+        // initial state depends on the behavior subject's initial value
+        expect(portfolioSummaryState.summary).toEqual({
+            balance: 1000,
+            currency: "USD",
+            changePercent: 5
+        });
         expect(portfolioSummaryState.loading).toBe(false);
         expect(portfolioSummaryState.error).toBe(null);
     });

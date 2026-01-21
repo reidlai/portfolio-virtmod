@@ -1,4 +1,4 @@
-import { type IPortfolioSummary, type IPortfolioSummaryState } from '$lib/widgets/PortfolioSummaryWidget.types';
+import { type IPortfolioSummary, type IPortfolioSummaryState } from '../widgets/PortfolioSummaryWidget.types';
 import { portfolioRxService } from '@modules/portfolio-ts';
 import { schemas } from '@modules/portfolio-ts'
 
@@ -28,6 +28,7 @@ class PortfolioSummaryRune {
 
         // Subscribe to live updates
         portfolioRxService.summary$.subscribe((value) => {
+            if (!value) return;
             try {
                 // Validate incoming data
                 schemas.PortfolioSummary.parse(value);

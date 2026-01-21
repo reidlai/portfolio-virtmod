@@ -14,6 +14,7 @@ tasks:
     options:
       mergeArgs: 'replace'
       mergeOutputs: 'replace'
+      mergeInputs: 'replace'
 
   format:
     command: "goimports"
@@ -53,6 +54,7 @@ tasks:
     options:
       runInCI: true
       mergeArgs: "replace"
+      mergeInputs: 'replace'
 
   goa-gen:
     command: "go run goa.design/goa/v3/cmd/goa@latest gen github.com/reidlai/ta-workspace/modules/portfolio/go/design --output goa_gen"
@@ -63,6 +65,7 @@ tasks:
       - "goa_gen/**"
     options:
       mergeArgs: "replace"
+      mergeInputs: 'replace'
 
   build-server:
     command: "go build -o bin/portfolio-server ."

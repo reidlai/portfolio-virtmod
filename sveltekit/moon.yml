@@ -26,12 +26,17 @@ tasks:
       - 'sync'
 
   lint:
-    command: 'pnpm run lint'
+    command: 'svelte-check --tsconfig ./tsconfig.json'
+    inputs: ["src/**/*", "!src/lib/api-client.ts", "moon.yml"]
     options:
       mergeArgs: 'replace'
+      mergeInputs: 'replace'
+    deps:
+      - 'sync'
 
   test:
     command: 'vitest run'
 
   format:
     command: 'prettier --plugin-search-dir . --write .'
+    inputs: ["**/*", "!node_modules/**"]
