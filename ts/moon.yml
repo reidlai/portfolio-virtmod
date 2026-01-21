@@ -1,29 +1,29 @@
-$schema: 'https://moonrepo.dev/schemas/project.json'
-id: 'portfolio-ts'
-type: 'library'
-stack: 'frontend'
+$schema: "https://moonrepo.dev/schemas/project.json"
+id: "portfolio-ts"
+type: "library"
+stack: "frontend"
 
 tasks:
   build:
     outputs: []
     options:
-      mergeOutputs: 'replace'
+      mergeOutputs: "replace"
 
   lint:
-    command: 'eslint .'
+    command: "eslint ."
     inputs: ["**/*", "!node_modules/**"]
     options:
-      mergeArgs: 'replace'
-      mergeInputs: 'replace'
+      mergeArgs: "replace"
+      mergeInputs: "replace"
 
   test:
-    command: 'vitest run'
+    command: "vitest run"
 
   format:
-    command: 'prettier --write .'
+    command: "prettier --write ."
     inputs: ["**/*", "!node_modules/**"]
 
   zodios-gen:
     command: 'npx openapi-zod-client "../go/goa_gen/gen/http/openapi3.json" -o "./src/lib/api-client.ts"'
     deps:
-      - 'build'
+      - "build"

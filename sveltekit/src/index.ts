@@ -8,7 +8,7 @@ const adapter = new SvelteKitAdapter();
 
 export const init: ModuleInit = async (_context) => {
   // 1. Discover SvelteKit routes
-  const modules = import.meta.glob('./routes/**/+page.svelte', { eager: true });
+  const modules = import.meta.glob("./routes/**/+page.svelte", { eager: true });
 
   // 2. Parse using adapter to get routes
   const bundle = await adapter.parse(modules);

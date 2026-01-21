@@ -1,4 +1,5 @@
 # https://moonrepo.dev/docs/config/project
+id: 'portfolio'
 language: "unknown" # Mixed/Polyglot
 
 fileGroups:
@@ -116,13 +117,15 @@ tasks:
     outputs: []
     platform: "system"
     options:
+      mergeArgs: 'replace'
       mergeOutputs: 'replace'
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test", "ts-test", "svelte-check"] # Runs both backend and frontend tests + type check
-
+    deps: ["go-test", "svelte-test", "ts-test", "svelte-check"]
     platform: "system"
+    options:
+      mergeArgs: 'replace'
 
   lint:
     command: 'echo "Linting all components"'
@@ -130,6 +133,7 @@ tasks:
     platform: "system"
     inputs: ["moon.yml"]
     options:
+      mergeArgs: 'replace'
       mergeInputs: 'replace'
 
   format:
@@ -138,4 +142,5 @@ tasks:
     platform: "system"
     inputs: ["moon.yml"]
     options:
+      mergeArgs: 'replace'
       mergeInputs: 'replace'

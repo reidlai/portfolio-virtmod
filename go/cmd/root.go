@@ -33,7 +33,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.portfolio-server.yaml)")
-	
+
 	rootCmd.PersistentFlags().StringVar(&config.Host, "host", "localhost", "Server host")
 	rootCmd.PersistentFlags().StringVar(&config.Port, "port", "8000", "Server port")
 	rootCmd.PersistentFlags().StringVar(&config.LogLevel, "log-level", "INFO", "Log level")
@@ -77,7 +77,7 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
 
-    if err := viper.Unmarshal(&config); err != nil {
-        fmt.Printf("unable to decode into struct, %v", err)
-    }
+	if err := viper.Unmarshal(&config); err != nil {
+		fmt.Printf("unable to decode into struct, %v", err)
+	}
 }
