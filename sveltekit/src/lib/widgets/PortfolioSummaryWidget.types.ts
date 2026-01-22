@@ -3,13 +3,13 @@
  * This allows individual controls for each summary attribute
  */
 export interface IPortfolioSummaryWidgetStory {
-    currency?: string;
-    balance?: number;
-    changePercent?: number;
-    loading?: boolean;
-    error?: string | null;
-    summary?: IPortfolioSummary | null;
-    usingMockData?: boolean;
+  currency?: string;
+  balance?: number;
+  changePercent?: number;
+  loading?: boolean;
+  error?: string | null;
+  summary?: IPortfolioSummary | null;
+  usingMockData?: boolean;
 }
 
 /**
@@ -17,15 +17,14 @@ export interface IPortfolioSummaryWidgetStory {
  */
 
 export interface IPortfolioSummary {
-    currency: string;
-    balance: number;
-    changePercent: number;
+  currency: string;
+  balance: number;
+  changePercent: number;
 }
 
 export interface IPortfolioSummaryState {
-    summary?: IPortfolioSummary | null;
-    loading?: boolean;
-    error?: string | null;
-    usingMockData?: boolean;
+  summary?: IPortfolioSummary | null;
+  loading?: boolean;
+  error?: string | null;
+  usingMockData?: boolean;
 }
-
