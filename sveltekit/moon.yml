@@ -8,6 +8,8 @@ tasks:
     command: "svelte-package"
     outputs:
       - "dist/**"
+    options:
+      mergeArgs: "replace"
 
   dev:
     command: "vite dev"
@@ -36,7 +38,13 @@ tasks:
 
   test:
     command: "vitest run"
+    platform: node
+    options:
+      mergeArgs: "replace"
 
   format:
-    command: "prettier --plugin-search-dir . --write ."
+    command: "prettier --write ."
     inputs: ["**/*", "!node_modules/**"]
+    platform: node
+    options:
+      mergeArgs: "replace"
