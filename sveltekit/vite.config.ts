@@ -13,6 +13,11 @@ export default defineConfig({
     alias: {
       $lib: path.resolve(__dirname, "./src/lib"),
     },
+    server: {
+      deps: {
+        inline: [/jsdom/, /html-encoding-sniffer/, /@exodus\/bytes/],
+      },
+    },
   },
   resolve: {
     conditions: ["browser"],
