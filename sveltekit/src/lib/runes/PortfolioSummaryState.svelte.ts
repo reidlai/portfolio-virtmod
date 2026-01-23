@@ -27,34 +27,57 @@ class PortfolioSummaryRune {
    * reactive state synchronization with the service layer.
    */
   constructor() {
-    // Subscribe to live updates
-    portfolioRxService.summary$.subscribe((value) => {
-      if (!value) return;
-      try {
-        // Validate incoming data
-        schemas.PortfolioSummary.parse(value);
-        const { change_percent: changePercent, ...rest } = value;
-        this.summary = { ...rest, changePercent };
-      } catch (e) {
-        console.error("Invalid portfolio summary update:", e);
-        this.error = "Invalid data received";
-      }
-    });
-
-    portfolioRxService.error$.subscribe((value) => {
-      this.error = value;
-    });
-
-    portfolioRxService.usingMockData$.subscribe((value) => {
-      this.usingMockData = value;
-    });
+    // Constructor no longer automatically subscribes to prevent test hangs on import
   }
 
-  public init(config: { usingMockData?: boolean }) {
+  private isInitialized = false;
+  private subscriptions: any[] = [];
+
+  public init(config: { usingMockData?: boolean; useSubscriptions?: boolean }) {
     if (config.usingMockData !== undefined) {
-      // this.usingMockData = config.usingMockData; // Handled by subscription
       portfolioRxService.usingMockData = config.usingMockData;
     }
+
+    if (config.useSubscriptions && !this.isInitialized) {
+      this.startSubscriptions();
+      this.isInitialized = true;
+    }
+  }
+
+  public dispose() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions = [];
+    this.isInitialized = false;
+  }
+
+  private startSubscriptions() {
+    // Subscribe to live updates
+    this.subscriptions.push(
+      portfolioRxService.summary$.subscribe((value) => {
+        if (!value) return;
+        try {
+          // Validate incoming data
+          schemas.PortfolioSummary.parse(value);
+          const { change_percent: changePercent, ...rest } = value;
+          this.summary = { ...rest, changePercent };
+        } catch (e) {
+          console.error("Invalid portfolio summary update:", e);
+          this.error = "Invalid data received";
+        }
+      }),
+    );
+
+    this.subscriptions.push(
+      portfolioRxService.error$.subscribe((value) => {
+        this.error = value;
+      }),
+    );
+
+    this.subscriptions.push(
+      portfolioRxService.usingMockData$.subscribe((value) => {
+        this.usingMockData = value;
+      }),
+    );
   }
 
   /**

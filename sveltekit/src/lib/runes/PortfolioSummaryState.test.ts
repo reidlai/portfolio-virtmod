@@ -1,10 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+// @vitest-environment jsdom
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { portfolioSummaryState } from "./PortfolioSummaryState.svelte";
 import { portfolioRxService } from "@modules/portfolio-ts";
 
 // Mock the service
 vi.mock("@modules/portfolio-ts", async () => {
-  const { BehaviorSubject, of } = await import("rxjs");
+  const { BehaviorSubject } = await import("rxjs");
   const mockSummary$ = new BehaviorSubject({
     balance: 1000,
     currency: "USD",
@@ -17,8 +18,9 @@ vi.mock("@modules/portfolio-ts", async () => {
       summary$: mockSummary$,
       error$: mockError$,
       usingMockData$: new BehaviorSubject(false),
-      getPortfolioSummary: vi.fn().mockReturnValue(of(undefined)),
+      getPortfolioSummary: vi.fn().mockResolvedValue({}), // Return resolving promise
       set usingMockData(value: boolean) {
+        // @ts-ignore - this.usingMockData$ exists in the object
         this.usingMockData$.next(value);
       },
     },
@@ -35,7 +37,12 @@ vi.mock("@modules/portfolio-ts", async () => {
 describe("PortfolioSummaryState Rune", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset subjects if needed, though mostly we test state reflection
+    // Start subscriptions for testing
+    portfolioSummaryState.init({ useSubscriptions: true });
+  });
+
+  afterEach(() => {
+    portfolioSummaryState.dispose();
   });
 
   it("should initialize with default state", () => {

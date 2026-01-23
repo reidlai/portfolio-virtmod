@@ -1,14 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/svelte";
 import PortfolioSummaryWidget from "./PortfolioSummaryWidget.svelte";
-import { portfolioRxService } from "@modules/portfolio-ts";
+// import { portfolioRxService } from "@modules/portfolio-ts";
 
 const meta: Meta<typeof PortfolioSummaryWidget> = {
   title: "Widgets/PortfolioSummaryWidget",
   component: PortfolioSummaryWidget,
   tags: ["autodocs"],
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     currency: {
       control: "text",
@@ -40,14 +37,14 @@ const meta: Meta<typeof PortfolioSummaryWidget> = {
       description: "Use mock data from service",
     },
   },
-  decorators: [
-    (story, { args }) => {
-      if (args.usingMockData !== undefined) {
-        portfolioRxService.usingMockData = args.usingMockData;
-      }
-      return story();
-    },
-  ],
+  // decorators: [
+  //   (story, { args }) => {
+  //     if (args.usingMockData !== undefined) {
+  //       portfolioRxService.usingMockData = args.usingMockData;
+  //     }
+  //     return story();
+  //   },
+  // ],
 };
 
 export default meta;

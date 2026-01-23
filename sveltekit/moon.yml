@@ -29,7 +29,15 @@ tasks:
 
   lint:
     command: "svelte-check --tsconfig ./tsconfig.json"
-    inputs: ["src/**/*", "!src/lib/api-client.ts", "moon.yml"]
+    inputs:
+      [
+        "src/**/*",
+        "!src/lib/api-client.ts",
+        "!dist/**",
+        "!storybook-static/**",
+        "**/.*/**",
+        "moon.yml",
+      ]
     options:
       mergeArgs: "replace"
       mergeInputs: "replace"
@@ -43,8 +51,15 @@ tasks:
       mergeArgs: "replace"
 
   format:
-    command: "prettier --write ."
-    inputs: ["**/*", "!node_modules/**"]
+    command: "prettier --write --ignore-path ../../../.prettierignore ."
+    inputs:
+      [
+        "**/*",
+        "!node_modules/**",
+        "!dist/**",
+        "!storybook-static/**",
+        "**/.*/**",
+      ]
     platform: node
     options:
       mergeArgs: "replace"

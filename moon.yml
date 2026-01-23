@@ -4,8 +4,8 @@ language: "unknown" # Mixed/Polyglot
 
 fileGroups:
   go: ["go/**/*"]
-  sveltekit: ["sveltekit/**/*", "!sveltekit/node_modules/**"]
-  ts: ["ts/**/*", "!ts/node_modules/**"]
+  sveltekit: ["sveltekit/**/*", "!sveltekit/node_modules/**", "!sveltekit/dist/**", "**/.*/**"]
+  ts: ["ts/**/*", "!ts/node_modules/**", "**/.*/**"]
 
 tasks:
   # Go Backend
@@ -144,3 +144,8 @@ tasks:
     options:
       mergeArgs: 'replace'
       mergeInputs: 'replace'
+
+  storybook:
+    deps: ["svelte-storybook"]
+    local: true
+    platform: "system"
