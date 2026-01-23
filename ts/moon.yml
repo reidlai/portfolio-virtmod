@@ -12,7 +12,7 @@ tasks:
 
   lint:
     command: "eslint ."
-    inputs: ["**/*", "!node_modules/**"]
+    inputs: ["**/*", "!node_modules/**", "**/.*/**"]
     options:
       mergeArgs: "replace"
       mergeInputs: "replace"
@@ -24,8 +24,8 @@ tasks:
       mergeArgs: "replace"
 
   format:
-    command: "prettier --write ."
-    inputs: ["**/*", "!node_modules/**"]
+    command: "prettier --write --ignore-path ../../../.prettierignore ."
+    inputs: ["**/*", "!node_modules/**", "**/.*/**"]
     platform: node
     options:
       mergeArgs: "replace"

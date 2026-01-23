@@ -4,4 +4,16 @@ import Title from "./card-title.svelte";
 import Description from "./card-description.svelte";
 import Content from "./card-content.svelte";
 
-export { Root, Header, Title, Description, Content };
+export {
+    Root,
+    Header,
+    Title,
+    Description,
+    Content,
+    //
+    Root as Card,
+    Header as CardHeader,
+    Title as CardTitle,
+    Description as CardDescription,
+    Content as CardContent,
+};

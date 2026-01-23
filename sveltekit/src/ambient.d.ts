@@ -33,7 +33,8 @@ declare module "$app/navigation" {
 // The default export is a Svelte component
 // Named exports from <script module> blocks (like Props interfaces) are preserved by the Svelte compiler
 declare module "*.svelte" {
-  import type { Component, ComponentProps } from "svelte";
+  // import type { Component, ComponentProps } from "svelte";
+  import type { Component } from "svelte";
   const component: Component<any>;
   export default component;
 }

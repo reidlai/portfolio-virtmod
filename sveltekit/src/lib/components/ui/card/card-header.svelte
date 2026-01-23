@@ -1,8 +1,14 @@
 <script lang="ts">
-  let className: string | undefined = undefined;
-  export { className as class };
+  import type { HTMLAttributes } from "svelte/elements";
+  import { cn } from "../../../utils";
+
+  let {
+    class: className,
+    children,
+    ...rest
+  }: HTMLAttributes<HTMLDivElement> = $props();
 </script>
 
-<div class={className}>
-  <slot />
+<div class={cn("flex flex-col space-y-1.5 p-6", className)} {...rest}>
+  {@render children?.()}
 </div>
