@@ -9,11 +9,11 @@ vi.mock("$app/navigation", () => ({
 // Mock portfolio service to prevent network noise
 vi.mock("@modules/portfolio-ts", () => ({
   portfolioRxService: {
-    summary$: { subscribe: () => {} },
-    error$: { subscribe: () => {} },
-    usingMockData$: { subscribe: () => {} },
+    summary$: { subscribe: () => { } },
+    error$: { subscribe: () => { } },
+    usingMockData$: { subscribe: () => { } },
     setConfig: vi.fn(),
-    getPortfolioSummary: vi.fn().mockReturnValue({ then: () => {} }), // Mock promise
+    getPortfolioSummary: vi.fn().mockResolvedValue({}), // Fixed: return resolving promise
     get summary() {
       return {
         balance: 0,
