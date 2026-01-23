@@ -45,7 +45,7 @@ tasks:
       - "sync"
 
   test:
-    command: "node scripts/vitest-wrapper.js"
+    command: "vitest run"
     platform: node
     options:
       mergeArgs: "replace"

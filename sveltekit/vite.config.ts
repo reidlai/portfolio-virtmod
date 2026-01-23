@@ -6,21 +6,8 @@ import path from "path";
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()],
   test: {
-    globals: true,
     environment: "jsdom",
-    include: ["src/**/*.{test,spec}.{js,ts}"],
     exclude: ["**/node_modules/**", "**/dist/**", "**/.svelte-kit/**"],
-    alias: {
-      $lib: path.resolve(__dirname, "./src/lib"),
-    },
-    deps: {
-      inline: ["jsdom", "html-encoding-sniffer", "@exodus/bytes"],
-    },
-    pool: "forks",
-    teardownTimeout: 1000,
-  },
-  ssr: {
-    noExternal: true,
   },
   resolve: {
     conditions: ["browser"],
