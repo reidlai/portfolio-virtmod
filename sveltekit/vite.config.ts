@@ -14,21 +14,13 @@ export default defineConfig({
       $lib: path.resolve(__dirname, "./src/lib"),
     },
     deps: {
-      optimizer: {
-        web: {
-          include: ["html-encoding-sniffer", "@exodus/bytes", "jsdom"],
-        },
-      },
-    },
-    server: {
-      deps: {
-        inline: ["jsdom", "html-encoding-sniffer", "@exodus/bytes"],
-      },
+      inline: ["jsdom", "html-encoding-sniffer", "@exodus/bytes"],
     },
     pool: "forks",
+    teardownTimeout: 1000,
   },
   ssr: {
-    noExternal: ["html-encoding-sniffer", "@exodus/bytes", "jsdom"],
+    noExternal: true,
   },
   resolve: {
     conditions: ["browser"],
