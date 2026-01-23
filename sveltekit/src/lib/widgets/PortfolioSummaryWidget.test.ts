@@ -1,46 +1,55 @@
-import { describe, it, expect, vi } from "vitest";
+// @vitest-environment jsdom
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render } from "@testing-library/svelte";
 import PortfolioSummaryWidget from "./PortfolioSummaryWidget.svelte";
 
 // Mock dependencies
-vi.mock("$app/navigation", () => ({
-  goto: vi.fn(),
+const { mockGoto } = vi.hoisted(() => ({
+  mockGoto: vi.fn(),
 }));
 
-// Mock portfolio service to prevent network noise
-vi.mock("@modules/portfolio-ts", () => ({
-  portfolioRxService: {
-    summary$: { subscribe: () => { } },
-    error$: { subscribe: () => { } },
-    usingMockData$: { subscribe: () => { } },
-    setConfig: vi.fn(),
-    getPortfolioSummary: vi.fn().mockResolvedValue({}), // Fixed: return resolving promise
-    get summary() {
-      return {
-        balance: 0,
-        currency: "USD",
-        changePercent: 0,
-      };
+vi.mock("$app/navigation", () => ({
+  goto: mockGoto,
+}));
+
+// Mock the Rune State directly
+vi.mock("../runes/PortfolioSummaryState.svelte", () => ({
+  portfolioSummaryState: {
+    summary: {
+      balance: 1000,
+      currency: "USD",
+      changePercent: 5,
     },
-    get error() {
-      return null;
-    },
-  },
-  schemas: {
-    PortfolioSummary: {
-      parse: vi.fn(),
-    },
+    loading: false,
+    error: null,
+    getPortfolioSummary: vi.fn(),
+    init: vi.fn(),
   },
 }));
+
+import { portfolioSummaryState } from "../runes/PortfolioSummaryState.svelte";
 
 describe("PortfolioSummaryWidget", () => {
-  it("can be imported and test runner executes", () => {
-    expect(PortfolioSummaryWidget).toBeTruthy();
-    expect(true).toBe(true);
+  beforeEach(() => {
+    vi.clearAllMocks();
+    // Reset mock state
+    // @ts-ignore
+    portfolioSummaryState.loading = false;
+    // @ts-ignore
+    portfolioSummaryState.error = null;
   });
 
-  // Keeping render test commented out for future implementation
-  // it("renders without crashing", () => {
-  //    const valuation = { ... };
-  //    render(PortfolioSummaryWidget, { valuation });
-  // });
+  it("should render and show balance from state", () => {
+    const { getByText } = render(PortfolioSummaryWidget);
+    // Balance is 1000 from mock initial state
+    expect(getByText(/1000/)).toBeTruthy();
+    expect(getByText(/USD/)).toBeTruthy();
+  });
+
+  it("should display loading state", () => {
+    // @ts-ignore
+    portfolioSummaryState.loading = true;
+    const { getByText } = render(PortfolioSummaryWidget);
+    expect(getByText(/Loading.../)).toBeTruthy();
+  });
 });

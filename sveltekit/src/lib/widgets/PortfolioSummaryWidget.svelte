@@ -1,8 +1,9 @@
 <script lang="ts">
     import type { IPortfolioSummaryWidgetStory } from "./PortfolioSummaryWidget.types";
-    import * as Card from "$lib/components/ui/card/index";
-    import { portfolioSummaryState } from "$lib/runes/PortfolioSummaryState.svelte";
+    import * as Card from "../components/ui/card/index";
+    import { portfolioSummaryState } from "../runes/PortfolioSummaryState.svelte";
     import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
 
     /**
      * PROPS INTEGRATION: Bridging Nested API/RxJS Data with Flattened Storybook Controls
@@ -24,6 +25,13 @@
         changePercent?: number;
         usingMockData?: boolean;
     } = $props();
+
+    onMount(() => {
+        portfolioSummaryState.init({
+            usingMockData: usingMockDataProp,
+            useSubscriptions: true,
+        });
+    });
 
     /**
      * GLOBAL STATE: RxJS Observable Integration
@@ -48,12 +56,6 @@
 
     let loading = $derived(loadingProp ?? portfolioSummaryState.loading);
     let error = $derived(errorProp ?? portfolioSummaryState.error ?? "");
-
-    $effect(() => {
-        if (usingMockDataProp !== undefined) {
-            portfolioSummaryState.init({ usingMockData: usingMockDataProp });
-        }
-    });
 
     let changeColor = $derived(getChangeColor(changePercent));
     let changeSign = $derived(getChangeSign(changePercent));
@@ -97,8 +99,11 @@
             </Card.Title> -->
             {#if loading}
                 <div class="flex items-center space-x-2">
-                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                    <span class="text-sm text-muted-foreground">Loading...</span>
+                    <div
+                        class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"
+                    ></div>
+                    <span class="text-sm text-muted-foreground">Loading...</span
+                    >
                 </div>
             {:else if error}
                 <div class="text-sm text-red-500 text-destructive">{error}</div>
@@ -107,7 +112,7 @@
                     {currency}
                     {balance.toFixed(2)}
                 </Card.Title>
-            {/if}            
+            {/if}
         </Card.Header>
         <Card.Content>
             <!-- <div class="flex items-center space-x-2 text-sm">
@@ -119,7 +124,7 @@
                 <p class="text-sm text-muted-foreground {changeColor}">
                     {changeSign}{changePercent.toFixed(2)}% from last month
                 </p>
-            {/if}            
+            {/if}
         </Card.Content>
     </Card.Root>
 </div>

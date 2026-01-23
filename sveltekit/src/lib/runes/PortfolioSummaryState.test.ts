@@ -1,4 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+// @vitest-environment jsdom
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { portfolioSummaryState } from "./PortfolioSummaryState.svelte";
 import { portfolioRxService } from "@modules/portfolio-ts";
 
@@ -36,7 +37,12 @@ vi.mock("@modules/portfolio-ts", async () => {
 describe("PortfolioSummaryState Rune", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset subjects if needed, though mostly we test state reflection
+    // Start subscriptions for testing
+    portfolioSummaryState.init({ useSubscriptions: true });
+  });
+
+  afterEach(() => {
+    portfolioSummaryState.dispose();
   });
 
   it("should initialize with default state", () => {
