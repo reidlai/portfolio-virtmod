@@ -38,6 +38,7 @@ tasks:
       - "github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
       - "run"
       - "-v"
+      - "--allow-parallel-runners"
     inputs:
       - "**/*.go"
       - "go.mod"
