@@ -30,7 +30,6 @@
 
 // export { PortfolioSummaryWidget };
 
-
 import type { IModuleBundle } from "virtual-module-core/types";
 import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
 
