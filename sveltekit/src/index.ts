@@ -32,7 +32,7 @@
 
 import type { IModuleBundle } from "virtual-module-core/types";
 import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
-
+import PortfolioPage from "./routes/+page.svelte";
 /**
  * Portfolio Virtual Module Bundle
  *
@@ -42,7 +42,7 @@ import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte"
  * Routes are now handled by SvelteKit 2 routing in src/routes/
  */
 const bundle: IModuleBundle = {
-  id: "watchlist-module",
+  id: "portfolio-module",
   widgets: [
     {
       id: "portfolio-summary",
@@ -52,6 +52,14 @@ const bundle: IModuleBundle = {
       size: "small",
     },
   ],
+  routes: [
+    {
+      path: "/portfolio",
+      type: "page",
+      component: PortfolioPage,
+    },
+  ],
+
 };
 
 export const init = async (_context: any): Promise<IModuleBundle> => {
