@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/reidlai/portfolio-virtmod/compare/v0.1.0...v0.1.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* app shell integration error ([86f2599](https://github.com/reidlai/portfolio-virtmod/commit/86f25991ccb94d2f66fccb23b03609a7ecd1b835))
+* missing root route ([29efdf2](https://github.com/reidlai/portfolio-virtmod/commit/29efdf2a6fdbcab4b39235e2e13a0ad242ec80ce))
+
 ## 1.0.0 (2026-01-04)
 
 
