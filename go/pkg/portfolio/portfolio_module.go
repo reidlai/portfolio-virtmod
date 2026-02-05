@@ -6,11 +6,11 @@ import (
 	"net/http"
 
 	"github.com/jirenius/go-res"
-	"github.com/reidlai/virtual-module-core/go/pkg/module"
-	genportfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	portfoliosvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
-	goahttp "goa.design/goa/v3/http"
+	genportfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
+	"github.com/reidlai/virtual-module-core/go/pkg/module"
 	"goa.design/clue/debug"
+	goahttp "goa.design/goa/v3/http"
 )
 
 // PortfolioModule implements HTTP and RES registration for portfolio
@@ -30,8 +30,6 @@ func NewModule(logger *slog.Logger) *PortfolioModule {
 		endpoints: endpoints,
 	}
 }
-
-
 
 // RegisterHTTP implements Registrar interface
 func (m *PortfolioModule) RegisterHTTP(
@@ -54,7 +52,6 @@ func (m *PortfolioModule) RegisterHTTP(
 	}
 	return result
 }
-
 
 // RegisterRES implements Registrar interface
 func (m *PortfolioModule) RegisterRES(resSvc *res.Service) {
