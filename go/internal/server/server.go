@@ -13,7 +13,7 @@ import (
 
 	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
-	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
+	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
 	"goa.design/goa/v3/middleware"

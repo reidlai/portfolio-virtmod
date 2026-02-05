@@ -12,7 +12,7 @@ import (
 	"time"
 
 	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
-	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg"
+	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
