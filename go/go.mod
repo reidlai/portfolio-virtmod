@@ -1,6 +1,6 @@
 module github.com/reidlai/ta-workspace/modules/portfolio/go
 
-go 1.24.12
+go 1.24.13
 
 require (
 	github.com/jirenius/go-res v0.5.1
