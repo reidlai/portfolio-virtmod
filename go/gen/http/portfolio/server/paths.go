@@ -4,9 +4,8 @@
 //
 // Command:
 // $ goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design
-// --output goa_gen
 
-package client
+package server
 
 // GetPortfolioSummaryPortfolioPath returns the URL path to the portfolio service getPortfolioSummary HTTP endpoint.
 func GetPortfolioSummaryPortfolioPath() string {

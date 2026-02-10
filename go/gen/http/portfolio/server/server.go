@@ -4,7 +4,6 @@
 //
 // Command:
 // $ goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design
-// --output goa_gen
 
 package server
 
@@ -12,7 +11,7 @@ import (
 	"context"
 	"net/http"
 
-	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
+	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
