@@ -160,7 +160,7 @@ export class PortfolioRxService {
 
     return new Promise((resolve, reject) => {
       // Construct WebSocket URL. Assumes apiBaseUrl is http/https and replaces with ws/wss
-      // @ts-ignore - zodios internal baseURL access might differ, but assuming standard config passed in constructor
+      // @ts-expect-error - zodios internal baseURL access might differ, but assuming standard config passed in constructor
       const wsUrl = this.apiClient.baseURL.replace(/^http/, "ws") + "/portfolio/summary/watch";
 
       try {
