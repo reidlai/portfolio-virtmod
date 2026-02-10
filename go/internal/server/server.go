@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"github.com/gorilla/websocket"
 	"os"
 	"os/signal"
 	"sync"
@@ -99,7 +100,7 @@ func handleHTTPServer(ctx context.Context, cfg *Config, endpoints *portfolioGen.
 		portfolioServer *portfolioSvr.Server
 	)
 	{
-		portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil)
+	portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil, &websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}, nil)
 		if cfg.Debug {
 			portfolioServer.Use(httpmdlwr.Debug(mux, os.Stdout))
 		}

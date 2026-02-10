@@ -4,6 +4,5 @@
 //
 // Command:
 // $ goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design
-// --output goa_gen
 
 package client

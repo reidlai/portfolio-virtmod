@@ -4,12 +4,11 @@
 //
 // Command:
 // $ goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design
-// --output goa_gen
 
 package client
 
 import (
-	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
+	portfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/gen/portfolio"
 	goa "goa.design/goa/v3/pkg"
 )
 

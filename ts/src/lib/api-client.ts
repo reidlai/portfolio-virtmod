@@ -21,6 +21,20 @@ const endpoints = makeApi([
     requestFormat: "json",
     response: PortfolioSummary,
   },
+  {
+    method: "get",
+    path: "/portfolio/summary/watch",
+    alias: "portfolio#watchPortfolioSummary",
+    requestFormat: "json",
+    response: z.void(),
+    errors: [
+      {
+        status: 101,
+        description: `Switching Protocols response.`,
+        schema: PortfolioSummary,
+      },
+    ],
+  },
 ]);
 
 export const api = new Zodios(endpoints);

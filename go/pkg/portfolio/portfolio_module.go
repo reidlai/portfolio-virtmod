@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/jirenius/go-res"
+	"github.com/gorilla/websocket"
 	portfoliosvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	genportfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	"github.com/reidlai/virtual-module-core/go/pkg/module"
@@ -38,7 +39,7 @@ func (m *PortfolioModule) RegisterHTTP(
 	enc func(context.Context, http.ResponseWriter) goahttp.Encoder,
 	eh func(context.Context, http.ResponseWriter, error),
 ) []module.MountPoint {
-	srv := portfoliosvr.New(m.endpoints, mux, dec, enc, eh, nil)
+	srv := portfoliosvr.New(m.endpoints, mux, dec, enc, eh, nil, &websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}, nil)
 	portfoliosvr.Mount(mux, srv)
 
 	// Convert Goa mount points to our generic format
