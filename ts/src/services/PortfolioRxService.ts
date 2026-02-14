@@ -160,8 +160,8 @@ export class PortfolioRxService {
 
     return new Promise((resolve, reject) => {
       // Construct WebSocket URL. Assumes apiBaseUrl is http/https and replaces with ws/wss
-      // @ts-expect-error - zodios internal baseURL access might differ, but assuming standard config passed in constructor
-      const wsUrl = this.apiClient.baseURL.replace(/^http/, "ws") + "/portfolio/summary/watch";
+      const baseUrl = this.apiClient.baseURL ?? "";
+      const wsUrl = baseUrl.replace(/^http/, "ws") + "/portfolio/summary/watch";
 
       try {
         const socket = new WebSocket(wsUrl);
@@ -185,17 +185,21 @@ export class PortfolioRxService {
           // 4. We parse it and update our state.
           try {
             const data = JSON.parse(event.data);
+            logger.debug(data);
             const summary = schemas.PortfolioSummary.parse(data);
             this.summary = summary;
 
-            // Resolve the promise once we have the first valid message, 
+            // Resolve the promise once we have the first valid message,
             // but the socket stays open for updates.
-            // Note: In a real RxJS stream, we wouldn't return a Promise that resolves once, 
+            // Note: In a real RxJS stream, we wouldn't return a Promise that resolves once,
             // but this matches the existing method signature.
             // Subsequent updates just update the subject.
             resolve(this.summary);
           } catch (e: unknown) {
-            logger.error({ err: e, data: event.data }, "Failed to parse websocket message");
+            logger.error(
+              { err: e, data: event.data },
+              "Failed to parse websocket message",
+            );
           }
         };
 
@@ -225,12 +229,12 @@ export class PortfolioRxService {
           // 6. For a real-time app, we might want to implement auto-reconnection logic here.
           logger.info("Portfolio WebSocket closed");
         };
-
       } catch (e: unknown) {
         // This catch block handles errors that occur during the WebSocket initialization itself,
         // before the connection is even established (e.g., invalid URL, network issues preventing connection attempt).
         logger.error({ err: e }, "Failed to initiate WebSocket connection");
-        const errorMessage = e instanceof Error ? e.message : "WebSocket init failed";
+        const errorMessage =
+          e instanceof Error ? e.message : "WebSocket init failed";
         this.error = errorMessage;
         reject(new Error(errorMessage));
       }

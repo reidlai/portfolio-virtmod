@@ -45,7 +45,7 @@ func TestHandleHTTPServer(t *testing.T) {
 	}
 
 	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
-	svc := portfolioPkg.NewPortfolio(logger)
+	svc := portfolioPkg.NewPortfolioService(logger)
 	endpoints := portfolioGen.NewEndpoints(svc)
 
 	errc := make(chan error, 1)

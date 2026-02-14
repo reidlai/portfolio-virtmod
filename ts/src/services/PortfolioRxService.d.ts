@@ -58,6 +58,7 @@ export declare class PortfolioRxService {
      * Actual API call
      */
     getPortfolioSummary(): Promise<PortfolioSummaryType>;
+    watchPortfolioSummary(): Promise<PortfolioSummaryType>;
 }
 export declare const portfolioRxService: PortfolioRxService;
 export {};

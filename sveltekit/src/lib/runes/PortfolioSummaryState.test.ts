@@ -19,6 +19,7 @@ vi.mock("@modules/portfolio-ts", async () => {
       error$: mockError$,
       usingMockData$: new BehaviorSubject(false),
       getPortfolioSummary: vi.fn().mockResolvedValue({}), // Return resolving promise
+      watchPortfolioSummary: vi.fn().mockResolvedValue({}), // Should also be mocked
       set usingMockData(value: boolean) {
         // @ts-ignore - this.usingMockData$ exists in the object
         this.usingMockData$.next(value);
@@ -63,7 +64,7 @@ describe("PortfolioSummaryState Rune", () => {
 
   it("should fetch summary when getPortfolioSummary is called", async () => {
     await portfolioSummaryState.getPortfolioSummary();
-    expect(portfolioRxService.getPortfolioSummary).toHaveBeenCalled();
+    expect(portfolioRxService.watchPortfolioSummary).toHaveBeenCalled();
   });
 
   // Note: Testing full reactivity in Node environment without Svelte context might be limited.

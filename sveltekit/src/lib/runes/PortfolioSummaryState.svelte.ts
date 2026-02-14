@@ -91,7 +91,7 @@ class PortfolioSummaryRune {
   public async getPortfolioSummary() {
     this.loading = true;
 
-    await portfolioRxService.getPortfolioSummary();
+    await portfolioRxService.watchPortfolioSummary();
 
     this.loading = false;
 
