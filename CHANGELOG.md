@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.0](https://github.com/reidlai/portfolio-virtmod/compare/v0.1.0...v0.2.0) (2026-02-14)
+
+
+### Features
+
+* add watch portfolio summary websocket support ([a7823fc](https://github.com/reidlai/portfolio-virtmod/commit/a7823fc85f96e0d88376c66fc421bda121f56665))
+* refactor package location ([39d1286](https://github.com/reidlai/portfolio-virtmod/commit/39d12861aeb8533248996f7e07f80149d6d1a15b))
+* switch to use virtual-module-core ([5005376](https://github.com/reidlai/portfolio-virtmod/commit/50053762ac4d925de35df55d0ca2c9b56736b336))
+* update golang version to fix SCA ([a98f598](https://github.com/reidlai/portfolio-virtmod/commit/a98f598f82f80d34525eb84cc7b2d3390d615828))
+
+
+### Bug Fixes
+
+* app shell integration error ([86f2599](https://github.com/reidlai/portfolio-virtmod/commit/86f25991ccb94d2f66fccb23b03609a7ecd1b835))
+* linting ([5cb6f07](https://github.com/reidlai/portfolio-virtmod/commit/5cb6f07830ebf6b48745e581fdabc042c397e51b))
+* linting error ([b975b14](https://github.com/reidlai/portfolio-virtmod/commit/b975b14e3a5a26cb05dd596e7b9eeb3330c74a32))
+* missing root route ([29efdf2](https://github.com/reidlai/portfolio-virtmod/commit/29efdf2a6fdbcab4b39235e2e13a0ad242ec80ce))
+* mono tasks ([0cae1e0](https://github.com/reidlai/portfolio-virtmod/commit/0cae1e024fd3a65e5572008148e40e3ffa57e813))
+* update virtual-module-core ([98cd33a](https://github.com/reidlai/portfolio-virtmod/commit/98cd33afcd17c6a8ed996a7d979db30466e0d1e9))
+* update virtual-module-core ([41770e5](https://github.com/reidlai/portfolio-virtmod/commit/41770e59e9cb853562bafb00a163b599c726cec2))
+* upgrade golang for SCA detected vulnerabilities ([eb9690b](https://github.com/reidlai/portfolio-virtmod/commit/eb9690b7339b7da54f165a1069961a58095f21a9))
+
 ## 1.0.0 (2026-01-04)
 
 
