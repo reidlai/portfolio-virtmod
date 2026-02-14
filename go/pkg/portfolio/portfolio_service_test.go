@@ -14,7 +14,7 @@ func TestPortfolioGetPortfolioSummary(t *testing.T) {
 	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
 
 	ctx := context.Background()
-	svc := NewPortfolio(logger)
+	svc := NewPortfolioService(logger)
 
 	// Act
 	res, err := svc.GetPortfolioSummary(ctx)

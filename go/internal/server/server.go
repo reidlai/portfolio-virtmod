@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"github.com/gorilla/websocket"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/gorilla/websocket"
 
 	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
@@ -44,7 +45,7 @@ func Run(cfg *Config) error {
 	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
 
 	// Initialize the service
-	portfolioSvc := portfolioPkg.NewPortfolio(logger)
+	portfolioSvc := portfolioPkg.NewPortfolioService(logger)
 
 	// Wrap the service with Goa endpoints
 	endpoints := portfolioGen.NewEndpoints(portfolioSvc)
@@ -100,7 +101,7 @@ func handleHTTPServer(ctx context.Context, cfg *Config, endpoints *portfolioGen.
 		portfolioServer *portfolioSvr.Server
 	)
 	{
-	portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil, &websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}, nil)
+		portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil, &websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}, nil)
 		if cfg.Debug {
 			portfolioServer.Use(httpmdlwr.Debug(mux, os.Stdout))
 		}

@@ -59,7 +59,6 @@ const bundle: IModuleBundle = {
       component: PortfolioPage,
     },
   ],
-
 };
 
 export const init = async (_context: any): Promise<IModuleBundle> => {

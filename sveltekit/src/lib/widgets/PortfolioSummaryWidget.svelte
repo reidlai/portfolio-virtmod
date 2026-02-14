@@ -86,11 +86,10 @@
 <div
     role="button"
     tabindex="0"
-    class="@container w-full h-full cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]"
+    class="@container w-full h-full p-4 cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]"
     onclick={handleCardClick}
 >
-    <!-- <Card.Root class="@container w-full h-full cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]"> -->
-    <Card.Root class="w-full">
+    <Card.Root class="w-full h-full">
         <Card.Header class="pb-2">
             <Card.Description>Total Balance</Card.Description>
             <!-- <Card.Title class="text-3xl font-bold tracking-tight">

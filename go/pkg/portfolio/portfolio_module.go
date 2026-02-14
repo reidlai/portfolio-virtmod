@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/jirenius/go-res"
 	"github.com/gorilla/websocket"
+	"github.com/jirenius/go-res"
 	portfoliosvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	genportfolio "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
 	"github.com/reidlai/virtual-module-core/go/pkg/module"
@@ -22,7 +22,7 @@ type PortfolioModule struct {
 
 // NewModule creates a new portfolio module with initialized endpoints
 func NewModule(logger *slog.Logger) *PortfolioModule {
-	svc := NewPortfolio(logger)
+	svc := NewPortfolioService(logger)
 	endpoints := genportfolio.NewEndpoints(svc)
 	endpoints.Use(debug.LogPayloads())
 

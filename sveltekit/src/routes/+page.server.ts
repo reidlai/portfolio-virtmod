@@ -1,9 +1,9 @@
 import type { PageServerLoad } from "./$types";
 // @ts-ignore
-import { MOCK_DATA } from "$env/static/public";
+import { env } from "$env/dynamic/public";
 
 export const load: PageServerLoad = async () => {
   return {
-    usingMockData: MOCK_DATA === "true",
+    usingMockData: env.PUBLIC_MOCK_DATA === "true",
   };
 };

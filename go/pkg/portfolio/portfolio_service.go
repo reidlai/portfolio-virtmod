@@ -18,8 +18,8 @@ type portfoliosrvc struct {
 // portfolio.Service interface." This is the "bridge" that ensures your struct implementation stays in sync with your interface definition.
 var _ genportfolio.Service = (*portfoliosrvc)(nil)
 
-// NewPortfolio returns the portfolio service implementation.
-func NewPortfolio(logger *slog.Logger) genportfolio.Service {
+// NewPortfolioService returns the portfolio service implementation.
+func NewPortfolioService(logger *slog.Logger) genportfolio.Service {
 	return &portfoliosrvc{
 		logger: logger,
 	}
@@ -50,7 +50,7 @@ func (s *portfoliosrvc) WatchPortfolioSummary(ctx context.Context, stream genpor
 		ChangePercent: 12.5,
 	}
 	if err := stream.Send(initial); err != nil {
-		s.logger.ErrorContext(ctx, "failed to send update", "error", err)		
+		s.logger.ErrorContext(ctx, "failed to send update", "error", err)
 		return err
 	}
 
@@ -79,4 +79,3 @@ func (s *portfoliosrvc) WatchPortfolioSummary(ctx context.Context, stream genpor
 		}
 	}
 }
-
