@@ -50,16 +50,16 @@ tasks:
     platform: "system"
 
   # Svelte Frontend
-  svelte-dev:
+  sveltekit-dev:
     deps: ["portfolio-sveltekit:dev"]
     local: true
     platform: "node"
 
-  svelte-build:
+  sveltekit-build:
     deps: ["portfolio-sveltekit:build"]
     platform: "node"
 
-  svelte-sync:
+  sveltekit-sync:
     deps: ["portfolio-sveltekit:sync"]
     platform: "node"
     local: true
@@ -67,21 +67,21 @@ tasks:
       runInCI: true
       persistent: false
 
-  svelte-check:
+  sveltekit-check:
     deps: ["portfolio-sveltekit:check"]
     platform: "node"
 
-  svelte-test:
+  sveltekit-test:
     deps: ["portfolio-sveltekit:test"]
     platform: "node"
 
-  svelte-lint:
+  sveltekit-lint:
     deps: ["portfolio-sveltekit:lint"]
     platform: "system"
     options:
       mergeInputs: "replace"
 
-  svelte-format:
+  sveltekit-format:
     deps: ["portfolio-sveltekit:format"]
     platform: "system"
     inputs: ["moon.yml"]
@@ -96,7 +96,7 @@ tasks:
   # Composite Tasks
   build:
     command: 'echo "Building all components"'
-    deps: ["go-build", "svelte-build"]
+    deps: ["go-build", "sveltekit-build"]
     platform: "system"
     outputs: []
     options:
@@ -106,7 +106,7 @@ tasks:
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test", "svelte-check"]
+    deps: ["go-test", "sveltekit-test", "sveltekit-check"]
     platform: "system"
     outputs: []
     options:
@@ -115,7 +115,7 @@ tasks:
 
   lint:
     command: 'echo "Linting all components"'
-    deps: ["go-lint", "svelte-lint"]
+    deps: ["go-lint", "sveltekit-lint"]
     platform: "system"
     inputs: ["moon.yml"]
     outputs: []
@@ -126,7 +126,7 @@ tasks:
 
   format:
     command: 'echo "Formatting all components"'
-    deps: ["go-format", "svelte-format"]
+    deps: ["go-format", "sveltekit-format"]
     platform: "system"
     inputs: ["moon.yml"]
     outputs: []
@@ -136,6 +136,6 @@ tasks:
       mergeOutputs: "replace"
 
   storybook:
-    deps: ["svelte-storybook"]
+    deps: ["sveltekit-storybook"]
     local: true
     platform: "system"
