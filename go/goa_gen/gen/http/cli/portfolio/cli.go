@@ -24,7 +24,7 @@ import (
 //	command (subcommand1|subcommand2|...)
 func UsageCommands() []string {
 	return []string{
-		"portfolio (get-portfolio-summary|watch-portfolio-summary)",
+		"portfolio get-portfolio-summary",
 	}
 }
 
@@ -42,19 +42,14 @@ func ParseEndpoint(
 	enc func(*http.Request) goahttp.Encoder,
 	dec func(*http.Response) goahttp.Decoder,
 	restore bool,
-	dialer goahttp.Dialer,
-	portfolioConfigurer *portfolioc.ConnConfigurer,
 ) (goa.Endpoint, any, error) {
 	var (
 		portfolioFlags = flag.NewFlagSet("portfolio", flag.ContinueOnError)
 
 		portfolioGetPortfolioSummaryFlags = flag.NewFlagSet("get-portfolio-summary", flag.ExitOnError)
-
-		portfolioWatchPortfolioSummaryFlags = flag.NewFlagSet("watch-portfolio-summary", flag.ExitOnError)
 	)
 	portfolioFlags.Usage = portfolioUsage
 	portfolioGetPortfolioSummaryFlags.Usage = portfolioGetPortfolioSummaryUsage
-	portfolioWatchPortfolioSummaryFlags.Usage = portfolioWatchPortfolioSummaryUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -93,9 +88,6 @@ func ParseEndpoint(
 			case "get-portfolio-summary":
 				epf = portfolioGetPortfolioSummaryFlags
 
-			case "watch-portfolio-summary":
-				epf = portfolioWatchPortfolioSummaryFlags
-
 			}
 
 		}
@@ -119,12 +111,10 @@ func ParseEndpoint(
 	{
 		switch svcn {
 		case "portfolio":
-			c := portfolioc.NewClient(scheme, host, doer, enc, dec, restore, dialer, portfolioConfigurer)
+			c := portfolioc.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "get-portfolio-summary":
 				endpoint = c.GetPortfolioSummary()
-			case "watch-portfolio-summary":
-				endpoint = c.WatchPortfolioSummary()
 			}
 		}
 	}
@@ -142,7 +132,6 @@ func portfolioUsage() {
 	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] portfolio COMMAND [flags]\n\n", os.Args[0])
 	fmt.Fprintln(os.Stderr, "COMMAND:")
 	fmt.Fprintln(os.Stderr, `    get-portfolio-summary: GetPortfolioSummary implements getPortfolioSummary.`)
-	fmt.Fprintln(os.Stderr, `    watch-portfolio-summary: WatchPortfolioSummary implements watchPortfolioSummary.`)
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Additional help:")
 	fmt.Fprintf(os.Stderr, "    %s portfolio COMMAND --help\n", os.Args[0])
@@ -161,20 +150,4 @@ func portfolioGetPortfolioSummaryUsage() {
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "portfolio get-portfolio-summary")
-}
-
-func portfolioWatchPortfolioSummaryUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] portfolio watch-portfolio-summary", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `WatchPortfolioSummary implements watchPortfolioSummary.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "portfolio watch-portfolio-summary")
 }

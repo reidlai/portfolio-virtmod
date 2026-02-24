@@ -12,7 +12,7 @@ import (
 	"time"
 
 	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
-	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio"
+	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -39,7 +39,7 @@ func TestHandleHTTPServer(t *testing.T) {
 
 	cfg := &Config{
 		Host:     "localhost",
-		Port:     fmt.Sprintf("%d", port),
+		Port:     port,
 		LogLevel: "ERROR", // Keep logs quiet during test
 		Debug:    true,
 	}

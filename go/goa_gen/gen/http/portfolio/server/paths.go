@@ -12,8 +12,3 @@ package server
 func GetPortfolioSummaryPortfolioPath() string {
 	return "/portfolio/summary"
 }
-
-// WatchPortfolioSummaryPortfolioPath returns the URL path to the portfolio service watchPortfolioSummary HTTP endpoint.
-func WatchPortfolioSummaryPortfolioPath() string {
-	return "/portfolio/summary/watch"
-}

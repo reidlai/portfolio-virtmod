@@ -21,3 +21,4 @@ vendor/
 # OS
 .DS_Store
 Thumbs.db
+go/portfolio-server

@@ -16,15 +16,13 @@ import (
 
 // Client is the "portfolio" service client.
 type Client struct {
-	GetPortfolioSummaryEndpoint   goa.Endpoint
-	WatchPortfolioSummaryEndpoint goa.Endpoint
+	GetPortfolioSummaryEndpoint goa.Endpoint
 }
 
 // NewClient initializes a "portfolio" service client given the endpoints.
-func NewClient(getPortfolioSummary, watchPortfolioSummary goa.Endpoint) *Client {
+func NewClient(getPortfolioSummary goa.Endpoint) *Client {
 	return &Client{
-		GetPortfolioSummaryEndpoint:   getPortfolioSummary,
-		WatchPortfolioSummaryEndpoint: watchPortfolioSummary,
+		GetPortfolioSummaryEndpoint: getPortfolioSummary,
 	}
 }
 
@@ -41,19 +39,4 @@ func (c *Client) GetPortfolioSummary(ctx context.Context) (res *PortfolioSummary
 		return
 	}
 	return ires.(*PortfolioSummary), nil
-}
-
-// WatchPortfolioSummary calls the "watchPortfolioSummary" endpoint of the
-// "portfolio" service.
-// WatchPortfolioSummary may return the following errors:
-//   - "unauthorized" (type Unauthorized)
-//   - "not_found" (type NotFound)
-//   - error: internal error
-func (c *Client) WatchPortfolioSummary(ctx context.Context) (res WatchPortfolioSummaryClientStream, err error) {
-	var ires any
-	ires, err = c.WatchPortfolioSummaryEndpoint(ctx, nil)
-	if err != nil {
-		return
-	}
-	return ires.(WatchPortfolioSummaryClientStream), nil
 }

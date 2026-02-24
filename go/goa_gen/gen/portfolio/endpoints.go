@@ -16,30 +16,19 @@ import (
 
 // Endpoints wraps the "portfolio" service endpoints.
 type Endpoints struct {
-	GetPortfolioSummary   goa.Endpoint
-	WatchPortfolioSummary goa.Endpoint
-}
-
-// WatchPortfolioSummaryEndpointInput holds both the payload and the server
-// stream of the "watchPortfolioSummary" method.
-type WatchPortfolioSummaryEndpointInput struct {
-	// Stream is the server stream used by the "watchPortfolioSummary" method to
-	// send data.
-	Stream WatchPortfolioSummaryServerStream
+	GetPortfolioSummary goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "portfolio" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
-		GetPortfolioSummary:   NewGetPortfolioSummaryEndpoint(s),
-		WatchPortfolioSummary: NewWatchPortfolioSummaryEndpoint(s),
+		GetPortfolioSummary: NewGetPortfolioSummaryEndpoint(s),
 	}
 }
 
 // Use applies the given middleware to all the "portfolio" service endpoints.
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.GetPortfolioSummary = m(e.GetPortfolioSummary)
-	e.WatchPortfolioSummary = m(e.WatchPortfolioSummary)
 }
 
 // NewGetPortfolioSummaryEndpoint returns an endpoint function that calls the
@@ -47,14 +36,5 @@ func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 func NewGetPortfolioSummaryEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req any) (any, error) {
 		return s.GetPortfolioSummary(ctx)
-	}
-}
-
-// NewWatchPortfolioSummaryEndpoint returns an endpoint function that calls the
-// method "watchPortfolioSummary" of service "portfolio".
-func NewWatchPortfolioSummaryEndpoint(s Service) goa.Endpoint {
-	return func(ctx context.Context, req any) (any, error) {
-		ep := req.(*WatchPortfolioSummaryEndpointInput)
-		return nil, s.WatchPortfolioSummary(ctx, ep.Stream)
 	}
 }

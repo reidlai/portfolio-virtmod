@@ -13,21 +13,27 @@ vi.mock("$app/navigation", () => ({
 }));
 
 // Mock the Rune State directly
-vi.mock("../runes/PortfolioSummaryState.svelte", () => ({
-  portfolioSummaryState: {
-    summary: {
-      balance: 1000,
-      currency: "USD",
-      changePercent: 5,
-    },
-    loading: false,
-    error: null,
-    getPortfolioSummary: vi.fn(),
-    init: vi.fn(),
+const mockPortfolioSummaryState = {
+  summary: {
+    balance: 1000,
+    currency: "USD",
+    changePercent: 5,
+  },
+  loading: false,
+  error: null,
+  getPortfolioSummary: vi.fn(),
+  watchPortfolioSummary: vi.fn(),
+  dispose: vi.fn(),
+};
+
+vi.mock("../states/PortfolioSummaryState.svelte", () => ({
+  PortfolioSummaryState: {
+    getInstance: vi.fn(() => mockPortfolioSummaryState),
   },
 }));
 
-import { portfolioSummaryState } from "../runes/PortfolioSummaryState.svelte";
+import { PortfolioSummaryState } from "../states/PortfolioSummaryState.svelte";
+const portfolioSummaryState = PortfolioSummaryState.getInstance();
 
 describe("PortfolioSummaryWidget", () => {
   beforeEach(() => {

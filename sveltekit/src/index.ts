@@ -1,66 +1,75 @@
-// /// <reference types="vite/client" />
-// import type { ModuleInit } from "virtual-module-core/types";
-// import { SvelteKitAdapter } from "virtual-module-core";
-// import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
-
-// // Create adapter instance
-// const adapter = new SvelteKitAdapter();
-
-// export const init: ModuleInit = async (_context) => {
-//   // 1. Discover SvelteKit routes
-//   const modules = import.meta.glob("./routes/**/+page.svelte", { eager: true });
-
-//   // 2. Parse using adapter to get routes
-//   const bundle = await adapter.parse(modules);
-
-//   // 3. Decorate bundle with module-specific metadata and widgets
-//   bundle.id = "portfolio-module";
-//   bundle.widgets = [
-//     {
-//       id: "portfolio-summary",
-//       title: "Portfolio Summary",
-//       component: PortfolioSummaryWidget,
-//       location: "dashboard",
-//       size: "large",
-//     },
-//   ];
-
-//   return bundle;
-// };
-
-// export { PortfolioSummaryWidget };
-
-import type { IModuleBundle } from "virtual-module-core/types";
+import type { ModuleInit } from "virtual-module-core/types";
+import { SvelteKitAdapter } from "virtual-module-core";
 import PortfolioSummaryWidget from "./lib/widgets/PortfolioSummaryWidget.svelte";
-import PortfolioPage from "./routes/+page.svelte";
+import { createApiClient } from "./lib/api-client/index";
+import { PortfolioSummaryState } from "./lib/states/PortfolioSummaryState.svelte";
+
 /**
- * Portfolio Virtual Module Bundle
- *
- * This module provides widgets for viewing watchlist summary and browsing exchanges.
- * All widgets integrate with RxJS services backed by Go APIs.
- *
- * Routes are now handled by SvelteKit 2 routing in src/routes/
+ * Portfolio Virtual Module
  */
-const bundle: IModuleBundle = {
-  id: "portfolio-module",
-  widgets: [
-    {
-      id: "portfolio-summary",
-      title: "Portfolio Summary",
-      component: PortfolioSummaryWidget,
-      location: "dashboard",
-      size: "small",
-    },
-  ],
-  routes: [
-    {
-      path: "/portfolio",
-      type: "page",
-      component: PortfolioPage,
-    },
-  ],
+export class PortfolioModule {
+  private adapter: SvelteKitAdapter;
+
+  constructor() {
+    this.adapter = new SvelteKitAdapter();
+  }
+
+  /**
+   * Initialize the portfolio module.
+   * Discovers routes dynamically and returns the module bundle.
+   */
+  async init(context: any): Promise<any> {
+
+    // @ts-ignore
+    const sharedAxios = typeof context.getService === 'function'
+      ? context.getService("apiClient")
+      : (context as any).resolve ? (context as any).resolve("apiClient") : undefined;
+
+    if (sharedAxios) {
+      // @ts-ignore
+      const baseURL = sharedAxios.defaults?.baseURL || "/";
+      const portfolioApi = createApiClient(baseURL, { axiosInstance: sharedAxios });
+      PortfolioSummaryState.getInstance().apiClient = portfolioApi;
+    }
+
+    // 2. Discover SvelteKit routes dynamically
+    const routes = import.meta.glob("./routes/**/+*.{svelte,ts}", {
+      eager: true,
+    });
+
+    // 3. Parse using adapter to get routes mapping
+    const bundle = await this.adapter.parse(routes);
+
+    // 3. Decorate bundle with module-specific metadata and widgets
+    bundle.id = "portfolio-module";
+    bundle.widgets = [
+      {
+        id: "portfolio-summary",
+        title: "Portfolio Summary",
+        component: PortfolioSummaryWidget,
+        location: "dashboard",
+        size: "small",
+      },
+    ];
+
+    return bundle;
+  }
+}
+
+// Instantiate the module
+const portfolioModule = new PortfolioModule();
+
+/**
+ * Default export as the module instance.
+ * ModuleLoader can access .init on this instance.
+ */
+export default portfolioModule;
+
+/**
+ * Named export for explicit initialization if needed.
+ */
+export const init: ModuleInit = async (context: any) => {
+  return portfolioModule.init(context);
 };
 
-export const init = async (_context: any): Promise<IModuleBundle> => {
-  return bundle;
-};
+export { PortfolioSummaryWidget };

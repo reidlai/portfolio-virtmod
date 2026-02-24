@@ -7,7 +7,12 @@ const PortfolioSummary = z
     change_percent: z.number(),
     currency: z.string(),
   })
-  .passthrough();
+  .passthrough()
+  .transform((data) => ({
+    balance: data.balance,
+    changePercent: data.change_percent,
+    currency: data.currency,
+  }));
 
 export const schemas = {
   PortfolioSummary,
@@ -21,23 +26,7 @@ const endpoints = makeApi([
     requestFormat: "json",
     response: PortfolioSummary,
   },
-  {
-    method: "get",
-    path: "/portfolio/summary/watch",
-    alias: "portfolio#watchPortfolioSummary",
-    requestFormat: "json",
-    response: z.void(),
-    errors: [
-      {
-        status: 101,
-        description: `Switching Protocols response.`,
-        schema: PortfolioSummary,
-      },
-    ],
-  },
 ]);
-
-export const api = new Zodios(endpoints);
 
 export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
   return new Zodios(baseUrl, endpoints, options);

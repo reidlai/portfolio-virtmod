@@ -32,12 +32,4 @@ var _ = Service("portfolio", func() {
 			Response(StatusOK)
 		})
 	})
-	Method("watchPortfolioSummary", func() {
-		StreamingResult(PortfolioSummarySchema)
-		HTTP(func() {
-			GET("/portfolio/summary/watch")
-			Response(StatusOK)
-		})
-
-	})
 })

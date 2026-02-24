@@ -24,17 +24,6 @@ type GetPortfolioSummaryResponseBody struct {
 	ChangePercent *float64 `form:"change_percent,omitempty" json:"change_percent,omitempty" xml:"change_percent,omitempty"`
 }
 
-// WatchPortfolioSummaryResponseBody is the type of the "portfolio" service
-// "watchPortfolioSummary" endpoint HTTP response body.
-type WatchPortfolioSummaryResponseBody struct {
-	// Total Balance
-	Balance *float64 `form:"balance,omitempty" json:"balance,omitempty" xml:"balance,omitempty"`
-	// Currency Code
-	Currency *string `form:"currency,omitempty" json:"currency,omitempty" xml:"currency,omitempty"`
-	// Change Percentage
-	ChangePercent *float64 `form:"change_percent,omitempty" json:"change_percent,omitempty" xml:"change_percent,omitempty"`
-}
-
 // NewGetPortfolioSummaryPortfolioSummaryOK builds a "portfolio" service
 // "getPortfolioSummary" endpoint result from a HTTP "OK" response.
 func NewGetPortfolioSummaryPortfolioSummaryOK(body *GetPortfolioSummaryResponseBody) *portfolio.PortfolioSummary {
@@ -47,36 +36,9 @@ func NewGetPortfolioSummaryPortfolioSummaryOK(body *GetPortfolioSummaryResponseB
 	return v
 }
 
-// NewWatchPortfolioSummaryPortfolioSummaryOK builds a "portfolio" service
-// "watchPortfolioSummary" endpoint result from a HTTP "OK" response.
-func NewWatchPortfolioSummaryPortfolioSummaryOK(body *WatchPortfolioSummaryResponseBody) *portfolio.PortfolioSummary {
-	v := &portfolio.PortfolioSummary{
-		Balance:       *body.Balance,
-		Currency:      *body.Currency,
-		ChangePercent: *body.ChangePercent,
-	}
-
-	return v
-}
-
 // ValidateGetPortfolioSummaryResponseBody runs the validations defined on
 // GetPortfolioSummaryResponseBody
 func ValidateGetPortfolioSummaryResponseBody(body *GetPortfolioSummaryResponseBody) (err error) {
-	if body.Balance == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("balance", "body"))
-	}
-	if body.Currency == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("currency", "body"))
-	}
-	if body.ChangePercent == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("change_percent", "body"))
-	}
-	return
-}
-
-// ValidateWatchPortfolioSummaryResponseBody runs the validations defined on
-// WatchPortfolioSummaryResponseBody
-func ValidateWatchPortfolioSummaryResponseBody(body *WatchPortfolioSummaryResponseBody) (err error) {
 	if body.Balance == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("balance", "body"))
 	}

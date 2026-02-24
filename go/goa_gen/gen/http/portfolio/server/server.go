@@ -19,9 +19,8 @@ import (
 
 // Server lists the portfolio service endpoint HTTP handlers.
 type Server struct {
-	Mounts                []*MountPoint
-	GetPortfolioSummary   http.Handler
-	WatchPortfolioSummary http.Handler
+	Mounts              []*MountPoint
+	GetPortfolioSummary http.Handler
 }
 
 // MountPoint holds information about the mounted endpoints.
@@ -48,19 +47,12 @@ func New(
 	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
 	errhandler func(context.Context, http.ResponseWriter, error),
 	formatter func(ctx context.Context, err error) goahttp.Statuser,
-	upgrader goahttp.Upgrader,
-	configurer *ConnConfigurer,
 ) *Server {
-	if configurer == nil {
-		configurer = &ConnConfigurer{}
-	}
 	return &Server{
 		Mounts: []*MountPoint{
 			{"GetPortfolioSummary", "GET", "/portfolio/summary"},
-			{"WatchPortfolioSummary", "GET", "/portfolio/summary/watch"},
 		},
-		GetPortfolioSummary:   NewGetPortfolioSummaryHandler(e.GetPortfolioSummary, mux, decoder, encoder, errhandler, formatter),
-		WatchPortfolioSummary: NewWatchPortfolioSummaryHandler(e.WatchPortfolioSummary, mux, decoder, encoder, errhandler, formatter, upgrader, configurer.WatchPortfolioSummaryFn),
+		GetPortfolioSummary: NewGetPortfolioSummaryHandler(e.GetPortfolioSummary, mux, decoder, encoder, errhandler, formatter),
 	}
 }
 
@@ -70,7 +62,6 @@ func (s *Server) Service() string { return "portfolio" }
 // Use wraps the server handlers with the given middleware.
 func (s *Server) Use(m func(http.Handler) http.Handler) {
 	s.GetPortfolioSummary = m(s.GetPortfolioSummary)
-	s.WatchPortfolioSummary = m(s.WatchPortfolioSummary)
 }
 
 // MethodNames returns the methods served.
@@ -79,7 +70,6 @@ func (s *Server) MethodNames() []string { return portfolio.MethodNames[:] }
 // Mount configures the mux to serve the portfolio endpoints.
 func Mount(mux goahttp.Muxer, h *Server) {
 	MountGetPortfolioSummaryHandler(mux, h.GetPortfolioSummary)
-	MountWatchPortfolioSummaryHandler(mux, h.WatchPortfolioSummary)
 }
 
 // Mount configures the mux to serve the portfolio endpoints.
@@ -129,72 +119,6 @@ func NewGetPortfolioSummaryHandler(
 			if errhandler != nil {
 				errhandler(ctx, w, err)
 			}
-		}
-	})
-}
-
-// MountWatchPortfolioSummaryHandler configures the mux to serve the
-// "portfolio" service "watchPortfolioSummary" endpoint.
-func MountWatchPortfolioSummaryHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := h.(http.HandlerFunc)
-	if !ok {
-		f = func(w http.ResponseWriter, r *http.Request) {
-			h.ServeHTTP(w, r)
-		}
-	}
-	mux.Handle("GET", "/portfolio/summary/watch", f)
-}
-
-// NewWatchPortfolioSummaryHandler creates a HTTP handler which loads the HTTP
-// request and calls the "portfolio" service "watchPortfolioSummary" endpoint.
-func NewWatchPortfolioSummaryHandler(
-	endpoint goa.Endpoint,
-	mux goahttp.Muxer,
-	decoder func(*http.Request) goahttp.Decoder,
-	encoder func(context.Context, http.ResponseWriter) goahttp.Encoder,
-	errhandler func(context.Context, http.ResponseWriter, error),
-	formatter func(ctx context.Context, err error) goahttp.Statuser,
-	upgrader goahttp.Upgrader,
-	configurer goahttp.ConnConfigureFunc,
-) http.Handler {
-	var (
-		encodeError = goahttp.ErrorEncoder(encoder, formatter)
-	)
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := context.WithValue(r.Context(), goahttp.AcceptTypeKey, r.Header.Get("Accept"))
-		ctx = context.WithValue(ctx, goa.MethodKey, "watchPortfolioSummary")
-		ctx = context.WithValue(ctx, goa.ServiceKey, "portfolio")
-		var err error
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithCancel(ctx)
-		v := &portfolio.WatchPortfolioSummaryEndpointInput{
-			Stream: &WatchPortfolioSummaryServerStream{
-				upgrader:   upgrader,
-				configurer: configurer,
-				cancel:     cancel,
-				w:          w,
-				r:          r,
-			},
-		}
-		_, err = endpoint(ctx, v)
-		if err != nil {
-			var stream *WatchPortfolioSummaryServerStream
-			if wrapper, ok := v.Stream.(interface{ Unwrap() any }); ok {
-				stream = wrapper.Unwrap().(*WatchPortfolioSummaryServerStream)
-			} else {
-				stream = v.Stream.(*WatchPortfolioSummaryServerStream)
-			}
-			if stream != nil && stream.conn != nil {
-				// Response writer has been hijacked, do not encode the error
-				if errhandler != nil {
-					errhandler(ctx, w, err)
-				}
-				return
-			}
-			if err := encodeError(ctx, w, err); err != nil && errhandler != nil {
-				errhandler(ctx, w, err)
-			}
-			return
 		}
 	})
 }

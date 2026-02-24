@@ -1,10 +1,16 @@
 # https://moonrepo.dev/docs/config/project
-id: 'portfolio'
+id: "portfolio"
 language: "unknown" # Mixed/Polyglot
 
 fileGroups:
   go: ["go/**/*"]
-  sveltekit: ["sveltekit/**/*", "!sveltekit/node_modules/**", "!sveltekit/dist/**", "**/.*/**"]
+  sveltekit:
+    [
+      "sveltekit/**/*",
+      "!sveltekit/node_modules/**",
+      "!sveltekit/dist/**",
+      "**/.*/**",
+    ]
   ts: ["ts/**/*", "!ts/node_modules/**", "**/.*/**"]
 
 tasks:
@@ -65,7 +71,6 @@ tasks:
     deps: ["portfolio-sveltekit:check"]
     platform: "node"
 
-
   svelte-test:
     deps: ["portfolio-sveltekit:test"]
     platform: "node"
@@ -74,76 +79,61 @@ tasks:
     deps: ["portfolio-sveltekit:lint"]
     platform: "system"
     options:
-      mergeInputs: 'replace'
+      mergeInputs: "replace"
 
   svelte-format:
     deps: ["portfolio-sveltekit:format"]
     platform: "system"
     inputs: ["moon.yml"]
     options:
-      mergeInputs: 'replace'
+      mergeInputs: "replace"
 
   svelte-storybook:
     deps: ["portfolio-sveltekit:storybook"]
     platform: "node"
     local: true
 
-  # TypeScript Shared Lib
-  ts-build:
-    deps: ["portfolio-ts:build"]
-    platform: "node"
-
-  ts-lint:
-    deps: ["portfolio-ts:lint"]
-    platform: "system"
-    options:
-      mergeInputs: 'replace'
-
-  ts-test:
-    deps: ["portfolio-ts:test"]
-    platform: "node"
-
-  ts-format:
-    deps: ["portfolio-ts:format"]
-    platform: "system"
-    inputs: ["moon.yml"]
-    options:
-      mergeInputs: 'replace'
-
   # Composite Tasks
   build:
     command: 'echo "Building all components"'
-    deps: ["go-build", "svelte-build", "ts-build"]
-    outputs: []
+    deps: ["go-build", "svelte-build"]
     platform: "system"
+    outputs: []
     options:
-      mergeArgs: 'replace'
-      mergeOutputs: 'replace'
+      mergeArgs: "replace"
+      mergeInputs: "replace"
+      mergeOutputs: "replace"
 
   test:
     command: 'echo "Testing all components"'
-    deps: ["go-test", "svelte-test", "ts-test", "svelte-check"]
+    deps: ["go-test", "svelte-test", "svelte-check"]
     platform: "system"
+    outputs: []
     options:
-      mergeArgs: 'replace'
+      mergeArgs: "replace"
+      mergeOutputs: "replace"
 
   lint:
     command: 'echo "Linting all components"'
-    deps: ["go-lint", "ts-lint", "svelte-lint"]
+    deps: ["go-lint", "svelte-lint"]
     platform: "system"
     inputs: ["moon.yml"]
+    outputs: []
     options:
-      mergeArgs: 'replace'
-      mergeInputs: 'replace'
+      mergeArgs: "replace"
+      mergeInputs: "replace"
+      mergeOutputs: "replace"
 
   format:
     command: 'echo "Formatting all components"'
-    deps: ["go-format", "ts-format", "svelte-format"]
+    deps: ["go-format", "svelte-format"]
     platform: "system"
     inputs: ["moon.yml"]
+    outputs: []
     options:
-      mergeArgs: 'replace'
-      mergeInputs: 'replace'
+      mergeArgs: "replace"
+      mergeInputs: "replace"
+      mergeOutputs: "replace"
 
   storybook:
     deps: ["svelte-storybook"]

@@ -23,23 +23,6 @@ paths:
                                 balance: 0.8755333377922939
                                 change_percent: 0.023360215353720726
                                 currency: Aut culpa consequatur necessitatibus.
-    /portfolio/summary/watch:
-        get:
-            tags:
-                - portfolio
-            summary: watchPortfolioSummary portfolio
-            operationId: portfolio#watchPortfolioSummary
-            responses:
-                "101":
-                    description: Switching Protocols response.
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/PortfolioSummary'
-                            example:
-                                balance: 0.5157822629951638
-                                change_percent: 0.6309358093655018
-                                currency: Aperiam suscipit et nobis.
 components:
     schemas:
         PortfolioSummary:
@@ -48,21 +31,21 @@ components:
                 balance:
                     type: number
                     description: Total Balance
-                    example: 0.12847725005648608
+                    example: 0.47723201288775363
                     format: double
                 change_percent:
                     type: number
                     description: Change Percentage
-                    example: 0.061940674743277156
+                    example: 0.2604217807206088
                     format: double
                 currency:
                     type: string
                     description: Currency Code
-                    example: Nisi sit.
+                    example: Quia ratione aliquam consectetur sunt amet non.
             example:
-                balance: 0.7331181742368418
-                change_percent: 0.12189459614448835
-                currency: Aut in aut vero consequatur.
+                balance: 0.12847725005648608
+                change_percent: 0.061940674743277156
+                currency: Nisi sit.
             required:
                 - balance
                 - currency

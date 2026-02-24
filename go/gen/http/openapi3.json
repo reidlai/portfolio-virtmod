@@ -1,1 +1,89 @@
-{"openapi":"3.0.3","info":{"title":"Goa API","version":"0.0.1"},"servers":[{"url":"http://localhost:80","description":"Default server for portfolio"}],"paths":{"/portfolio/summary":{"get":{"tags":["portfolio"],"summary":"getPortfolioSummary portfolio","operationId":"portfolio#getPortfolioSummary","responses":{"200":{"description":"OK response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PortfolioSummary"},"example":{"balance":0.8755333377922939,"change_percent":0.023360215353720726,"currency":"Aut culpa consequatur necessitatibus."}}}}}}},"/portfolio/summary/watch":{"get":{"tags":["portfolio"],"summary":"watchPortfolioSummary portfolio","operationId":"portfolio#watchPortfolioSummary","responses":{"101":{"description":"Switching Protocols response.","content":{"application/json":{"schema":{"$ref":"#/components/schemas/PortfolioSummary"},"example":{"balance":0.5157822629951638,"change_percent":0.6309358093655018,"currency":"Aperiam suscipit et nobis."}}}}}}}},"components":{"schemas":{"PortfolioSummary":{"type":"object","properties":{"balance":{"type":"number","description":"Total Balance","example":0.12847725005648608,"format":"double"},"change_percent":{"type":"number","description":"Change Percentage","example":0.061940674743277156,"format":"double"},"currency":{"type":"string","description":"Currency Code","example":"Nisi sit."}},"example":{"balance":0.7331181742368418,"change_percent":0.12189459614448835,"currency":"Aut in aut vero consequatur."},"required":["balance","currency","change_percent"]}}},"tags":[{"name":"portfolio","description":"Portfolio API"}]}
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Goa API", "version": "0.0.1" },
+  "servers": [
+    {
+      "url": "http://localhost:80",
+      "description": "Default server for portfolio"
+    }
+  ],
+  "paths": {
+    "/portfolio/summary": {
+      "get": {
+        "tags": ["portfolio"],
+        "summary": "getPortfolioSummary portfolio",
+        "operationId": "portfolio#getPortfolioSummary",
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PortfolioSummary" },
+                "example": {
+                  "balance": 0.8755333377922939,
+                  "change_percent": 0.023360215353720726,
+                  "currency": "Aut culpa consequatur necessitatibus."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/portfolio/summary/watch": {
+      "get": {
+        "tags": ["portfolio"],
+        "summary": "watchPortfolioSummary portfolio",
+        "operationId": "portfolio#watchPortfolioSummary",
+        "responses": {
+          "101": {
+            "description": "Switching Protocols response.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PortfolioSummary" },
+                "example": {
+                  "balance": 0.5157822629951638,
+                  "change_percent": 0.6309358093655018,
+                  "currency": "Aperiam suscipit et nobis."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PortfolioSummary": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "number",
+            "description": "Total Balance",
+            "example": 0.12847725005648608,
+            "format": "double"
+          },
+          "change_percent": {
+            "type": "number",
+            "description": "Change Percentage",
+            "example": 0.061940674743277156,
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency Code",
+            "example": "Nisi sit."
+          }
+        },
+        "example": {
+          "balance": 0.7331181742368418,
+          "change_percent": 0.12189459614448835,
+          "currency": "Aut in aut vero consequatur."
+        },
+        "required": ["balance", "currency", "change_percent"]
+      }
+    }
+  },
+  "tags": [{ "name": "portfolio", "description": "Portfolio API" }]
+}
