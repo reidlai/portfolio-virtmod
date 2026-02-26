@@ -1,6 +1,7 @@
 $schema: "https://moonrepo.dev/schemas/project.json"
 id: "portfolio-sveltekit"
-type: "library"
+project:
+  description: "Portfolio SvelteKit"
 stack: "frontend"
 
 tasks:
@@ -13,11 +14,11 @@ tasks:
 
   dev:
     command: "vite dev"
-    local: true
+    preset: "server"
 
   storybook:
     command: "pnpm run story:dev"
-    local: true
+    preset: "server"
 
   sync:
     command: "svelte-kit sync"

@@ -42,7 +42,7 @@ tasks:
     command: "cd go && go run ."
     inputs: ["go/**/*"]
     platform: "system"
-    local: true
+    preset: "server"
 
   goa-gen:
     command: "cd go && goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
@@ -52,7 +52,7 @@ tasks:
   # Svelte Frontend
   sveltekit-dev:
     deps: ["portfolio-sveltekit:dev"]
-    local: true
+    preset: "server"
     platform: "node"
 
   sveltekit-build:
@@ -62,7 +62,7 @@ tasks:
   sveltekit-sync:
     deps: ["portfolio-sveltekit:sync"]
     platform: "node"
-    local: true
+    preset: "server"
     options:
       runInCI: true
       persistent: false
@@ -91,7 +91,7 @@ tasks:
   sveltekit-storybook:
     deps: ["portfolio-sveltekit:storybook"]
     platform: "node"
-    local: true
+    preset: "server"
 
   # Composite Tasks
   build:
@@ -137,5 +137,5 @@ tasks:
 
   storybook:
     deps: ["sveltekit-storybook"]
-    local: true
+    preset: "server"
     platform: "system"

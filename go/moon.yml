@@ -1,6 +1,6 @@
 $schema: "https://moonrepo.dev/schemas/project.json"
 id: "portfolio-go"
-type: "library"
+layer: "library"
 stack: "backend"
 
 tasks:
@@ -84,4 +84,4 @@ tasks:
     command: "./bin/portfolio-server api-server start"
     deps:
       - "build-server"
-    local: true
+    preset: "server"
