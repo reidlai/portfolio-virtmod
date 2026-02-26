@@ -18,16 +18,16 @@ tasks:
   go-build:
     command: "go build -v ./go/..."
     inputs: ["go/**/*"]
-    platform: "system"
+    toolchain: "system"
 
   go-test:
     command: "go test -v ./go/..."
     inputs: ["go/**/*", "!go/goa_gen/**"]
-    platform: "system"
+    toolchain: "system"
 
   go-lint:
     deps: ["portfolio-go:lint"]
-    platform: "system"
+    toolchain: "system"
     options:
       mergeInputs: "replace"
 
@@ -41,27 +41,27 @@ tasks:
   go-run:
     command: "cd go && go run ."
     inputs: ["go/**/*"]
-    platform: "system"
+    toolchain: "system"
     preset: "server"
 
   goa-gen:
     command: "cd go && goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
     inputs: ["go/design/**/*"]
-    platform: "system"
+    toolchain: "system"
 
   # Svelte Frontend
   sveltekit-dev:
     deps: ["portfolio-sveltekit:dev"]
     preset: "server"
-    platform: "node"
+    toolchain: "node"
 
   sveltekit-build:
     deps: ["portfolio-sveltekit:build"]
-    platform: "node"
+    toolchain: "node"
 
   sveltekit-sync:
     deps: ["portfolio-sveltekit:sync"]
-    platform: "node"
+    toolchain: "node"
     preset: "server"
     options:
       runInCI: true
@@ -69,35 +69,35 @@ tasks:
 
   sveltekit-check:
     deps: ["portfolio-sveltekit:check"]
-    platform: "node"
+    toolchain: "node"
 
   sveltekit-test:
     deps: ["portfolio-sveltekit:test"]
-    platform: "node"
+    toolchain: "node"
 
   sveltekit-lint:
     deps: ["portfolio-sveltekit:lint"]
-    platform: "system"
+    toolchain: "system"
     options:
       mergeInputs: "replace"
 
   sveltekit-format:
     deps: ["portfolio-sveltekit:format"]
-    platform: "system"
+    toolchain: "system"
     inputs: ["moon.yml"]
     options:
       mergeInputs: "replace"
 
   sveltekit-storybook:
     deps: ["portfolio-sveltekit:storybook"]
-    platform: "node"
+    toolchain: "node"
     preset: "server"
 
   # Composite Tasks
   build:
     command: 'echo "Building all components"'
     deps: ["go-build", "sveltekit-build"]
-    platform: "system"
+    toolchain: "system"
     outputs: []
     options:
       mergeArgs: "replace"
@@ -107,7 +107,7 @@ tasks:
   test:
     command: 'echo "Testing all components"'
     deps: ["go-test", "sveltekit-test", "sveltekit-check"]
-    platform: "system"
+    toolchain: "system"
     outputs: []
     options:
       mergeArgs: "replace"
@@ -116,7 +116,7 @@ tasks:
   lint:
     command: 'echo "Linting all components"'
     deps: ["go-lint", "sveltekit-lint"]
-    platform: "system"
+    toolchain: "system"
     inputs: ["moon.yml"]
     outputs: []
     options:
@@ -127,7 +127,7 @@ tasks:
   format:
     command: 'echo "Formatting all components"'
     deps: ["go-format", "sveltekit-format"]
-    platform: "system"
+    toolchain: "system"
     inputs: ["moon.yml"]
     outputs: []
     options:
@@ -138,4 +138,4 @@ tasks:
   storybook:
     deps: ["sveltekit-storybook"]
     preset: "server"
-    platform: "system"
+    toolchain: "system"

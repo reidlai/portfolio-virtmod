@@ -47,7 +47,7 @@ tasks:
 
   test:
     command: "vitest run"
-    platform: node
+    toolchain: "node"
     options:
       mergeArgs: "replace"
 
@@ -61,7 +61,7 @@ tasks:
         "!storybook-static/**",
         "**/.*/**",
       ]
-    platform: node
+    toolchain: "node"
     options:
       mergeArgs: "replace"
 

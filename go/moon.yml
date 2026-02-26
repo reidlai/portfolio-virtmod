@@ -26,7 +26,7 @@ tasks:
       - "go.mod"
       - "go.sum"
       - "!**/.*/**"
-    platform: "system"
+    toolchain: "system"
     options:
       mergeArgs: "replace"
       mergeInputs: "replace"
