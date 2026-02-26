@@ -39,15 +39,13 @@ tasks:
       mergeInputs: "replace"
 
   go-run:
-    command: "cd go && go run ."
+    script: "cd go && go run ."
     inputs: ["go/**/*"]
-    toolchain: "system"
     preset: "server"
 
   goa-gen:
-    command: "cd go && goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
+    script: "cd go && goa gen github.com/reidlai/ta-workspace/modules/portfolio/go/design"
     inputs: ["go/design/**/*"]
-    toolchain: "system"
 
   # Svelte Frontend
   sveltekit-dev:
