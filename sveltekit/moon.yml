@@ -29,7 +29,7 @@ tasks:
       - "sync"
 
   lint:
-    command: "svelte-check --tsconfig ./tsconfig.json"
+    command: "svelte-check --tsconfig ./tsconfig.json --ignore ../node_modules"
     inputs:
       [
         "src/**/*",
