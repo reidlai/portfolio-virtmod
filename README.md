@@ -17,13 +17,13 @@ As applications grow, managing coding complexity and coordinating multiple teams
 
 - **Distributed Development**: allowing distinct full-stack teams to own features from backend to frontend.
 - **Reduced Complexity**: breaking down the application into manageable, self-contained units.
-- **Standardized Integration**: decoupling modules using ReactiveX (RxJS) for robust, end-to-end data flow.
+- **Standardized Integration**: decoupling modules using Svelte 5 Runes for reactive, end-to-end data flow.
 - **Feature Injection**: utilizing Dependency Injection (DI) to seamlessly plug new or updated capabilities into the host AppShell without tight coupling.
 
 ## Highlights
 
-- **Polyglot Design**: Seamlessly combines Go (backend logic), Svelte (UI widgets), and TypeScript (shared types/logic).
-- **SOLID Architecture**: Enforces strict boundaries via Dependency Injection (Go) and Interface Contracts (TypeScript).
+- **Polyglot Design**: Seamlessly combines Go (backend logic) and SvelteKit (UI widgets with Svelte 5 Runes).
+- **SOLID Architecture**: Enforces strict boundaries via Dependency Injection (Go) and Interface Contracts (virtual-module-core).
 - **End-to-End Delivery**: Autonomous build and deployment lifecycle that integrates into the host AppShell via standard protocols.
 - **DevSecOps Native**: Built-in 6-stage security pipeline (SCA, SAST, Threat Modeling) ensuring enterprise-grade compliance.
 
@@ -112,7 +112,7 @@ This is a **Virtual Module** designed to integrate into the main [ta-workspace](
 This module follows the **Virtual Module** pattern:
 
 - **NOT a standalone service** - designed to be embedded into the host application
-- **Polyglot components**: Go backend services + Svelte UI widgets + TypeScript contracts
+- **Polyglot components**: Go backend services + SvelteKit UI widgets
 - **Zero infrastructure** - no persistent state, inherits host app's DB/auth/routing
 
 #### Integration Steps
@@ -127,7 +127,7 @@ This module follows the **Virtual Module** pattern:
 2. **Automatic Configuration**:
    The `add-module` workflow automatically:
    - Adds submodule to `modules/portfolio/`
-   - Updates `pnpm-workspace.yaml` with `modules/portfolio/svelte` and `modules/portfolio/ts`
+   - Updates `pnpm-workspace.yaml` with `modules/portfolio/sveltekit`
    - Updates `go.work` with `modules/portfolio/go`
    - Registers tasks in `moon.yml`
 
@@ -162,27 +162,41 @@ This module follows the **Virtual Module** pattern:
    };
    ```
 
-   5. **Shared Logic & State** (TypeScript):
+   5. **State Management** (Svelte 5 Runes):
 
-      The `ts/` directory contains framework-agnostic business logic and state management using **ReactiveX (RxJS)**. This layer bridges the backend data and the UI.
+      State management uses **Svelte 5 Runes** (`$state`, `$derived`) for reactive data flow. State classes are defined in the `sveltekit/src/lib/states/` directory.
 
       ```typescript
-      // modules/portfolio/ts/src/portfolio.store.ts
-      import { BehaviorSubject } from "rxjs";
+      // modules/portfolio/sveltekit/src/lib/states/PortfolioState.svelte.ts
+      class PortfolioState {
+        data = $state<Portfolio | null>(null);
+        loading = $state(false);
 
-      // State is exposed as Observables
-      export const portfolioStore = new BehaviorSubject<Portfolio | null>(null);
+        isReady = $derived(this.data !== null);
+
+        async fetchData() {
+          this.loading = true;
+          this.data = await api.getPortfolio();
+          this.loading = false;
+        }
+      }
+
+      export const portfolioState = new PortfolioState();
       ```
 
       Svelte components consume this state directly:
 
       ```svelte
-      // modules/portfolio/sveltekit/src/widgets/Summary.svelte
+      <!-- modules/portfolio/sveltekit/src/lib/widgets/Summary.svelte -->
       <script>
-        import { portfolioStore } from "@modules/portfolio-ts";
+        import { portfolioState } from "$lib/states/PortfolioState.svelte";
       </script>
 
-      <h1>{$portfolioStore?.totalValue}</h1>
+      {#if portfolioState.loading}
+        <p>Loading...</p>
+      {:else}
+        <h1>{portfolioState.data?.totalValue}</h1>
+      {/if}
       ```
 
    6. **Verify Integration**:
