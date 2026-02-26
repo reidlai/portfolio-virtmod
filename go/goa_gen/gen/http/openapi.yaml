@@ -29,23 +29,6 @@ paths:
                             - change_percent
             schemes:
                 - http
-    /portfolio/summary/watch:
-        get:
-            tags:
-                - portfolio
-            summary: watchPortfolioSummary portfolio
-            operationId: portfolio#watchPortfolioSummary
-            responses:
-                "101":
-                    description: Switching Protocols response.
-                    schema:
-                        $ref: '#/definitions/PortfolioSummary'
-                        required:
-                            - balance
-                            - currency
-                            - change_percent
-            schemes:
-                - ws
 definitions:
     PortfolioSummary:
         title: PortfolioSummary
@@ -54,21 +37,21 @@ definitions:
             balance:
                 type: number
                 description: Total Balance
-                example: 0.48762896212116436
+                example: 0.5157822629951638
                 format: double
             change_percent:
                 type: number
                 description: Change Percentage
-                example: 0.03770770812643
+                example: 0.6309358093655018
                 format: double
             currency:
                 type: string
                 description: Currency Code
-                example: Debitis impedit.
+                example: Aperiam suscipit et nobis.
         example:
-            balance: 0.47723201288775363
-            change_percent: 0.2604217807206088
-            currency: Quia ratione aliquam consectetur sunt amet non.
+            balance: 0.48762896212116436
+            change_percent: 0.03770770812643
+            currency: Debitis impedit.
         required:
             - balance
             - currency

@@ -1,20 +1,20 @@
-$schema: 'https://moonrepo.dev/schemas/project.json'
-id: 'portfolio-go'
-type: 'library'
-stack: 'backend'
+$schema: "https://moonrepo.dev/schemas/project.json"
+id: "portfolio-go"
+layer: "library"
+stack: "backend"
 
 tasks:
   build:
-    command: 'go build ./...'
+    command: "go build ./..."
     inputs:
-      - '**/*.go'
-      - 'go.mod'
-      - 'go.sum'
+      - "**/*.go"
+      - "go.mod"
+      - "go.sum"
     outputs: []
     options:
-      mergeArgs: 'replace'
-      mergeOutputs: 'replace'
-      mergeInputs: 'replace'
+      mergeArgs: "replace"
+      mergeOutputs: "replace"
+      mergeInputs: "replace"
 
   format:
     command: "goimports"
@@ -26,16 +26,14 @@ tasks:
       - "go.mod"
       - "go.sum"
       - "!**/.*/**"
-    platform: "system"
+    toolchain: "system"
     options:
       mergeArgs: "replace"
       mergeInputs: "replace"
 
   lint:
-    command: "go"
+    command: "golangci-lint"
     args:
-      - "run"
-      - "github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
       - "run"
       - "-v"
       - "--allow-parallel-runners"
@@ -57,7 +55,7 @@ tasks:
     options:
       runInCI: true
       mergeArgs: "replace"
-      mergeInputs: 'replace'
+      mergeInputs: "replace"
 
   goa-gen:
     command: "go run goa.design/goa/v3/cmd/goa@latest gen github.com/reidlai/ta-workspace/modules/portfolio/go/design --output goa_gen"
@@ -68,7 +66,7 @@ tasks:
       - "goa_gen/**"
     options:
       mergeArgs: "replace"
-      mergeInputs: 'replace'
+      mergeInputs: "replace"
 
   build-server:
     command: "go build -o bin/portfolio-server ."
@@ -83,7 +81,7 @@ tasks:
       - "bin/portfolio-server"
 
   start:
-    command: "./bin/portfolio-server"
+    command: "./bin/portfolio-server api-server start"
     deps:
       - "build-server"
-    local: true
+    preset: "server"

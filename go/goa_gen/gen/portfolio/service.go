@@ -16,8 +16,6 @@ import (
 type Service interface {
 	// GetPortfolioSummary implements getPortfolioSummary.
 	GetPortfolioSummary(context.Context) (res *PortfolioSummary, err error)
-	// WatchPortfolioSummary implements watchPortfolioSummary.
-	WatchPortfolioSummary(context.Context, WatchPortfolioSummaryServerStream) (err error)
 }
 
 // APIName is the name of the API as defined in the design.
@@ -34,28 +32,7 @@ const ServiceName = "portfolio"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [2]string{"getPortfolioSummary", "watchPortfolioSummary"}
-
-// WatchPortfolioSummaryServerStream allows streaming instances of
-// *PortfolioSummary to the client.
-type WatchPortfolioSummaryServerStream interface {
-	// Send streams instances of "PortfolioSummary".
-	Send(*PortfolioSummary) error
-	// SendWithContext streams instances of "PortfolioSummary" with context.
-	SendWithContext(context.Context, *PortfolioSummary) error
-	// Close closes the stream.
-	Close() error
-}
-
-// WatchPortfolioSummaryClientStream allows streaming instances of
-// *PortfolioSummary to the client.
-type WatchPortfolioSummaryClientStream interface {
-	// Recv reads instances of "PortfolioSummary" from the stream.
-	Recv() (*PortfolioSummary, error)
-	// RecvWithContext reads instances of "PortfolioSummary" from the stream with
-	// context.
-	RecvWithContext(context.Context) (*PortfolioSummary, error)
-}
+var MethodNames = [1]string{"getPortfolioSummary"}
 
 // PortfolioSummary is the result type of the portfolio service
 // getPortfolioSummary method.

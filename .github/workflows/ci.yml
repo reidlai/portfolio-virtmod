@@ -62,12 +62,15 @@ jobs:
       - name: Quality - Go Vet
         run: cd go && go vet ./...
 
+      - name: Install golangci-lint
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.64.5
+
       - name: Quality - Moon Lint (TS/JS)
-        run: npx @moonrepo/cli run :lint
+        run: pnpm exec moon run :lint
 
       # Stage 4: Unit Tests
       - name: Test - Moon Unit Tests
-        run: npx @moonrepo/cli run :test
+        run: pnpm exec moon run :test
 
       # Stage 5: SAST
       - name: SAST - Gosec (Go)

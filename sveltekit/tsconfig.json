@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*"],
-  "exclude": ["src/lib/api-client.ts"]
+  "exclude": ["src/lib/api-client.ts", "../node_modules/**/*"]
 }

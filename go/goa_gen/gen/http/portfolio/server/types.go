@@ -23,32 +23,10 @@ type GetPortfolioSummaryResponseBody struct {
 	ChangePercent float64 `form:"change_percent" json:"change_percent" xml:"change_percent"`
 }
 
-// WatchPortfolioSummaryResponseBody is the type of the "portfolio" service
-// "watchPortfolioSummary" endpoint HTTP response body.
-type WatchPortfolioSummaryResponseBody struct {
-	// Total Balance
-	Balance float64 `form:"balance" json:"balance" xml:"balance"`
-	// Currency Code
-	Currency string `form:"currency" json:"currency" xml:"currency"`
-	// Change Percentage
-	ChangePercent float64 `form:"change_percent" json:"change_percent" xml:"change_percent"`
-}
-
 // NewGetPortfolioSummaryResponseBody builds the HTTP response body from the
 // result of the "getPortfolioSummary" endpoint of the "portfolio" service.
 func NewGetPortfolioSummaryResponseBody(res *portfolio.PortfolioSummary) *GetPortfolioSummaryResponseBody {
 	body := &GetPortfolioSummaryResponseBody{
-		Balance:       res.Balance,
-		Currency:      res.Currency,
-		ChangePercent: res.ChangePercent,
-	}
-	return body
-}
-
-// NewWatchPortfolioSummaryResponseBody builds the HTTP response body from the
-// result of the "watchPortfolioSummary" endpoint of the "portfolio" service.
-func NewWatchPortfolioSummaryResponseBody(res *portfolio.PortfolioSummary) *WatchPortfolioSummaryResponseBody {
-	body := &WatchPortfolioSummaryResponseBody{
 		Balance:       res.Balance,
 		Currency:      res.Currency,
 		ChangePercent: res.ChangePercent,

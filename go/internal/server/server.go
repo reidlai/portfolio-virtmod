@@ -11,21 +11,27 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gorilla/websocket"
-
 	portfolioSvr "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/http/portfolio/server"
 	portfolioGen "github.com/reidlai/ta-workspace/modules/portfolio/go/goa_gen/gen/portfolio"
-	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio"
+	portfolioPkg "github.com/reidlai/ta-workspace/modules/portfolio/go/pkg/portfolio/service"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
 	"goa.design/goa/v3/middleware"
 )
 
 type Config struct {
-	Host     string
-	Port     string
-	Debug    bool
-	LogLevel string
+	Host              string
+	Port              int
+	Debug             bool
+	LogLevel          string
+	LogFormat         string
+	Secure            bool
+	TLSCert           string
+	TLSKey            string
+	ReadHeaderTimeout time.Duration
+	WriteTimeout      time.Duration
+	IdleTimeout       time.Duration
+	MaxHeaderBytes    int
 }
 
 // adapter implements middleware.Logger interface by writing to slog
@@ -41,8 +47,13 @@ func (a *adapter) Log(keyvals ...interface{}) error {
 
 func Run(cfg *Config) error {
 	// Setup logger
-	// In a real app we might configure level based on cfg.LogLevel
-	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	var handler slog.Handler
+	if cfg.LogFormat == "json" {
+		handler = slog.NewJSONHandler(os.Stderr, nil)
+	} else {
+		handler = slog.NewTextHandler(os.Stderr, nil)
+	}
+	logger := slog.New(handler)
 
 	// Initialize the service
 	portfolioSvc := portfolioPkg.NewPortfolioService(logger)
@@ -101,7 +112,8 @@ func handleHTTPServer(ctx context.Context, cfg *Config, endpoints *portfolioGen.
 		portfolioServer *portfolioSvr.Server
 	)
 	{
-		portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil, &websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}, nil)
+		// Note: We remove websocket upgrader check since we are removing WS support gradually/completely as per user request
+		portfolioServer = portfolioSvr.New(endpoints, mux, dec, enc, nil, nil)
 		if cfg.Debug {
 			portfolioServer.Use(httpmdlwr.Debug(mux, os.Stdout))
 		}
@@ -115,8 +127,15 @@ func handleHTTPServer(ctx context.Context, cfg *Config, endpoints *portfolioGen.
 		handler = httpmdlwr.RequestID()(handler)       //nolint:staticcheck // Deprecated but sufficient for dev server
 	}
 
-	addr := fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)
-	svr := &http.Server{Addr: addr, Handler: handler}
+	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
+	svr := &http.Server{
+		Addr:              addr,
+		Handler:           handler,
+		ReadHeaderTimeout: cfg.ReadHeaderTimeout,
+		WriteTimeout:      cfg.WriteTimeout,
+		IdleTimeout:       cfg.IdleTimeout,
+		MaxHeaderBytes:    cfg.MaxHeaderBytes,
+	}
 
 	wg.Add(1)
 	go func() {

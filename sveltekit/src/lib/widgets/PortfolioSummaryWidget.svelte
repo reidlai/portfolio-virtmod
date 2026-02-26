@@ -1,9 +1,12 @@
 <script lang="ts">
     import type { IPortfolioSummaryWidgetStory } from "./PortfolioSummaryWidget.types";
     import * as Card from "../components/ui/card/index";
-    import { portfolioSummaryState } from "../runes/PortfolioSummaryState.svelte";
+    import { PortfolioSummaryState } from "../states/PortfolioSummaryState.svelte.ts";
     import { goto } from "$app/navigation";
-    import { onMount } from "svelte";
+
+    // Allow injecting a mocked or specific apiClient, or fallback to the one in the global DI container.
+    // If running in isolation without appContainer, it will throw unless mock data is used.
+    let portfolioSummaryState = PortfolioSummaryState.getInstance();
 
     /**
      * PROPS INTEGRATION: Bridging Nested API/RxJS Data with Flattened Storybook Controls
@@ -26,16 +29,17 @@
         usingMockData?: boolean;
     } = $props();
 
-    onMount(() => {
-        portfolioSummaryState.init({
+    $effect(() => {
+        // We only inject usingMockData so that Storybook can force mock data.
+        // The apiClient has already been injected by the ModuleLoader via src/index.ts
+        portfolioSummaryState = PortfolioSummaryState.getInstance({
             usingMockData: usingMockDataProp,
-            useSubscriptions: true,
         });
+
+        // Safe to call directly; apiClient exists either from ModuleLoader or it's mocked.
+        portfolioSummaryState.getPortfolioSummary();
     });
 
-    /**
-     * GLOBAL STATE: RxJS Observable Integration
-     */
     let summary = $derived(portfolioSummaryState.summary);
 
     /**

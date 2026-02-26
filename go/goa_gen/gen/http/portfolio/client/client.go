@@ -11,9 +11,7 @@ package client
 import (
 	"context"
 	"net/http"
-	"time"
 
-	"github.com/gorilla/websocket"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
@@ -24,20 +22,14 @@ type Client struct {
 	// getPortfolioSummary endpoint.
 	GetPortfolioSummaryDoer goahttp.Doer
 
-	// WatchPortfolioSummary Doer is the HTTP client used to make requests to the
-	// watchPortfolioSummary endpoint.
-	WatchPortfolioSummaryDoer goahttp.Doer
-
 	// RestoreResponseBody controls whether the response bodies are reset after
 	// decoding so they can be read again.
 	RestoreResponseBody bool
 
-	scheme     string
-	host       string
-	encoder    func(*http.Request) goahttp.Encoder
-	decoder    func(*http.Response) goahttp.Decoder
-	dialer     goahttp.Dialer
-	configurer *ConnConfigurer
+	scheme  string
+	host    string
+	encoder func(*http.Request) goahttp.Encoder
+	decoder func(*http.Response) goahttp.Decoder
 }
 
 // NewClient instantiates HTTP clients for all the portfolio service servers.
@@ -48,22 +40,14 @@ func NewClient(
 	enc func(*http.Request) goahttp.Encoder,
 	dec func(*http.Response) goahttp.Decoder,
 	restoreBody bool,
-	dialer goahttp.Dialer,
-	cfn *ConnConfigurer,
 ) *Client {
-	if cfn == nil {
-		cfn = &ConnConfigurer{}
-	}
 	return &Client{
-		GetPortfolioSummaryDoer:   doer,
-		WatchPortfolioSummaryDoer: doer,
-		RestoreResponseBody:       restoreBody,
-		scheme:                    scheme,
-		host:                      host,
-		decoder:                   dec,
-		encoder:                   enc,
-		dialer:                    dialer,
-		configurer:                cfn,
+		GetPortfolioSummaryDoer: doer,
+		RestoreResponseBody:     restoreBody,
+		scheme:                  scheme,
+		host:                    host,
+		decoder:                 dec,
+		encoder:                 enc,
 	}
 }
 
@@ -83,42 +67,5 @@ func (c *Client) GetPortfolioSummary() goa.Endpoint {
 			return nil, goahttp.ErrRequestError("portfolio", "getPortfolioSummary", err)
 		}
 		return decodeResponse(resp)
-	}
-}
-
-// WatchPortfolioSummary returns an endpoint that makes HTTP requests to the
-// portfolio service watchPortfolioSummary server.
-func (c *Client) WatchPortfolioSummary() goa.Endpoint {
-	var (
-		decodeResponse = DecodeWatchPortfolioSummaryResponse(c.decoder, c.RestoreResponseBody)
-	)
-	return func(ctx context.Context, v any) (any, error) {
-		req, err := c.BuildWatchPortfolioSummaryRequest(ctx, v)
-		if err != nil {
-			return nil, err
-		}
-		conn, resp, err := c.dialer.DialContext(ctx, req.URL.String(), req.Header)
-		if err != nil {
-			if resp != nil {
-				return decodeResponse(resp)
-			}
-			return nil, goahttp.ErrRequestError("portfolio", "watchPortfolioSummary", err)
-		}
-		if c.configurer.WatchPortfolioSummaryFn != nil {
-			var cancel context.CancelFunc
-			ctx, cancel = context.WithCancel(ctx)
-			conn = c.configurer.WatchPortfolioSummaryFn(conn, cancel)
-		}
-		go func() {
-			<-ctx.Done()
-			conn.WriteControl(
-				websocket.CloseMessage,
-				websocket.FormatCloseMessage(websocket.CloseNormalClosure, "client closing connection"),
-				time.Now().Add(time.Second),
-			)
-			conn.Close()
-		}()
-		stream := &WatchPortfolioSummaryClientStream{conn: conn}
-		return stream, nil
 	}
 }

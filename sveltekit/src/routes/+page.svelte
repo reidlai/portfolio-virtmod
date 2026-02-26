@@ -9,7 +9,7 @@
   <section>
     <h2 class="text-xl mb-4">Portfolio Summary</h2>
     <div class="max-w-md">
-      <PortfolioSummaryWidget />
+      <PortfolioSummaryWidget usingMockData={true} />
     </div>
   </section>
 </div>
