@@ -5,7 +5,7 @@ projects:
   portfolio-go: "go"
 
 vcs:
-  manager: "git"
+  client: "git"
   provider: "github"
   defaultBranch: "main"
 
