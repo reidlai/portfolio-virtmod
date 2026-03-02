@@ -32,7 +32,9 @@ describe("PortfolioSummaryState", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockApi = { get: vi.fn() };
-    portfolioSummaryState = PortfolioSummaryState.getInstance({ apiClient: mockApi });
+    portfolioSummaryState = PortfolioSummaryState.getInstance({
+      apiClient: mockApi,
+    });
     portfolioSummaryState.reset();
   });
 
@@ -74,7 +76,9 @@ describe("PortfolioSummaryState", () => {
   it("should handle error when API call fails", async () => {
     mockApi.get.mockRejectedValueOnce(new Error("API Error"));
 
-    await expect(portfolioSummaryState.getPortfolioSummary()).rejects.toThrow("API Error");
+    await expect(portfolioSummaryState.getPortfolioSummary()).rejects.toThrow(
+      "API Error",
+    );
     expect(portfolioSummaryState.error).toBe("API Error");
     expect(portfolioSummaryState.loading).toBe(false);
   });
