@@ -22,7 +22,10 @@ export class PortfolioSummaryState {
 
   public apiClient!: ApiClient;
 
-  private constructor(config?: { usingMockData?: boolean; apiClient?: ApiClient }) {
+  private constructor(config?: {
+    usingMockData?: boolean;
+    apiClient?: ApiClient;
+  }) {
     if (config?.usingMockData !== undefined) {
       this.usingMockData = config.usingMockData;
     }
@@ -85,7 +88,7 @@ export class PortfolioSummaryState {
         });
         this.summary = summary;
       }
-      logger.info({ "summary": this.summary })
+      logger.info({ summary: this.summary });
     } catch (e: unknown) {
       logger.error({ e }, "Failed to fetch portfolio summary");
       const errorMessage =

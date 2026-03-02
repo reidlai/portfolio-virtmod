@@ -19,16 +19,20 @@ export class PortfolioModule {
    * Discovers routes dynamically and returns the module bundle.
    */
   async init(context: any): Promise<any> {
-
     // @ts-ignore
-    const sharedAxios = typeof context.getService === 'function'
-      ? context.getService("apiClient")
-      : (context as any).resolve ? (context as any).resolve("apiClient") : undefined;
+    const sharedAxios =
+      typeof context.getService === "function"
+        ? context.getService("apiClient")
+        : (context as any).resolve
+          ? (context as any).resolve("apiClient")
+          : undefined;
 
     if (sharedAxios) {
       // @ts-ignore
       const baseURL = sharedAxios.defaults?.baseURL || "/";
-      const portfolioApi = createApiClient(baseURL, { axiosInstance: sharedAxios });
+      const portfolioApi = createApiClient(baseURL, {
+        axiosInstance: sharedAxios,
+      });
       PortfolioSummaryState.getInstance().apiClient = portfolioApi;
     }
 
