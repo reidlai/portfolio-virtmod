@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.2.0](https://github.com/reidlai/portfolio-virtmod/compare/v0.1.0...v0.2.0) (2026-03-02)
+
+
+### Features
+
+* add watch portfolio summary websocket support ([a7823fc](https://github.com/reidlai/portfolio-virtmod/commit/a7823fc85f96e0d88376c66fc421bda121f56665))
+* refactor package location ([39d1286](https://github.com/reidlai/portfolio-virtmod/commit/39d12861aeb8533248996f7e07f80149d6d1a15b))
+* remove portfolio-ts task ([95bbaad](https://github.com/reidlai/portfolio-virtmod/commit/95bbaad34ffe75abacfce7a8a3fdd5623fd566be))
+* remove RxJS ([c2abb0a](https://github.com/reidlai/portfolio-virtmod/commit/c2abb0a8ead8f32be38498262ebf04d87c354509))
+* switch to use virtual-module-core ([5005376](https://github.com/reidlai/portfolio-virtmod/commit/50053762ac4d925de35df55d0ca2c9b56736b336))
+* update golang version to fix SCA ([a98f598](https://github.com/reidlai/portfolio-virtmod/commit/a98f598f82f80d34525eb84cc7b2d3390d615828))
+
+
+### Bug Fixes
+
+* add --ignore flag to svelte-check for node_modules ([1a1f5ac](https://github.com/reidlai/portfolio-virtmod/commit/1a1f5acfd3d85711d254e03944951e5df0b12a68))
+* app shell integration error ([86f2599](https://github.com/reidlai/portfolio-virtmod/commit/86f25991ccb94d2f66fccb23b03609a7ecd1b835))
+* CI error ([c4e224c](https://github.com/reidlai/portfolio-virtmod/commit/c4e224c068f9f0e4a9eecd305f62dc6bc7653d31))
+* CI error ([7a3cefd](https://github.com/reidlai/portfolio-virtmod/commit/7a3cefdf4fd535ff5956ac542b400ab7136f2ed5))
+* CI error ([0c77532](https://github.com/reidlai/portfolio-virtmod/commit/0c775324573b86c4c1eb59ea58d7dc041e30f4e6))
+* CI error ([ac8e80d](https://github.com/reidlai/portfolio-virtmod/commit/ac8e80d35a40e6f1939692914c65ad922b739039))
+* exclude parent node_modules from svelte-check ([7a1e0e9](https://github.com/reidlai/portfolio-virtmod/commit/7a1e0e9cf131e8baa40a8ef1cc57df28315af066))
+* linting ([5cb6f07](https://github.com/reidlai/portfolio-virtmod/commit/5cb6f07830ebf6b48745e581fdabc042c397e51b))
+* linting error ([b975b14](https://github.com/reidlai/portfolio-virtmod/commit/b975b14e3a5a26cb05dd596e7b9eeb3330c74a32))
+* missing root route ([29efdf2](https://github.com/reidlai/portfolio-virtmod/commit/29efdf2a6fdbcab4b39235e2e13a0ad242ec80ce))
+* mono tasks ([0cae1e0](https://github.com/reidlai/portfolio-virtmod/commit/0cae1e024fd3a65e5572008148e40e3ffa57e813))
+* pnpm_lock ([26fd6c7](https://github.com/reidlai/portfolio-virtmod/commit/26fd6c7f1090db38da9d87c69b70e83619af28c1))
+* remove deprecated type field from moon.yml files ([a2c30dd](https://github.com/reidlai/portfolio-virtmod/commit/a2c30ddb8a777261ec9deb635366b50691ba977f))
+* rename vcs.manager to vcs.client for Moon compatibility ([e961c8f](https://github.com/reidlai/portfolio-virtmod/commit/e961c8f951bee1239b13153e74ff825edd654106))
+* replace deprecated platform field with toolchain ([e2edfb7](https://github.com/reidlai/portfolio-virtmod/commit/e2edfb783c779f9ebf41072a775d6aecae4184f4))
+* storybook task ([f3b12fb](https://github.com/reidlai/portfolio-virtmod/commit/f3b12fbb3811c43c1fc59c9811b1c951eeec50dc))
+* update virtual-module-core ([98cd33a](https://github.com/reidlai/portfolio-virtmod/commit/98cd33afcd17c6a8ed996a7d979db30466e0d1e9))
+* update virtual-module-core ([41770e5](https://github.com/reidlai/portfolio-virtmod/commit/41770e59e9cb853562bafb00a163b599c726cec2))
+* upgrade golang for SCA detected vulnerabilities ([eb9690b](https://github.com/reidlai/portfolio-virtmod/commit/eb9690b7339b7da54f165a1069961a58095f21a9))
+* use script instead of command for shell syntax tasks ([660a99f](https://github.com/reidlai/portfolio-virtmod/commit/660a99f335b1f0c7707ca574edf1dfdc26d49e4b))
+
+
+### Reverts
+
+* remove --ignore flag (doesn't work with --tsconfig) ([7f82c4f](https://github.com/reidlai/portfolio-virtmod/commit/7f82c4fcb17dc563cdaf14d3f59906164d6a45a7))
+
 ## 1.0.0 (2026-01-04)
 
 ### Features
