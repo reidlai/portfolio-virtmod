@@ -74,7 +74,7 @@ jobs:
 
       # Stage 5: SAST
       - name: SAST - Gosec (Go)
-        run: cd go && go run github.com/securego/gosec/v2/cmd/gosec@latest -no-fail ./...
+        run: cd go && go run github.com/securego/gosec/v2/cmd/gosec@v2.22.4 -no-fail ./...
 
       - name: SAST - Semgrep (Polyglot)
         run: semgrep --config=p/security-audit --error .
